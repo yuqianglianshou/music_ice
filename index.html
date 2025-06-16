@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="utf-8" />
+    <!-- 移动端适配 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 网站图标 -->
+    <link rel="icon" type="image/png" href="/images/icon.jpeg" />
+    <title>music</title>
+    <!-- 样式文件引入 -->
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel="stylesheet" type="text/css" href="css/common.css">
+    <link rel="stylesheet" type="text/css" href="css/rules.css">
+    <link rel="stylesheet" type="text/css" href="css/response.css">
+
+</head>
+
+<body>
+    <!-- 引入图标定义文件 -->
+    <div id="svg-icons-container"></div>
+
+    <div id="app">
+        <!-- 头部导航栏 -->
+        <header class="list_header flex" list_header>
+            <div class="list-tab">
+                <div class="tab-A active" data-tab="tab-A">全部</div>
+                <div class="tab-B" data-tab="tab-B">天籁之音</div>
+                <div class="tab-C" data-tab="tab-C">轻音乐</div>
+                <div class="tab-D" data-tab="tab-D">伤感</div>
+                <div class="tab-E" data-tab="tab-E">经典</div>
+                <div class="tab-F" data-tab="tab-F">背景音乐</div>
+                <div class="tab-G" data-tab="tab-G">律动</div>
+                <div class="tab-H" data-tab="tab-H">动画片</div>
+            </div>
+        </header>
+
+        <div class="app_main">
+
+            <!-- 歌单列表容器 -->
+            <div class="wrapper-contentList" content-list></div>
+
+            <!-- 悬浮窗容器 -->
+            <div id="hoverWindow" class="hover-window">
+                <div id="hoverContent" class="hover-content"></div>
+            </div>
+
+            <main class="main-wrap">
+                <!-- 歌曲播放面板 -->
+                <!-- 背景图片 -->
+                <img class="imgBoard" currentPlay-img400 title="..."></img>
+
+                <!-- 歌曲播放控制面板 -->
+                <div class="song_panel" song-panel>
+                    <!-- 面板顶部选项 -->
+                    <div class="panel-options flex">
+                        <!-- 关闭按钮 -->
+                        <div class="options-close flex">
+                            <span class="close-icon flex" id="close-panel-btn">
+                                <svg fill="none" stroke="currentColor" class="icon" stroke-width="5"
+                                    stroke-linecap="butt" stroke-linejoin="miter" style="font-size: 30px;">
+                                    <use xlink:href="#icon-down"></use>
+                                </svg>
+                            </span>
+                        </div>
+                        <!-- 全屏按钮 -->
+                        <div class="options-fullScreen flex">
+                            <span class="fullScreen-icon flex" id="fullscreen-btn">
+                                <svg fill="none" stroke="currentColor" class="icon" stroke-width="5"
+                                    stroke-linecap="butt" stroke-linejoin="miter" style="font-size: 30px;">
+                                    <use xlink:href="#icon-fullscreen"></use>
+                                </svg>
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- 面板主要内容 -->
+                    <div class="panel-content flex">
+                        <!-- 左侧歌曲信息 -->
+                        <div class="content-left flex">
+                            <div class="left-songInfo flex">
+                                <div class="songInfo-img flex">
+                                    <img class="img" src="" alt="..." play-imgBorad currentPlay-img400>
+                                </div>
+                                <div class="songInfo-item flex">
+                                    <div class="item-song flex">
+                                        <div class="song-name">
+                                            <span title="" class="name text-ol fs-20 fw-6" currentPlay-name></span>
+                                        </div>
+                                        <div class="song-author">
+                                            <span title="" class="author text-ol fw-6 fs-16" currentPlay-author></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 播放控制区域 -->
+                            <div class="left-playControl">
+                                <!-- 进度条 -->
+                                <div class="playControl-progressBar flex">
+                                    <span class="text-ol currentTime" play-currentTime>00:00</span>
+                                    <div class="progressBar">
+                                        <input type="range" play-Progress min="0" max="100" value="0" step="1">
+                                        <div class="progress-colorFill" play-colorFill></div>
+                                    </div>
+                                    <span class="text-ol totalTime" play-totalTime>00:00</span>
+                                </div>
+
+                                <!-- 播放控制按钮 -->
+                                <div class="playControl-function flex">
+                                    <!-- 上一首 -->
+                                    <div class="function-prevSong flex">
+                                        <span class="prevSong-icon flex" play-prev-btn>
+                                            <svg fill="none" stroke="currentColor" class="icon" stroke-width="5"
+                                                stroke-linecap="butt" stroke-linejoin="miter">
+                                                <use xlink:href="#icon-prev"></use>
+                                            </svg>
+                                        </span>
+                                    </div>
+                                    <!-- 播放/暂停 -->
+                                    <div class="function-Play flex">
+                                        <span class="Play-icon flex pause" play-btn>
+                                            <svg fill="none" stroke="currentColor" class="icon pause" stroke-width="5"
+                                                stroke-linecap="butt" stroke-linejoin="miter">
+                                                <use xlink:href="#icon-play"></use>
+                                            </svg>
+                                            <svg fill="none" stroke="currentColor" class="icon playing" stroke-width="5"
+                                                stroke-linecap="butt" stroke-linejoin="miter">
+                                                <use xlink:href="#icon-pause"></use>
+                                            </svg>
+                                        </span>
+                                    </div>
+                                    <!-- 下一首 -->
+                                    <div class="function-nextSong flex">
+                                        <span class="nextSong-icon flex" play-next-btn>
+                                            <svg fill="none" stroke="currentColor" class="icon" stroke-width="5"
+                                                stroke-linecap="butt" stroke-linejoin="miter">
+                                                <use xlink:href="#icon-next"></use>
+                                            </svg>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 右侧歌词显示 -->
+                        <div class="content-right">
+                            <div class="right-wrap" wrap-lyrics>
+                                <div class="wrap-lyrics fs-30 fw-5" play-lyrics>
+                                    <!-- 歌词内容将通过JavaScript动态插入 -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+
+        <!-- 底部播放控制栏 -->
+        <footer class="app_footer" id="app-footer">
+            <div class="songs_play flex">
+                <!-- 播放信息区域 -->
+                <div class="play-info">
+                    <div class="info-content flex">
+                        <div class="info-avatar">
+                            <img class="avatar-img" src="imgs/music_3-400x400.jpg" currentPlay-img70 alt="">
+                        </div>
+                        <div class="info-items flex">
+                            <div class="items-name fs-18 fw-7">
+                                <span class="text-tl fc-b" title="歌名" currentPlay-name>歌名</span>
+                            </div>
+                            <div class="items-author fs-12 fc-b">
+                                <span title="作者" class="text-ol" currentPlay-author>作者</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="info-blank"></div>
+                </div>
+
+                <!-- 播放控制区域 -->
+                <div class="play-control flex">
+                    <div class="control-items flex">
+                        <div class="items-blank"></div>
+                        <div class="items-btn flex">
+                            <!-- 上一首 -->
+                            <div class="btn-prev flex" play-prev-btn id="btn-prev">
+                                <svg fill="none" stroke="currentColor" class="icon" stroke-width="5"
+                                    stroke-linecap="butt" stroke-linejoin="miter">
+                                    <use xlink:href="#icon-prev"></use>
+                                </svg>
+                            </div>
+                            <!-- 播放/暂停按钮 -->
+                            <div class="btn-play pause flex" play-btn id="btn-play">
+                                <svg fill="none" stroke="currentColor" class="icon pause" stroke-width="5"
+                                    stroke-linecap="butt" stroke-linejoin="miter">
+                                    <use xlink:href="#icon-play"></use>
+                                </svg>
+                                <svg fill="none" stroke="currentColor" class="icon playing" stroke-width="5"
+                                    stroke-linecap="butt" stroke-linejoin="miter">
+                                    <use xlink:href="#icon-pause"></use>
+                                </svg>
+                            </div>
+                            <!-- 下一首按钮 -->
+                            <div class="btn-next flex" play-next-btn id="btn-next">
+                                <svg fill="none" stroke="currentColor" class="icon" stroke-width="5"
+                                    stroke-linecap="butt" stroke-linejoin="miter">
+                                    <use xlink:href="#icon-next"></use>
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="items-blank"></div>
+                    </div>
+
+                    <!-- 进度条控制 -->
+                    <div class="control-progress flex">
+                        <span class="progress-currentTime" play-currentTime>00:00</span>
+                        <div class="progress-bar">
+                            <input class="range" play-Progress type="range" value="0" min="0" max="100" step="1">
+                            <div class="progress-colorFill" play-colorFill></div>
+                        </div>
+                        <span class="progress-totalTime" play-totalTime>00:00</span>
+                    </div>
+                </div>
+
+                <!-- 播放设置区域 -->
+                <div class="play-setting flex">
+                    <div class="setting-blank"></div>
+                    <div class="setting-options flex">
+                        <!-- 循环模式切换 -->
+                        <div class="options-circulationMode flex">
+                            <li class="flex listLoop" play-mode>
+                                <svg class="icon listLoop" style="color: var(--blue-color);">
+                                    <use xlink:href="#icon-liebiaoxunhuan"></use>
+                                </svg>
+                                <svg class="icon randomLoop" style="color: var(--blue-color);">
+                                    <use xlink:href="#icon-suijibofang1"></use>
+                                </svg>
+                                <svg class="icon singleLoop" style="color: var(--blue-color);">
+                                    <use xlink:href="#icon-danquxunhuan1"></use>
+                                </svg>
+                            </li>
+                        </div>
+                        <!-- 音量控制 -->
+                        <div class="options-sound flex">
+                            <li class="flex sound" play-volume-icon>
+                                <svg fill="none" stroke="currentColor" class="icon sound" stroke-width="4"
+                                    stroke-linecap="butt" stroke-linejoin="miter" style="font-size: 20px;">
+                                    <use xlink:href="#icon-volume"></use>
+                                </svg>
+                                <svg fill="none" stroke="currentColor" class="icon mute" stroke-width="4"
+                                    stroke-linecap="butt" stroke-linejoin="miter" style="font-size: 20px;">
+                                    <use xlink:href="#icon-mute"></use>
+                                </svg>
+                            </li>
+                        </div>
+                        <!-- 音量滑块 -->
+                        <div class="options-soundSlider flex">
+                            <input type="range" play-volume-range min="0" max="1" value="0.8" step="0.01">
+                            <div class="progress-colorFill" play-volume-colorFill></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+    </div>
+
+    <!-- JavaScript模块引入 -->
+    <script>
+        // 加载SVG图标
+        fetch('./icons/svg_icons.html')
+            .then(response => response.text())
+            .then(svgContent => {
+                document.getElementById('svg-icons-container').innerHTML = svgContent;
+            })
+            .catch(error => console.error('加载图标失败:', error));
+    </script>
+    <script type="module" src="js/config.js"></script>
+    <script type="module" src="js/LyricsManager.js"></script>
+    <script type="module" src="js/utils.js"></script>
+    <script type="module" src="js/musicList.js"></script>
+    <script type="module" src="js/musicLyrics.js"></script>
+    <script type="module" src="js/musicLyrics2.js"></script>
+    <script type="module" src="js/index.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,91 @@
+/* ================ 全局重置样式 ================ */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* ================ 文档基础样式 ================ */
+body,
+html {
+  /* 字体渲染优化 */
+  -webkit-font-smoothing: antialiased;
+  /* 平滑滚动 */
+  scroll-behavior: smooth;
+  /* 设置字体 */
+  font-family: 'Inter', sans-serif;
+  /* 鼠标样式 */
+  cursor: default;
+  /* 禁止文本选择 */
+  user-select: none;
+}
+
+/* ================ 滚动条样式 ================ */
+/* 滚动条整体 */
+::-webkit-scrollbar {
+  appearance: none;
+  width: 8px;
+  padding: 3px;
+}
+
+/* 滚动条滑块 */
+::-webkit-scrollbar-thumb {
+  background-color: transparent;
+  border-radius: 10px;
+}
+
+/* 滚动条滑块悬停效果 */
+::-webkit-scrollbar-thumb:hover {
+  background-color: #c9cdc4;
+}
+
+/* ================ 范围输入控件样式 ================ */
+/* 去除默认样式 */
+input[type='range'] {
+  -webkit-appearance: none;
+  width: 100%;
+  margin: 10px 0;
+}
+
+/* 滑块样式重置 */
+input[type='range']::-webkit-slider-thumb {
+  -webkit-appearance: none;
+}
+
+/* 轨道样式 */
+input[type='range']::-webkit-slider-runnable-track {
+  border-radius: 10px;
+}
+
+/* ================ 元素默认样式重置 ================ */
+/* 斜体文本重置 */
+em,
+i {
+  font-style: normal;
+}
+
+/* 列表样式重置 */
+ul {
+  margin: 0;
+}
+
+li {
+  list-style: none;
+}
+
+/* 按钮样式重置 */
+button {
+  cursor: pointer;
+  background-color: transparent;
+  border: 1px solid transparent;
+}
+
+/* 链接样式重置 */
+a {
+  text-decoration: none;
+}
+
+/* 输入框焦点样式重置 */
+input:focus {
+  outline: none;
+}
