@@ -4,46 +4,46 @@
   /* 基础色板 */
   --white-color: #fff;
   --black-color: #000;
-  --blue-color: #4fb7ff;
+  --blue-color: #ff9b45;
 
-  --primary-color: #64d0ff;
-  --secondary-color: #ff9de2;
-  --theme-color: #ffe66d;
+  --primary-color: #ffd18b;
+  --secondary-color: #ff8a5c;
+  --theme-color: #ffe8c2;
   --surface-color: rgba(255, 255, 255, 0.08);
-  --surface-strong: rgba(255, 255, 255, 0.16);
-  --glass-border: rgba(255, 255, 255, 0.22);
-  --text-color: #e3e8ff;
+  --surface-strong: rgba(255, 255, 255, 0.14);
+  --glass-border: rgba(255, 255, 255, 0.25);
+  --text-color: #fff8ef;
 
   --app-width: 100vw;
   --app-height: 100vh;
 
-  --color-1: #f5f5f7;
-  --color-2: #d7def0;
-  --color-3: #b5c4f3;
+  --color-1: #fff1d9;
+  --color-2: #ffd3a5;
+  --color-3: #ffbc82;
   --color-4: rgba(255, 255, 255, 0.08);
-  --color-5: rgba(255, 255, 255, 0.18);
-  --color-6: rgba(255, 255, 255, 0.24);
-  --color-7: rgba(255, 255, 255, 0.32);
+  --color-5: rgba(255, 255, 255, 0.14);
+  --color-6: rgba(255, 255, 255, 0.22);
+  --color-7: rgba(255, 255, 255, 0.3);
   --color-8: rgba(255, 255, 255, 0.4);
-  --color-9: #91a0ff;
-  --color-10: #7a8fe4;
-  --color-11: rgba(255, 255, 255, 0.16);
-  --color-12: #64d0ff;
-  --color-13: rgba(100, 208, 255, 0.35);
+  --color-9: #ffb880;
+  --color-10: #ff9f6f;
+  --color-11: rgba(255, 255, 255, 0.18);
+  --color-12: #ffd18b;
+  --color-13: rgba(255, 180, 120, 0.35);
   --color-14: rgba(255, 255, 255, 0.2);
-  --color-15: rgba(0, 0, 0, 0.25);
+  --color-15: rgba(0, 0, 0, 0.2);
   --color-16: rgba(255, 255, 255, 0.06);
-  --color-17: rgba(16, 24, 48, 0.76);
-  --color-18: rgba(21, 29, 54, 0.9);
+  --color-17: rgba(90, 35, 0, 0.45);
+  --color-18: rgba(70, 25, 0, 0.65);
   --color-19: rgba(255, 255, 255, 0.08);
-  --color-20: #fefefe;
-  --color-21: rgba(255, 255, 255, 0.28);
+  --color-20: #fff7ef;
+  --color-21: rgba(255, 255, 255, 0.3);
   --color-22: rgba(255, 255, 255, 0.12);
   --color-23: rgba(255, 255, 255, 0.15);
 
-  --aurora-a: rgba(93, 95, 239, 0.65);
-  --aurora-b: rgba(54, 209, 220, 0.55);
-  --aurora-c: rgba(255, 141, 211, 0.45);
+  --aurora-a: rgba(255, 138, 92, 0.45);
+  --aurora-b: rgba(255, 193, 90, 0.35);
+  --aurora-c: rgba(255, 105, 155, 0.35);
 
   /* 布局尺寸 */
   --side-width: 250px;
