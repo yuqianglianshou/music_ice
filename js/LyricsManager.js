@@ -1,8 +1,6 @@
 // 导入所需的配置
 import { CONFIG } from './config.js';
 import { addEventListeners } from './utils.js';
-import { lyricsList } from './musicLyrics.js';
-import { lyricsList2 } from './musicLyrics2.js';
 
 /**
  * 歌词管理类
@@ -148,13 +146,9 @@ export class LyricsManager {
         }
 
         let lyrics = null;
-        if (musicData.type_load_lyrics === CONFIG.LOAD_LYRICS_TYPE.TYPE_1) {
-            lyrics = this.parseLyricsType1(musicData);
-        } else if (musicData.type_load_lyrics === CONFIG.LOAD_LYRICS_TYPE.TYPE_2) {
-            lyrics = this.parseLyricsType2(musicData);
-        } else if (musicData.type_load_lyrics === CONFIG.LOAD_LYRICS_TYPE.TYPE_file) {
+        if (musicData.type_load_lyrics === CONFIG.LOAD_LYRICS_TYPE.TYPE_file) {
             if (musicData.lyrics_path && musicData.lyrics_path.trim() !== '') {
-                lyrics = await this.parseLyricsType3(musicData);
+                lyrics = await this.parseLyricsType(musicData);
             } else {
                 lyrics = null;
             }
@@ -172,69 +166,10 @@ export class LyricsManager {
             this.currentIndex = -1;
         }
     }
-
     /**
-     * 解析第一种格式的歌词
+     * 解析歌词文件
      */
-    parseLyricsType1(musicData) {
-        const currentLyrics = lyricsList.find(item =>
-            item.name_path === musicData.name_path
-        );
-
-        if (!currentLyrics) return null;
-
-        const lyricsText = currentLyrics.lyrics.map(line =>
-            line.substring(line.indexOf(']') + 1)
-        );
-
-        const lyricsTimer = currentLyrics.lyrics.map(line => {
-            const timeStr = line.substring(1, 10);
-            const [minutes, secondsAndMilliseconds] = timeStr.split(':');
-            const [seconds, milliseconds] = secondsAndMilliseconds.split('.').map(parseFloat);
-            return (parseFloat(minutes) * 60 + parseFloat(seconds) + milliseconds / 1000);
-        });
-
-        return { text: lyricsText, timer: lyricsTimer };
-    }
-
-    /**
-     * 解析第二种格式的歌词
-     */
-    parseLyricsType2(musicData) {
-        const currentLyrics = lyricsList2.find(item =>
-            item.name_path === musicData.name_path
-        );
-
-        if (!currentLyrics) return null;
-
-        const lyricsText = currentLyrics.lyrics.split('\n');
-        const lyricsRegex = /\[(\d{2}:\d{2}(?:\.\d{2,3})?)\](.*)/;
-
-        const lyricsData = lyricsText
-            .map(line => {
-                const match = line.match(lyricsRegex);
-                if (!match) return null;
-
-                const timeStr = match[1];
-                const lyricsLine = match[2];
-                const [minutes, secondsAndMilliseconds] = timeStr.split(':');
-                const [seconds, milliseconds] = secondsAndMilliseconds.split('.').map(parseFloat);
-                const timer = parseFloat(minutes) * 60 + parseFloat(seconds) + milliseconds / 1000;
-
-                return { time: timer, text: lyricsLine };
-            })
-            .filter(line => line !== null);
-
-        return {
-            text: lyricsData.map(line => line.text),
-            timer: lyricsData.map(line => line.time)
-        };
-    }
-
-    /**
-     * 解析第三种格式的歌词
-     */
-    async parseLyricsType3(musicData) {
+    async parseLyricsType(musicData) {
         try {
             const basePath = './music_lyrics/';
             const lyricsPath = basePath + musicData.lyrics_path.split('/').pop();
@@ -249,13 +184,20 @@ export class LyricsManager {
             // 支持两种时间格式的正则表达式
             const lyricsRegex = /\[(\d{2}:\d{2}[\.:]?\d{0,3})\](.*)/;
 
-            const lyricsData = lyricsText
+            // 解析所有歌词行
+            const allLyricsData = lyricsText
                 .map(line => {
                     const match = line.match(lyricsRegex);
                     if (!match) return null;
 
                     const timeStr = match[1];
-                    const lyricsLine = match[2].trim();
+                    let lyricsLine = match[2].trim();
+                    
+                    // 处理可能在同一行有重复标题的情况（如第45行）
+                    // 如果行中包含 [ti: 等标签，只取时间戳后的第一部分
+                    if (lyricsLine.includes('[ti:')) {
+                        lyricsLine = lyricsLine.split('[ti:')[0].trim();
+                    }
 
                     // 处理时间戳
                     let timer = 0;
@@ -276,12 +218,55 @@ export class LyricsManager {
 
                     return { time: timer, text: lyricsLine };
                 })
-                .filter(line => line !== null);
+                .filter(line => line !== null && line.text !== '');
 
-            return {
-                text: lyricsData.map(line => line.text),
-                timer: lyricsData.map(line => line.time)
-            };
+            // 检测是否有重复的时间戳（说明有翻译）
+            const timeMap = new Map();
+            allLyricsData.forEach(item => {
+                if (!timeMap.has(item.time)) {
+                    timeMap.set(item.time, []);
+                }
+                timeMap.get(item.time).push(item.text);
+            });
+
+            // 检查是否有重复时间戳
+            const hasTranslation = Array.from(timeMap.values()).some(texts => texts.length > 1);
+
+            if (hasTranslation) {
+                // 有翻译的情况：合并相同时间戳的原文和翻译
+                const mergedData = [];
+                const processedTimes = new Set();
+
+                allLyricsData.forEach(item => {
+                    if (processedTimes.has(item.time)) return;
+                    processedTimes.add(item.time);
+
+                    const texts = timeMap.get(item.time);
+                    if (texts.length > 1) {
+                        // 有多个文本，合并为一行（原文 + 翻译）
+                        // 通常第一个是原文，后面的是翻译
+                        const mergedText = texts.join('\n');
+                        mergedData.push({ time: item.time, text: mergedText });
+                    } else {
+                        // 只有一个文本，直接使用
+                        mergedData.push(item);
+                    }
+                });
+
+                // 按时间排序
+                mergedData.sort((a, b) => a.time - b.time);
+
+                return {
+                    text: mergedData.map(line => line.text),
+                    timer: mergedData.map(line => line.time)
+                };
+            } else {
+                // 没有翻译的情况：使用原有逻辑
+                return {
+                    text: allLyricsData.map(line => line.text),
+                    timer: allLyricsData.map(line => line.time)
+                };
+            }
         } catch (error) {
             console.error('解析歌词文件失败:', error);
             return null;
