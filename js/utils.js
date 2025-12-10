@@ -31,8 +31,11 @@ export const addEventListeners = (elements, events) => {
  * 秒 -> 分（170s -> 2m50s）
  */
 export const timeFormatSecondsToMinutes = function (duration) {
-  const minutes = Math.floor(duration / 60)
-  const seconds = Math.ceil(duration - (minutes * 60))
-  const totalTime = `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`
-  return totalTime
+  // 使用向下取整避免显示“多一秒”的问题
+  const safeDuration = Math.max(0, duration);
+  const totalSeconds = Math.floor(safeDuration);
+  const minutes = Math.floor(totalSeconds / 60);
+  const seconds = totalSeconds % 60;
+  const totalTime = `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
+  return totalTime;
 }

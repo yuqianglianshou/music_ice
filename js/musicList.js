@@ -3,7 +3,7 @@ import { CONFIG } from './config.js';
 //音乐根路径
 export const FILE_MUSIC_ROOT = './music/';
 
-// 空白格  dance monkey 绿光  那些年 我怀念的  生生世世爱  
+//  生生世世爱  
 // type 分类  （轻音乐，伤感，）
 
 // musicPath: FILE_MUSIC_ROOT + type_path + name_path,  ./music/jingdian/我的歌声里.mp3
@@ -37,6 +37,10 @@ const FILE_MUSIC_lvdong = 'lvdong/'
 // musicList7
 const TYPE_7 = "动画片"
 const FILE_MUSIC_donghuapian = 'donghuapian/'
+
+// musicList8
+const TYPE_8 = "民谣"
+const FILE_MUSIC_minyao = 'minyao/'
 
 
 //天籁之音
@@ -200,7 +204,7 @@ const musicList2 = [
     type_path: FILE_MUSIC_QINGYINYUE,
     imgPath: " ",
     time: '04:39',
-    des: "",
+    des: "成长不是变得坚强，是学会了什么都不说。",
     type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
     lyrics_path: 'call of silence.lrc'
   },
@@ -216,7 +220,7 @@ const musicList3 = [
     type_path: FILE_MUSIC_EMO,
     imgPath: "",
     time: '03:06',
-    des: "",
+    des: "爱不是突然坠落的，是从一点点心软开始的。",
     type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
     lyrics_path: '堕 - 旺仔小乔.lrc'
   },
@@ -383,7 +387,7 @@ const musicList3 = [
     type_path: FILE_MUSIC_EMO,
     imgPath: "./imgs/16.jpg",
     time: '01:36',
-    des: "阿朱 。",
+    des: "可我还是在等你，哪怕只是在心里。",
     type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_chunyinyue
   },
   {
@@ -463,7 +467,7 @@ const musicList3 = [
     type_path: FILE_MUSIC_EMO,
     imgPath: " ",
     time: '05:13',
-    des: "",
+    des: "我们真的愿意为一个人变成更好的自己。",
     type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
     lyrics_path:'假如爱有天意.lrc'
   },
@@ -487,20 +491,8 @@ const musicList3 = [
     type_path: FILE_MUSIC_EMO,
     imgPath: " ",
     time: '04:18',
-    des: "",
+    des: "她不是被命运选中的人，她是把命运握在手里的那个人。",
     type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_chunyinyue
-  },
-  {
-    title: "安和桥-宋冬野",
-    author: "宋冬野",
-    name_path: "安和桥-宋冬野.MP3",
-    type: TYPE_3,
-    type_path: FILE_MUSIC_EMO,
-    imgPath: " ",
-    time: '04:10',
-    des: "村东头的狗都懂了遗憾的意义",
-    type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
-    lyrics_path: '安和桥.lrc'
   },
   {
     title: "后来-刘若英",
@@ -510,7 +502,7 @@ const musicList3 = [
     type_path: FILE_MUSIC_EMO,
     imgPath: " ",
     time: '05:41',
-    des: "",
+    des: "我曾经以为你会一直在，后来才知道，有的人走了就是走了。",
     type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
     lyrics_path: '后来.lrc'
   },
@@ -522,10 +514,23 @@ const musicList3 = [
     type_path: FILE_MUSIC_EMO,
     imgPath: " ",
     time: '05:29',
-    des: "",
+    des: "我问过自己很多次：如果我再努力一点，你会不会留下？可惜答案永远都是沉默。",
     type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
     lyrics_path: '我用什么把你留住.lrc'
   },
+  {
+    title: "那些年 - 胡夏",
+    author: "胡夏",
+    name_path: "那些年 - 胡夏.mp3",
+    type: TYPE_3,
+    type_path: FILE_MUSIC_EMO,
+    imgPath: " ",
+    time: '06:11',
+    des: "青春最心酸的地方，就是回头看，每个瞬间都以为会永远。",
+    type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
+    lyrics_path: './music/emo/那些年 - 胡夏.lrc'
+  },
+
 
 ]
 
@@ -539,7 +544,7 @@ const musicList4 = [
     type_path: FILE_MUSIC_JINGDIAN,
     imgPath: "  ",
     time: '04:12',
-    des: "",
+    des: "黑暗多的时候，我就抬头找光。不是为了看得更远，而是为了让自己不倒下。",
     type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
     lyrics_path: '夜空中最亮的星 - 逃跑计划.lrc'
   },
@@ -551,7 +556,7 @@ const musicList4 = [
     type_path: FILE_MUSIC_JINGDIAN,
     imgPath: "  ",
     time: '03:37',
-    des: "",
+    des: "最心酸的不是忘不掉，而是突然在街角听到这首歌时，一秒就想起你。",
     type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
     lyrics_path: '我的歌声里 - 曲婉婷.lrc'
   },
@@ -563,7 +568,7 @@ const musicList4 = [
     type_path: FILE_MUSIC_JINGDIAN,
     imgPath: "  ",
     time: '05:24',
-    des: "",
+    des: "这首歌每一句都像在替我说：我很好，也很想你，只是你不知道。",
     type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
     lyrics_path:'我好想你.lrc'
   },
@@ -599,7 +604,7 @@ const musicList4 = [
     type_path: FILE_MUSIC_JINGDIAN,
     imgPath: "  ",
     time: '04:40',
-    des: "",
+    des: "你是我这辈子跨不过去的大海，无论我在岸上喊得多用力，你都不会再回应了。",
     type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
     lyrics_path:'大海.lrc'
   },
@@ -611,7 +616,7 @@ const musicList4 = [
     type_path: FILE_MUSIC_JINGDIAN,
     imgPath: "  ",
     time: '05:00',
-    des: "",
+    des: "黑暗并不可怕，可怕的是忘了抬头看看那盏属于自己的灯。",
     type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
     lyrics_path:'星星点灯.lrc'
   },
@@ -743,7 +748,7 @@ const musicList4 = [
     type_path: FILE_MUSIC_JINGDIAN,
     imgPath: " ",
     time: '04:31',
-    des: "",
+    des: "我一直很清楚，喜欢你这件事，从来没办法平均分给别人。",
     type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
     lyrics_path: '唯一.lrc'
   },
@@ -767,7 +772,7 @@ const musicList4 = [
     type_path: FILE_MUSIC_JINGDIAN,
     imgPath: " ",
     time: '04:13',
-    des: "",
+    des: "下雨天最适合想你，因为雨声刚好覆盖我所有没说出口的难过。",
     type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
     lyrics_path: '下雨天.lrc'
   },
@@ -779,11 +784,107 @@ const musicList4 = [
     type_path: FILE_MUSIC_JINGDIAN,
     imgPath: " ",
     time: '04:07',
-    des: "",
+    des: "有些心碎从来都没有声音，所以没人知道你有多难过。",
     type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
     lyrics_path: '一直很安静.lrc'
   },
-
+  {
+    title: "明天，你好 - 牛奶咖啡",
+    author: "牛奶咖啡",
+    name_path: "明天，你好 - 牛奶咖啡.mp3",
+    type: TYPE_4,
+    type_path: FILE_MUSIC_JINGDIAN,
+    imgPath: " ",
+    time: '04:31',
+    des: "今天的你也许很累，但请相信——明天的风，会比今天温柔一点。",
+    type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
+    lyrics_path: './music/jingdian/明天，你好 - 牛奶咖啡.lrc'
+  },
+  {
+    title: "越长大越孤单 - 牛奶咖啡",
+    author: "牛奶咖啡",
+    name_path: "越长大越孤单 - 牛奶咖啡.mp3",
+    type: TYPE_4,
+    type_path: FILE_MUSIC_JINGDIAN,
+    imgPath: " ",
+    time: '04:28',
+    des: "小时候害怕黑暗，长大后害怕沉默。越长大，越发现能说真话的人越来越少。",
+    type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
+    lyrics_path: './music/jingdian/越长大越孤单 - 牛奶咖啡.lrc'
+  },
+  {
+    title: "那些花儿 - 朴树",
+    author: "朴树",
+    name_path: "那些花儿 - 朴树.mp3",
+    type: TYPE_4,
+    type_path: FILE_MUSIC_JINGDIAN,
+    imgPath: " ",
+    time: '04:55',
+    des: "那些走丢的人，那些开过的花，都住在我心里最柔软的地方。",
+    type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
+    lyrics_path: './music/jingdian/那些花儿 - 朴树.lrc'
+  },
+  {
+    title: "生生世世爱 - 吴雨霏 ",
+    author: "吴雨霏",
+    name_path: "生生世世爱 - 吴雨霏.mp3",
+    type: TYPE_4,
+    type_path: FILE_MUSIC_JINGDIAN,
+    imgPath: " ",
+    time: '04:41',
+    des: "我以为生生世世很长，可以慢慢等你。后来才懂，来日并不方长，喜欢的人也会走散。",
+    type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
+    lyrics_path: './music/jingdian/生生世世爱 - 吴雨霏.lrc'
+  },
+  {
+    title: "空白格 - 杨宗纬",
+    author: "杨宗纬",
+    name_path: "空白格 - 杨宗纬.mp3",
+    type: TYPE_4,
+    type_path: FILE_MUSIC_JINGDIAN,
+    imgPath: " ",
+    time: '03:38',
+    des: "我以为我会是最坚强的那一个，我还是高估了自己。",
+    type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
+    lyrics_path: './music/jingdian/空白格 - 杨宗纬.lrc'
+  },
+  {
+    title: "绿光 - 孙燕姿",
+    author: "孙燕姿",
+    name_path: "绿光 - 孙燕姿.mp3",
+    type: TYPE_4,
+    type_path: FILE_MUSIC_JINGDIAN,
+    imgPath: " ",
+    time: '03:11',
+    des: "我想超越这平凡的生活，注定现在暂时漂泊。",
+    type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
+    lyrics_path: './music/jingdian/绿光 - 孙燕姿.lrc'
+  },
+  {
+    title: "dance monkey - Tones and I",
+    author: "Tones and I",
+    name_path: "dance monkey - Tones and I.mp3",
+    type: TYPE_4,
+    type_path: FILE_MUSIC_JINGDIAN,
+    imgPath: " ",
+    time: '03:30',
+    des: "I'm a dance monkey, I'm a dance monkey, I'm a dance monkey.",
+    type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
+    lyrics_path: './music/jingdian/dance monkey - Tones and I.lrc'
+  },
+  {
+    title: "我怀念的 - 孙燕姿",
+    author: "孙燕姿",
+    name_path: "我怀念的 - 孙燕姿.mp3",
+    type: TYPE_4,
+    type_path: FILE_MUSIC_JINGDIAN,
+    imgPath: " ",
+    time: '04:50',
+    des: "我怀念的，是什么？",
+    type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
+    lyrics_path: './music/jingdian/我怀念的 - 孙燕姿.lrc'
+  }
+  
 ]
 //气势BGM
 const musicList5 = [
@@ -905,7 +1006,117 @@ const musicList7 = [
 
 ]
 
+//民谣
+const musicList8 = [
+  {title: "安和桥 - 宋冬野",
+    author: "宋冬野",
+    name_path: "安和桥 - 宋冬野.mp3",
+    type: TYPE_8,
+    type_path: FILE_MUSIC_minyao,
+    imgPath: "",
+    time: '04:10',
+    des: "村东头的狗都懂了遗憾的意义",
+    type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
+    lyrics_path: './music/minyao/安和桥 - 宋冬野.lrc'
+  },
+  {
+    title: "斑马，斑马 - 宋冬野",
+    author: "宋冬野",
+    name_path: "斑马，斑马 - 宋冬野.mp3",
+    type: TYPE_8,
+    type_path: FILE_MUSIC_minyao,
+    imgPath: "",
+    time: '04:14',
+    des: "世界如此广阔，人类却走进了悲伤的墙角。",
+    type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
+    lyrics_path: './music/minyao/斑马，斑马 - 宋冬野.lrc'
+  },
+  {
+    title: "成都 - 赵雷",
+    author: "赵雷",
+    name_path: "成都 - 赵雷.mp3",
+    type: TYPE_8,
+    type_path: FILE_MUSIC_minyao,
+    imgPath: "",
+    time: '05:29',
+    des: "",
+    type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
+    lyrics_path: './music/minyao/成都 - 赵雷.lrc'
+  },
+  {
+    title: "春风十里 - 鹿先森乐队",
+    author: "鹿先森乐队",
+    name_path: "春风十里 - 鹿先森乐队.mp3",
+    type: TYPE_8,
+    type_path: FILE_MUSIC_minyao,
+    imgPath: "",
+    time: '06:15',
+    des: "",
+    type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
+    lyrics_path: './music/minyao/春风十里 - 鹿先森乐队.lrc'
+  },
+  {
+    title: "董小姐 - 宋冬野",
+    author: "宋冬野",
+    name_path: "董小姐 - 宋冬野.mp3",
+    type: TYPE_8,
+    type_path: FILE_MUSIC_minyao,
+    imgPath: "",
+    time: '05:10',
+    des: "",
+    type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
+    lyrics_path: './music/minyao/董小姐 - 宋冬野.lrc'
+  },
+  {
+    title: "鼓楼 - 赵雷",
+    author: "赵雷",
+    name_path: "鼓楼 - 赵雷.mp3",
+    type: TYPE_8,
+    type_path: FILE_MUSIC_minyao,
+    imgPath: "",
+    time: '04:41',
+    des: "",
+    type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
+    lyrics_path: './music/minyao/鼓楼 - 赵雷.lrc'
+  },
+  {
+    title: "理想三旬 - 陈鸿宇",
+    author: "陈鸿宇",
+    name_path: "理想三旬 - 陈鸿宇.mp3",
+    type: TYPE_8,
+    type_path: FILE_MUSIC_minyao,
+    imgPath: "",
+    time: '03:30',
+    des: "",
+    type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
+    lyrics_path: './music/minyao/理想三旬 - 陈鸿宇.lrc'
+  },
+  {
+    title: "南方姑娘 - 赵雷",
+    author: "赵雷",
+    name_path: "南方姑娘 - 赵雷.mp3",
+    type: TYPE_8,
+    type_path: FILE_MUSIC_minyao,
+    imgPath: "",
+    time: '05:32',
+    des: "",
+    type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
+    lyrics_path: './music/minyao/南方姑娘 - 赵雷.lrc'
+  },
+  {
+    title: "白桦林 - 朴树",
+    author: "朴树",
+    name_path: "白桦林 - 朴树.mp3",
+    type: TYPE_8,
+    type_path: FILE_MUSIC_minyao,
+    imgPath: "",
+    time: '03:47',
+    des: "",
+    type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
+    lyrics_path: './music/minyao/白桦林 - 朴树.lrc'
+  },
 
+]
 
 
 // 统一管理所有音乐列表的存储
@@ -930,7 +1141,8 @@ export class MusicStorage {
     JINGDIAN: { key: 'musicList4', label: '经典' },
     BGM: { key: 'musicList5', label: '气势BGM' },
     LVDONG: { key: 'musicList6', label: '律动' },
-    DONGHUAPIAN: { key: 'musicList7', label: '动画片' }
+    DONGHUAPIAN: { key: 'musicList7', label: '动画片' },
+    MINYAO: { key: 'musicList8', label: '民谣' }
   };
   // 定义音乐列表映射
   static musicListMap = {
@@ -940,7 +1152,8 @@ export class MusicStorage {
     [STORAGE_KEYS.JINGDIAN]: musicList4,
     [STORAGE_KEYS.BGM]: musicList5,
     [STORAGE_KEYS.LVDONG]: musicList6,
-    [STORAGE_KEYS.DONGHUAPIAN]: musicList7
+    [STORAGE_KEYS.DONGHUAPIAN]: musicList7,
+    [STORAGE_KEYS.MINYAO]: musicList8
   };
 
   // 验证音乐对象
@@ -1044,7 +1257,8 @@ export const getMusicList = (tabName) => {
     'tab-E': MusicStorage.getList(STORAGE_KEYS.JINGDIAN),
     'tab-F': MusicStorage.getList(STORAGE_KEYS.BGM),
     'tab-G': MusicStorage.getList(STORAGE_KEYS.LVDONG),
-    'tab-H': MusicStorage.getList(STORAGE_KEYS.DONGHUAPIAN)
+    'tab-H': MusicStorage.getList(STORAGE_KEYS.DONGHUAPIAN),
+    'tab-I': MusicStorage.getList(STORAGE_KEYS.MINYAO)
   };
   return tabMusicMap[tabName] || [];
 };

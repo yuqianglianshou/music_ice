@@ -172,7 +172,17 @@ export class LyricsManager {
     async parseLyricsType(musicData) {
         try {
             const basePath = './music_lyrics/';
-            const lyricsPath = basePath + musicData.lyrics_path.split('/').pop();
+            const rawPath = (musicData.lyrics_path || '').trim();
+            // 兼容两种路径：
+            // 1) 仅文件名 => 使用默认目录 ./music_lyrics/
+            // 2) 带相对/绝对路径（如 ./music/minyao/...）=> 直接使用该路径
+            const lyricsPath = (
+                rawPath.startsWith('./') ||
+                rawPath.startsWith('/') ||
+                rawPath.startsWith('http')
+            )
+                ? rawPath
+                : basePath + rawPath.split('/').pop();
 
             const response = await fetch(lyricsPath);
             if (!response.ok) {
