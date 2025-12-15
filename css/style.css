@@ -554,7 +554,8 @@
 	opacity: 1;
 }
 
-@media (max-width: 1200px) {
+/* 平板适配 */
+@media (max-width: 1200px) and (min-width: 769px) {
 	.app_layout {
 		grid-template-columns: 1fr;
 	}
@@ -568,19 +569,9 @@
 	}
 }
 
-/* 响应式适配 */
+/* 手机端响应式适配 - 详细规则在 response.css 中 */
 @media (max-width: 768px) {
-	.list_header {
-		height: 60px;
-		padding: 0 12px;
-	}
-
-	.list_header .list-tab>div {
-		font-size: 14px;
-		padding: 6px 16px;
-		min-width: 80px;
-		height: 34px;
-	}
+	/* 基础样式保留,详细适配在 response.css */
 }
 
 /* ================ 歌词面板相关样式 ================ */
@@ -1244,17 +1235,7 @@
 	border-radius: var(--border-radius);
 }
 
-/* 响应式设计优化 */
-@media (max-width: 768px) {
-	.list-tab {
-		overflow-x: auto;
-		padding: 12px;
-	}
-
-	.song_panel {
-		border-radius: 12px 12px 0 0;
-	}
-}
+/* 响应式设计优化 - 手机端详细规则在 response.css 中 */
 
 :root {
 	--transition: all 0.3s ease;

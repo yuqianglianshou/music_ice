@@ -37,7 +37,7 @@
   }
 }
 
- /* 360px - 768px */
+ /* 360px - 768px - 手机端适配 */
 @media (max-width: 768px) {
 
   /* app_side */
@@ -60,40 +60,255 @@
     display: block;
   }
 
-  /* lyrics-pannel */
-
-  .song_panel .panel-content {
-    max-width: 576px;
-    height: 100%;
-    margin: 0  auto;
+  /* ================ 整体布局适配 ================ */
+  #app {
+    padding: 12px 12px 100px;
+    max-width: 100%;
   }
 
-  .panel-content .content-right{
+  .app_layout {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  /* 隐藏右侧面板 */
+  .layout-right {
     display: none;
   }
 
+  .layout-left {
+    padding: 16px;
+    border-radius: 20px;
+  }
+
+  /* ================ 头部导航栏适配 ================ */
+  .list_header {
+    height: 56px;
+    padding: 0 8px;
+    border-radius: 16px;
+    margin-bottom: 12px;
+  }
+
+  .list_header .list-tab {
+    gap: 6px;
+  }
+
+  .list_header .list-tab > div {
+    font-size: 13px;
+    padding: 6px 14px;
+    min-width: 70px;
+    height: 32px;
+    border-radius: 16px;
+  }
+
+  /* ================ 列表项适配 ================ */
+  .wrapper-contentList {
+    padding: 8px 12px;
+    border-radius: 16px;
+  }
+
+  .wrapper-contentList .contentList-item {
+    height: 64px;
+    padding: 0 12px;
+    border-radius: 12px;
+    margin-bottom: 6px;
+  }
+
+  .wrapper-contentList .item-img {
+    width: 48px;
+    margin-left: 0;
+    padding: 0 8px;
+  }
+
+  .wrapper-contentList .item-title {
+    flex: 1;
+    font-size: 14px;
+    padding: 0 8px;
+  }
+
+  /* 隐藏作者和专辑列 */
+  .wrapper-contentList .item-author,
+  .wrapper-contentList .item-album {
+    display: none;
+  }
+
+  .wrapper-contentList .item-totalTime {
+    width: 45px;
+    font-size: 12px;
+    margin-right: 0;
+    padding: 0 4px;
+  }
+
+  /* ================ 底部播放栏适配 ================ */
+  .app_footer {
+    bottom: 0;
+    left: 0;
+    right: 0;
+    transform: none;
+    width: 100%;
+    height: 72px;
+    border-radius: 0;
+    padding: 0 16px;
+    border-left: none;
+    border-right: none;
+    border-bottom: none;
+  }
+
+  .app_footer .songs_play {
+    gap: 12px;
+  }
+
+  /* 播放控制区域 */
+  .songs_play .play-control {
+    gap: 12px;
+    flex: 1;
+    min-width: 0;
+  }
+
+  .play-control .control-items {
+    gap: 8px;
+    flex-shrink: 0;
+  }
+
+  .control-items .items-btn {
+    gap: 6px;
+  }
+
+  /* 按钮尺寸调整 */
+  .control-items :is(.btn-prev, .btn-next) {
+    width: 40px;
+    height: 40px;
+  }
+
+  .control-items .btn-play {
+    width: 52px;
+    height: 52px;
+    margin-right: 4px;
+  }
+
+  .control-items :is(.btn-prev, .btn-play, .btn-next) .icon {
+    width: 28px;
+    height: 28px;
+  }
+
+  .control-items .btn-play .icon {
+    width: 40px;
+    height: 40px;
+  }
+
+  /* 进度条区域 */
+  .play-control .control-progress {
+    gap: 8px;
+    flex: 1;
+    min-width: 0;
+  }
+
+  .control-progress :is(.progress-currentTime, .progress-totalTime) {
+    min-width: 38px;
+    max-width: 38px;
+    font-size: 11px;
+  }
+
+  .play-control .control-progress .progress-bar {
+    height: 3px;
+  }
+
+  .control-progress input[type='range'] {
+    height: 3px;
+  }
+
+  .control-progress input[type='range']::-webkit-slider-thumb {
+    height: 16px;
+    width: 16px;
+    margin-top: -6.5px;
+  }
+
+  .control-progress .progress-colorFill {
+    height: 3px;
+  }
+
+  /* 播放设置区域 */
+  .songs_play .play-setting {
+    gap: 8px;
+    flex-shrink: 0;
+  }
+
+  .play-setting .setting-options {
+    gap: 8px;
+  }
+
+  .setting-options :is(.options-circulationMode[play-mode], .options-sound[play-volume-icon]) {
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+  }
+
+  .options-circulationMode .icon {
+    width: 16px;
+    height: 16px;
+  }
+
+  .options-sound .icon {
+    width: 18px;
+    height: 18px;
+  }
+
+  /* 音量滑块 */
+  .setting-options .options-soundSlider {
+    width: 60px;
+    height: 24px;
+  }
+
+  .options-soundSlider input[type='range']::-webkit-slider-thumb {
+    height: 16px;
+    width: 16px;
+    margin-top: -5px;
+  }
+
+  .options-soundSlider .progress-colorFill {
+    height: 5px;
+  }
+
+  /* ================ 歌词面板适配 ================ */
+  .song_panel {
+    padding: 20px 16px;
+    border-radius: 20px 20px 0 0;
+  }
+
+  .song_panel .panel-content {
+    max-width: 100%;
+    padding: 16px 20px 24px;
+    gap: 16px;
+  }
+
+  .panel-content .content-right {
+    display: none;
+  }
 
   .panel-content .content-left {
     width: 100%;
     justify-content: flex-end;
-    margin: 19px 0 0 0;
+    margin: 0;
   }
- 
+
   .panel-content .left-songInfo {
     flex: 1;
   }
 
-  .item-moreActions{
+  .item-moreActions {
     display: none;
   }
-  .left-songInfo .img{
-    width: 100%; 
-    object-fit: fill;
+
+  .left-songInfo .img {
+    width: 100%;
+    max-width: 280px;
+    object-fit: cover;
   }
 
   .left-songInfo .songInfo-item {
     display: none;
   }
+
   .content-left .mobile.songInfo-item {
     display: block;
     flex: 1;
@@ -101,18 +316,18 @@
 
   .panel-content .left-playControl {
     flex: 1;
-    margin-top: 4px;
+    margin-top: 8px;
     width: 100%;
   }
 
-  .content-left .close.mobile{
+  .content-left .close.mobile {
     flex: 1;
     position: relative;
     display: block;
     width: 100%;
-    
   }
-  .content-left .close.mobile .line{
+
+  .content-left .close.mobile .line {
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
@@ -122,29 +337,155 @@
     justify-content: center;
     align-items: center;
     text-align: center;
-    background-color: black;
-    opacity: .5;
+    background-color: rgba(255, 255, 255, 0.3);
+    opacity: 0.5;
     cursor: pointer;
   }
-  .song_panel .panel-options{
+
+  .song_panel .panel-options {
     display: none;
   }
 
-}
+  /* 歌词显示区域 */
+  .wrap-lyrics {
+    font-size: 13px;
+  }
 
- /* <360px */
-@media (max-width: 360px) {
-  .app_aside{
-    width: 100%;
-    left: 0;
+  [play-lyrics] .lyric {
+    padding: 14px 0;
+    font-size: 14px;
+  }
+
+  [play-lyrics] .lyric.active {
+    font-size: 16px;
   }
 
 }
 
+ /* <360px - 小屏手机适配 */
+@media (max-width: 360px) {
+  #app {
+    padding: 8px 8px 90px;
+  }
 
+  .layout-left {
+    padding: 12px;
+  }
+
+  .list_header {
+    height: 52px;
+    padding: 0 6px;
+  }
+
+  .list_header .list-tab > div {
+    font-size: 12px;
+    padding: 5px 12px;
+    min-width: 60px;
+    height: 30px;
+  }
+
+  .wrapper-contentList .contentList-item {
+    height: 60px;
+    padding: 0 10px;
+  }
+
+  .wrapper-contentList .item-img {
+    width: 44px;
+  }
+
+  .wrapper-contentList .item-title {
+    font-size: 13px;
+  }
+
+  .app_footer {
+    height: 68px;
+    padding: 0 12px;
+  }
+
+  .control-items :is(.btn-prev, .btn-next) {
+    width: 36px;
+    height: 36px;
+  }
+
+  .control-items .btn-play {
+    width: 48px;
+    height: 48px;
+  }
+
+  .control-items :is(.btn-prev, .btn-next) .icon {
+    width: 24px;
+    height: 24px;
+  }
+
+  .control-items .btn-play .icon {
+    width: 36px;
+    height: 36px;
+  }
+
+  .control-progress :is(.progress-currentTime, .progress-totalTime) {
+    min-width: 32px;
+    max-width: 32px;
+    font-size: 10px;
+  }
+
+  .setting-options :is(.options-circulationMode[play-mode], .options-sound[play-volume-icon]) {
+    width: 36px;
+    height: 36px;
+  }
+
+  .setting-options .options-soundSlider {
+    width: 50px;
+  }
+
+  .song_panel {
+    padding: 16px 12px;
+  }
+
+  .song_panel .panel-content {
+    padding: 12px 16px 20px;
+  }
+}
+
+/* 横屏适配 */
+@media (max-width: 768px) and (orientation: landscape) {
+  #app {
+    padding: 8px 12px 80px;
+  }
+
+  .app_footer {
+    height: 64px;
+  }
+
+  .layout-left {
+    padding: 12px;
+  }
+
+  .list_header {
+    height: 48px;
+    margin-bottom: 8px;
+  }
+
+  .song_panel .panel-content {
+    padding: 12px 20px 16px;
+  }
+}
+
+/* 高度限制适配 */
 @media (max-height: 768px) {
-  .left-songInfo .img{
-    width: calc(50vh - 50px) ;
+  .left-songInfo .img {
+    width: calc(50vh - 50px);
+    max-width: 240px;
+  }
+}
+
+/* 触摸优化 - 增大触摸目标 */
+@media (max-width: 768px) {
+  .control-items :is(.btn-prev, .btn-play, .btn-next),
+  .setting-options :is(.options-circulationMode[play-mode], .options-sound[play-volume-icon]),
+  .list_header .list-tab > div,
+  .wrapper-contentList .contentList-item {
+    -webkit-tap-highlight-color: rgba(255, 255, 255, 0.1);
+    touch-action: manipulation;
   }
 }
 

@@ -654,7 +654,19 @@ const musicList4 = [
     time: '05:04',
     des: "今天语文老师教我们文言文中\"之\"的取独用法，以本歌经典歌词为例，翻译成了古汉语：\"吾之爱汝，如鼠之爱粟。\"简直印象不能再深刻[大哭][大哭][大哭]",
     type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
-    lyrics_path:'老鼠爱大米.lrc'
+    lyrics_path:'./music/jingdian/老鼠爱大米 - 香香.lrc'
+  },
+  {
+    title: "老鼠爱大米 - 香香",
+    author: "香香",
+    name_path: "老鼠爱大米 - 香香.mp3",
+    type: TYPE_4,
+    type_path: FILE_MUSIC_JINGDIAN,
+    imgPath: "  ",
+    time: '05:01',
+    des: "今天语文老师教我们文言文中\"之\"的取独用法，以本歌经典歌词为例，翻译成了古汉语：\"吾之爱汝，如鼠之爱粟。\"简直印象不能再深刻[大哭][大哭][大哭]",
+    type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
+    lyrics_path:'./music/jingdian/老鼠爱大米 - 香香.lrc'
   },
   {
     title: "奇妙能力歌 - 陈粒",
