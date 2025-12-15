@@ -530,6 +530,30 @@ const musicList3 = [
     type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
     lyrics_path: './music/emo/那些年 - 胡夏.lrc'
   },
+  {
+    title: "黄昏 - 周传雄",
+    author: "周传雄",
+    name_path: "黄昏 - 周传雄.mp3",
+    type: TYPE_3,
+    type_path: FILE_MUSIC_EMO,
+    imgPath: " ",
+    time: '05:44',
+    des: "我以为我不会再想你了，但是当我听到这首歌时，我才发现我错了。",
+    type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
+    lyrics_path: './music/emo/黄昏 - 周传雄.lrc'
+  },
+  {
+    title: "求佛 - 誓言",
+    author: "誓言",
+    name_path: "求佛 - 誓言.mp3",
+    type: TYPE_3,
+    type_path: FILE_MUSIC_EMO,
+    imgPath: " ",
+    time: '04:46',
+    des: "求佛，求佛，求佛。",
+    type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
+    lyrics_path: './music/emo/求佛 - 誓言.lrc'
+  }
 
 
 ]
@@ -861,18 +885,6 @@ const musicList4 = [
     lyrics_path: './music/jingdian/绿光 - 孙燕姿.lrc'
   },
   {
-    title: "dance monkey - Tones and I",
-    author: "Tones and I",
-    name_path: "dance monkey - Tones and I.mp3",
-    type: TYPE_4,
-    type_path: FILE_MUSIC_JINGDIAN,
-    imgPath: " ",
-    time: '03:30',
-    des: "I'm a dance monkey, I'm a dance monkey, I'm a dance monkey.",
-    type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
-    lyrics_path: './music/jingdian/dance monkey - Tones and I.lrc'
-  },
-  {
     title: "我怀念的 - 孙燕姿",
     author: "孙燕姿",
     name_path: "我怀念的 - 孙燕姿.mp3",
@@ -883,8 +895,80 @@ const musicList4 = [
     des: "我怀念的，是什么？",
     type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
     lyrics_path: './music/jingdian/我怀念的 - 孙燕姿.lrc'
+  },
+  {
+    title: "七里香 - 周杰伦",
+    author: "周杰伦",
+    name_path: "七里香 - 周杰伦.mp3",
+    type: TYPE_4,
+    type_path: FILE_MUSIC_JINGDIAN,
+    imgPath: " ",
+    time: '04:59',
+    des: "窗外的麻雀在电线杆上多嘴，你说这一句很有夏天的感觉。",
+    type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
+    lyrics_path: './music/jingdian/七里香 - 周杰伦.lrc'
+  },
+  {
+    title: "寂寞沙洲冷 - 周传雄",
+    author: "周传雄",
+    name_path: "寂寞沙洲冷 - 周传雄.mp3",
+    type: TYPE_4,
+    type_path: FILE_MUSIC_JINGDIAN,
+    imgPath: " ",
+    time: '04:37',
+    des: "当记忆的线",
+    type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
+    lyrics_path: './music/jingdian/寂寞沙洲冷 - 周传雄.lrc'
+  },
+  {
+    title: "My Heart Will Go On (Love Theme from _Titanic_) - Céline Dion",
+    author: "Céline Dion",
+    name_path: "My Heart Will Go On (Love Theme from _Titanic_) - Céline Dion.mp3",
+    type: TYPE_4,
+    type_path: FILE_MUSIC_JINGDIAN,
+    imgPath: " ",
+    time: '05:10',
+    des: "我心永恒",
+    type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
+    lyrics_path: './music/jingdian/My Heart Will Go On (Love Theme from _Titanic_) - Céline Dion.lrc'
+  },
+  {
+    title: "传奇 - 李健",
+    author: "李健",
+    name_path: "传奇 - 李健.mp3",
+    type: TYPE_4,
+    type_path: FILE_MUSIC_JINGDIAN,
+    imgPath: " ",
+    time: '05:24',
+    des: "只是因为在人群中多看了你一眼，再也没能忘掉你容颜。",
+    type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
+    lyrics_path: './music/jingdian/传奇 - 李健.lrc'
+  },
+  {
+    title: "情人 - Beyond",
+    author: "Beyond",
+    name_path: "情人 - Beyond.mp3",
+    type: TYPE_4,
+    type_path: FILE_MUSIC_JINGDIAN,
+    imgPath: " ",
+    time: '05:18',
+    des: "情人，情人，情人。",
+    type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
+    lyrics_path: './music/jingdian/情人 - Beyond.lrc'
+  },
+  {
+    title: "倩女幽魂 - 张国荣",
+    author: "张国荣",
+    name_path: "倩女幽魂 - 张国荣.mp3",
+    type: TYPE_4,
+    type_path: FILE_MUSIC_JINGDIAN,
+    imgPath: " ",
+    time: '03:37',
+    des: "倩女幽魂，倩女幽魂。",
+    type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
+    lyrics_path: './music/jingdian/倩女幽魂 - 张国荣.lrc'
   }
-  
+
 ]
 //气势BGM
 const musicList5 = [
@@ -946,7 +1030,7 @@ const musicList6 = [
     type_path: FILE_MUSIC_lvdong,
     imgPath: "./imgs/1.jpg",
     time: '03:24',
-    des: "",
+    des: "不用等梦想成真，只要每天做一点点。",
     type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
     lyrics_path: 'Dream It Possible.lrc'
   },
@@ -961,6 +1045,30 @@ const musicList6 = [
     des: "心中是否有我未曾到过的地方啊",
     type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
     lyrics_path:'挪威的森林.lrc'
+  },
+  {
+    title: "dance monkey - Tones and I",
+    author: "Tones and I",
+    name_path: "dance monkey - Tones and I.mp3",
+    type: TYPE_6,
+    type_path: FILE_MUSIC_lvdong,
+    imgPath: " ",
+    time: '03:30',
+    des: "I'm a dance monkey, I'm a dance monkey, I'm a dance monkey.",
+    type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
+    lyrics_path: './music/lvdong/dance monkey - Tones and I.lrc'
+  },
+  {
+    title: "街角的晚风 (粤语小春版) - 善宇",
+    author: "善宇",
+    name_path: "街角的晚风 (粤语小春版) - 善宇.mp3",
+    type: TYPE_6,
+    type_path: FILE_MUSIC_lvdong,
+    imgPath: " ",
+    time: '02:35',
+    des: "",
+    type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
+    lyrics_path: './music/lvdong/街角的晚风 (粤语小春版) - 善宇.lrc'
   },
 
 ]
@@ -1039,7 +1147,7 @@ const musicList8 = [
     type_path: FILE_MUSIC_minyao,
     imgPath: "",
     time: '05:29',
-    des: "",
+    des: "我在这座城市听《成都》，它就变成了我的故事。",
     type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
     lyrics_path: './music/minyao/成都 - 赵雷.lrc'
   },
@@ -1051,7 +1159,7 @@ const musicList8 = [
     type_path: FILE_MUSIC_minyao,
     imgPath: "",
     time: '06:15',
-    des: "",
+    des: "不如遇见你。",
     type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
     lyrics_path: './music/minyao/春风十里 - 鹿先森乐队.lrc'
   },
@@ -1063,7 +1171,7 @@ const musicList8 = [
     type_path: FILE_MUSIC_minyao,
     imgPath: "",
     time: '05:10',
-    des: "",
+    des: "求给陌生人一支兰州，我已经付了零钱和敬意。",
     type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
     lyrics_path: './music/minyao/董小姐 - 宋冬野.lrc'
   },
@@ -1075,7 +1183,7 @@ const musicList8 = [
     type_path: FILE_MUSIC_minyao,
     imgPath: "",
     time: '04:41',
-    des: "",
+    des: "城市太大了，大到装得下所有烦恼，却装不下一个想拥抱的人。",
     type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
     lyrics_path: './music/minyao/鼓楼 - 赵雷.lrc'
   },
@@ -1087,7 +1195,7 @@ const musicList8 = [
     type_path: FILE_MUSIC_minyao,
     imgPath: "",
     time: '03:30',
-    des: "",
+    des: "曾以为理想三旬，只是个诗意的词，后来才知道——是我们终究要长大的意思。",
     type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
     lyrics_path: './music/minyao/理想三旬 - 陈鸿宇.lrc'
   },
@@ -1099,7 +1207,7 @@ const musicList8 = [
     type_path: FILE_MUSIC_minyao,
     imgPath: "",
     time: '05:32',
-    des: "",
+    des: "我会去南方么？我问我自己。",
     type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
     lyrics_path: './music/minyao/南方姑娘 - 赵雷.lrc'
   },
@@ -1111,7 +1219,7 @@ const musicList8 = [
     type_path: FILE_MUSIC_minyao,
     imgPath: "",
     time: '03:47',
-    des: "",
+    des: "最让人难受的不是他死在白桦林里，而是她永远不知道。",
     type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
     lyrics_path: './music/minyao/白桦林 - 朴树.lrc'
   },
