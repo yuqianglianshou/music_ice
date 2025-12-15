@@ -6,6 +6,7 @@
   --black-color: #000;
   --blue-color: #ff9b45;
 
+  /* 主题颜色（由themeManager动态设置） */
   --primary-color: #ffd18b;
   --secondary-color: #ff8a5c;
   --theme-color: #ffe8c2;
@@ -13,6 +14,11 @@
   --surface-strong: rgba(255, 255, 255, 0.14);
   --glass-border: rgba(255, 255, 255, 0.25);
   --text-color: #fff8ef;
+
+  /* 背景颜色变量（由themeManager动态设置） */
+  --bg-base: #3c1301;
+  --bg-gradient-start: #742d08;
+  --bg-gradient-end: #3c1301;
 
   --app-width: 100vw;
   --app-height: 100vh;
