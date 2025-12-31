@@ -553,7 +553,139 @@ const musicList3 = [
     des: "求佛，求佛，求佛。",
     type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
     lyrics_path: './music/emo/求佛 - 誓言.lrc'
-  }
+  },
+  {
+    title: "卜卦 - 崔子格",
+    author: "崔子格",
+    name_path: "卜卦 - 崔子格.mp3",
+    type: TYPE_3,
+    type_path: FILE_MUSIC_EMO,
+    imgPath: "./music/emo/卜卦 - 崔子格.webp",
+    time: '03:36',
+    des: "卜卦",
+    type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
+    lyrics_path: './music/emo/卜卦 - 崔子格.lrc'
+  },
+  {
+    title: "犯错 - 顾峰",
+    author: "顾峰",
+    name_path: "犯错 - 顾峰.mp3",
+    type: TYPE_3,
+    type_path: FILE_MUSIC_EMO,
+    imgPath: "./music/emo/犯错 - 顾峰.jpg",
+    time: '03:16',
+    des: "犯错",
+    type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
+    lyrics_path: './music/emo/犯错 - 顾峰.lrc'
+  },
+  {
+    title: "阿拉斯加海湾 - 蓝心羽",
+    author: "蓝心羽",
+    name_path: "阿拉斯加海湾 - 蓝心羽.mp3",
+    type: TYPE_3,
+    type_path: FILE_MUSIC_EMO,
+    imgPath: "./music/emo/阿拉斯加海湾 - 蓝心羽.jpg",
+    time: '04:01',
+    des: "阿拉斯加海湾",
+    type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
+    lyrics_path: './music/emo/阿拉斯加海湾 - 蓝心羽.lrc'
+  },
+  {
+    title: "凄美地 - 郭顶",
+    author: "郭顶",
+    name_path: "凄美地 - 郭顶.mp3",
+    type: TYPE_3,
+    type_path: FILE_MUSIC_EMO,
+    imgPath: "./music/emo/凄美地 - 郭顶.jpg",
+    time: '04:10',
+    des: "凄美地",
+    type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
+    lyrics_path: './music/emo/凄美地 - 郭顶.lrc'
+  },
+  {
+    title: "悬溺 - 旺仔小乔", 
+    author: "旺仔小乔",
+    name_path: "悬溺 - 旺仔小乔.mp3",
+    type: TYPE_3,
+    type_path: FILE_MUSIC_EMO,
+    imgPath: "./music/emo/悬溺 - 旺仔小乔.webp",
+    time: '03:17',
+    des: "悬溺",
+    type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
+    lyrics_path: './music/emo/悬溺 - 旺仔小乔.lrc'
+  },
+  {
+    title: "烟火里的尘埃 - 华晨宇",
+    author: "华晨宇",
+    name_path: "烟火里的尘埃 - 华晨宇.mp3",
+    type: TYPE_3,
+    type_path: FILE_MUSIC_EMO,
+    imgPath: "./music/emo/烟火里的尘埃 - 华晨宇.jpg",
+    time: '05:21',
+    des: "烟火里的尘埃",
+    type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
+    lyrics_path: './music/emo/烟火里的尘埃 - 华晨宇.lrc'
+  },
+  {
+    title: "海底 - 一支榴莲",
+    author: "一支榴莲",
+    name_path: "海底 - 一支榴莲.mp3",
+    type: TYPE_3,
+    type_path: FILE_MUSIC_EMO,
+    imgPath: "./music/emo/海底 - 一支榴莲.jpg",
+    time: '04:16',
+    des: "海底",
+    type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
+    lyrics_path: './music/emo/海底 - 一支榴莲.lrc'
+  },
+  {
+    title: "好想爱这个世界啊 - 华晨宇",
+    author: "华晨宇",
+    name_path: "好想爱这个世界啊 - 华晨宇.mp3",
+    type: TYPE_3,
+    type_path: FILE_MUSIC_EMO,
+    imgPath: "./music/emo/好想爱这个世界啊 - 华晨宇.jpg",
+    time: '04:18',
+    des: "好想爱这个世界啊",
+    type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
+    lyrics_path: './music/emo/好想爱这个世界啊 - 华晨宇.lrc'
+  },
+  {
+    title: "你从未离去 - 白挺",
+    author: "白挺",
+    name_path: "你从未离去 - 白挺.mp3",
+    type: TYPE_3,
+    type_path: FILE_MUSIC_EMO,
+    imgPath: "./music/emo/你从未离去 - 白挺.webp",
+    time: '03:23',
+    des: "你从未离去",
+    type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
+    lyrics_path: './music/emo/你从未离去 - 白挺.lrc'
+  },
+  {
+    title: "三生石下 - 大欢",
+    author: "大欢",
+    name_path: "三生石下 - 大欢.mp3",
+    type: TYPE_3,
+    type_path: FILE_MUSIC_EMO,
+    imgPath: "./music/emo/三生石下 - 大欢.webp",
+    time: '04:23',
+    des: "三生石下",
+    type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
+    lyrics_path: './music/emo/三生石下 - 大欢.lrc'
+  },
+  {
+    title: "拯救 - 孙楠",
+    author: "孙楠",
+    name_path: "拯救 - 孙楠.mp3",
+    type: TYPE_3,
+    type_path: FILE_MUSIC_EMO,
+    imgPath: "./music/emo/拯救 - 孙楠.webp",
+    time: '05:32',
+    des: "拯救",
+    type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
+    lyrics_path: './music/emo/拯救 - 孙楠.lrc'
+  },
 
 
 ]
@@ -957,18 +1089,6 @@ const musicList4 = [
     lyrics_path: './music/jingdian/传奇 - 李健.lrc'
   },
   {
-    title: "情人 - Beyond",
-    author: "Beyond",
-    name_path: "情人 - Beyond.mp3",
-    type: TYPE_4,
-    type_path: FILE_MUSIC_JINGDIAN,
-    imgPath: " ",
-    time: '05:18',
-    des: "情人，情人，情人。",
-    type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
-    lyrics_path: './music/jingdian/情人 - Beyond.lrc'
-  },
-  {
     title: "倩女幽魂 - 张国荣",
     author: "张国荣",
     name_path: "倩女幽魂 - 张国荣.mp3",
@@ -979,6 +1099,246 @@ const musicList4 = [
     des: "倩女幽魂，倩女幽魂。",
     type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
     lyrics_path: './music/jingdian/倩女幽魂 - 张国荣.lrc'
+  },
+  {
+    title: "怎么说我不爱你 - 萧敬腾",
+    author: "萧敬腾",
+    name_path: "怎么说我不爱你 - 萧敬腾.mp3",
+    type: TYPE_4,
+    type_path: FILE_MUSIC_JINGDIAN,
+    imgPath: " ",
+    time: '04:35',
+    des: "怎么说我不爱你",
+    type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
+    lyrics_path: './music/jingdian/怎么说我不爱你 - 萧敬腾.lrc'
+  },
+  {
+    title: "九儿 - 胡莎莎",
+    author: "胡莎莎",
+    name_path: "九儿 - 胡莎莎.mp3",
+    type: TYPE_4,
+    type_path: FILE_MUSIC_JINGDIAN,
+    imgPath: "./music/jingdian/九儿.jpg",
+    time: '02:28',
+    des: "",
+    type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
+    lyrics_path: './music/jingdian/九儿 - 胡莎莎.lrc'
+  },
+  {
+    title: "Lonely - Nana",
+    author: "Nana",
+    name_path: "Lonely - Nana.mp3",
+    type: TYPE_4,
+    type_path: FILE_MUSIC_JINGDIAN,
+    imgPath: "./music/jingdian/Lonely - Nana.jpg",
+    time: '06:21',
+    des: "",
+    type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
+    lyrics_path: './music/jingdian/Lonely - Nana.lrc'
+  },
+  {
+    title: "旅行 - 许巍",
+    author: "许巍",
+    name_path: "旅行 - 许巍.mp3",
+    type: TYPE_4,
+    type_path: FILE_MUSIC_JINGDIAN,
+    imgPath: "./music/jingdian/旅行 - 许巍.jpg",
+    time: '04:26',
+    des: "",
+    type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
+    lyrics_path: './music/jingdian/旅行 - 许巍.lrc'
+  },
+  {
+    title: "北郊 - 迟志强",
+    author: "迟志强",
+    name_path: "北郊 - 迟志强.mp3",
+    type: TYPE_4,
+    type_path: FILE_MUSIC_JINGDIAN,
+    imgPath: "",
+    time: '05:05',
+    des: "如果当时",
+    type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
+    lyrics_path: './music/jingdian/北郊 - 迟志强.lrc'
+  },
+  {
+    title: "铁窗泪 - 迟志强",
+    author: "迟志强",
+    name_path: "铁窗泪 - 迟志强.mp3",
+    type: TYPE_4,
+    type_path: FILE_MUSIC_JINGDIAN,
+    imgPath: "./music/jingdian/铁窗泪 - 迟志强.webp",
+    time: '08:27',
+    des: "",
+    type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
+    lyrics_path: './music/jingdian/铁窗泪 - 迟志强.lrc'
+  },
+  {
+    title: "钞票 - 迟志强",
+    author: "迟志强",
+    name_path: "钞票 - 迟志强.mp3",
+    type: TYPE_4,
+    type_path: FILE_MUSIC_JINGDIAN,
+    imgPath: "",
+    time: '03:09',
+    des: "",
+    type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
+    lyrics_path: './music/jingdian/钞票 - 迟志强.lrc'
+  },
+  {
+    title: "愁啊愁 - 迟志强",
+    author: "迟志强",
+    name_path: "愁啊愁 - 迟志强.mp3",
+    type: TYPE_4,
+    type_path: FILE_MUSIC_JINGDIAN,
+    imgPath: "",
+    time: '04:43',
+    des: "",
+    type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
+    lyrics_path: './music/jingdian/愁啊愁 - 迟志强.lrc'
+  },
+  {
+    title: "狱中十二月 - 迟志强",
+    author: "迟志强",
+    name_path: "狱中十二月 - 迟志强.mp3",
+    type: TYPE_4,
+    type_path: FILE_MUSIC_JINGDIAN,
+    imgPath: "./music/jingdian/狱中十二月 - 迟志强.webp",
+    time: '03:07',
+    des: "",
+    type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
+    lyrics_path: './music/jingdian/狱中十二月 - 迟志强.lrc'
+  },
+  {
+    title: "打工十二月 - 翟惠民",
+    author: "翟惠民",
+    name_path: "打工十二月 - 翟惠民.mp3",
+    type: TYPE_4,
+    type_path: FILE_MUSIC_JINGDIAN,
+    imgPath: "./music/jingdian/打工十二月 - 翟惠民.jpg",
+    time: '06:08',
+    des: "",
+    type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
+    lyrics_path: './music/jingdian/打工十二月 - 翟惠民.lrc'
+  },
+  {
+    title: "流浪歌 - 迟志强",
+    author: "迟志强",
+    name_path: "流浪歌 - 迟志强.mp3",
+    type: TYPE_4,
+    type_path: FILE_MUSIC_JINGDIAN,
+    imgPath: "./music/jingdian/流浪歌 - 迟志强.webp",
+    time: '04:57',
+    des: "",
+    type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
+    lyrics_path: './music/jingdian/流浪歌 - 迟志强.lrc'
+  },
+  {
+    title: "记事本 - 陈慧琳",
+    author: "陈慧琳",
+    name_path: "记事本 - 陈慧琳.mp3",
+    type: TYPE_4,
+    type_path: FILE_MUSIC_JINGDIAN,
+    imgPath: "./music/jingdian/记事本 - 陈慧琳.jpg",
+    time: '04:11',
+    des: "",
+    type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
+    lyrics_path: './music/jingdian/记事本 - 陈慧琳.lrc'
+  },
+  {
+    title: "丫头 - 王童语",
+    author: "王童语",
+    name_path: "丫头 - 王童语.mp3",
+    type: TYPE_4,
+    type_path: FILE_MUSIC_JINGDIAN,
+    imgPath: "./music/jingdian/丫头 - 王童语.webp",
+    time: '05:32',
+    des: "",
+    type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
+    lyrics_path: './music/jingdian/丫头 - 王童语.lrc'
+  },
+  {
+    title: "真的爱你 - BEYOND",
+    author: "BEYOND",
+    name_path: "真的爱你 - BEYOND.mp3",
+    type: TYPE_4,
+    type_path: FILE_MUSIC_JINGDIAN,
+    imgPath: "./music/jingdian/真的爱你 - BEYOND.webp",
+    time: '04:35',
+    des: "",
+    type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
+    lyrics_path: './music/jingdian/真的爱你 - BEYOND.lrc'
+  },
+  {
+    title: "情人 - BEYOND",
+    author: "BEYOND",
+    name_path: "情人 - BEYOND.mp3",
+    type: TYPE_4,
+    type_path: FILE_MUSIC_JINGDIAN,
+    imgPath: "./music/jingdian/情人 - BEYOND.jpg",
+    time: '05:18',
+    des: "情人，情人，情人。",
+    type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
+    lyrics_path: './music/jingdian/情人 - BEYOND.lrc'
+  },
+  {
+    title: "光辉岁月 - BEYOND",
+    author: "BEYOND",
+    name_path: "光辉岁月 - BEYOND.mp3",
+    type: TYPE_4,
+    type_path: FILE_MUSIC_JINGDIAN,
+    imgPath: "./music/jingdian/光辉岁月 - BEYOND.webp",
+    time: '05:02',
+    des: "",
+    type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
+    lyrics_path: './music/jingdian/光辉岁月 - BEYOND.lrc'
+  },
+  {
+    title: "喜欢你 - BEYOND",
+    author: "BEYOND",
+    name_path: "喜欢你 - BEYOND.mp3",
+    type: TYPE_4,
+    type_path: FILE_MUSIC_JINGDIAN,
+    imgPath: "./music/jingdian/喜欢你 - BEYOND.webp",
+    time: '04:34',
+    des: "",
+    type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
+    lyrics_path: './music/jingdian/喜欢你 - BEYOND.lrc'
+  },
+  {
+    title: "海阔天空 - BEYOND",
+    author: "BEYOND",
+    name_path: "海阔天空 - BEYOND.mp3",
+    type: TYPE_4,
+    type_path: FILE_MUSIC_JINGDIAN,
+    imgPath: "./music/jingdian/海阔天空 - BEYOND.webp",
+    time: '05:25',
+    des: "",  
+    type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
+    lyrics_path: './music/jingdian/海阔天空 - BEYOND.lrc'
+  },
+  {
+    title: "灰色轨迹 - BEYOND",
+    author: "BEYOND",
+    name_path: "灰色轨迹 - BEYOND.mp3",
+    type: TYPE_4,
+    type_path: FILE_MUSIC_JINGDIAN,
+    imgPath: "./music/jingdian/灰色轨迹 - BEYOND.jpg",
+    time: '05:25',
+    des: "",
+    type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
+    lyrics_path: './music/jingdian/灰色轨迹 - BEYOND.lrc'
+  },
+  {
+    title: "大地 - BEYOND",
+    author: "BEYOND",
+    name_path: "大地 - BEYOND.mp3",
+    type: TYPE_4,
+    type_path: FILE_MUSIC_JINGDIAN,
+    imgPath: "./music/jingdian/大地 - BEYOND.webp",
+    time: '04:21',
+    des: "",
+    type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
+    lyrics_path: './music/jingdian/大地 - BEYOND.lrc'
   }
 
 ]
@@ -1006,6 +1366,7 @@ const musicList5 = [
     des: "Ivan Torrent 是西班牙一个独立作曲家和制作人。为流行音乐和舞蹈艺术家在西班牙工作多年，作为一个设计师，也为广播电台做广告宣传和广告歌曲。现在Ivan Torrent想更专注于电影音乐的场景，为预告片音乐公司工作，以及做演示样品库。",
     type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_chunyinyue
   },
+
 
 ]
 
@@ -1089,40 +1450,66 @@ const musicList6 = [
 //动画片
 const musicList7 = [
   {
-    title: "光能使者-田中公平",
-    author: "田中公平",
-    name_path: "光能使者-田中公平.mp3",
+    title: "灌篮高手 - 好想大声说爱你",
+    author: "",
+    name_path: "灌篮高手 - 好想大声说爱你.mp3",
     type: TYPE_7,
     type_path: FILE_MUSIC_donghuapian,
-    imgPath: "",
+    imgPath: "./music/donghuapian/灌篮高手 - 好想大声说爱你.jpg",
+    time: '03:51',
+    des: "",
+    type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
+    lyrics_path: './music/donghuapian/灌篮高手 - 好想大声说爱你.lrc'
+  },
+  {
+    title: "数码宝贝 - ButterFly - 和田光司",
+    author: "和田光司",
+    name_path: "数码宝贝 - Butter-Fly - 和田光司.mp3",
+    type: TYPE_7,
+    type_path: FILE_MUSIC_donghuapian,
+    imgPath: "./music/donghuapian/数码宝贝 - Butter-Fly - 和田光司.webp",
+    time: '04:18',
+    des: "",
+    type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
+    lyrics_path: './music/donghuapian/数码宝贝 - Butter-Fly - 和田光司.lrc'
+  },
+  {
+    title: "数码宝贝 - brave heart - 宮崎歩",
+    author: " 宮崎歩",
+    name_path: "数码宝贝 - brave heart - 宮崎歩.mp3",
+    type: TYPE_7,
+    type_path: FILE_MUSIC_donghuapian,
+    imgPath: "./music/donghuapian/数码宝贝 - brave heart - 宮崎歩.jpg",
+    time: '04:12',
+    des: "",
+    type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
+    lyrics_path: './music/donghuapian/数码宝贝 - brave heart - 宮崎歩.lrc'
+  },
+  {
+    title: "龙珠 - 魔訶不思議アドベンチャー - 高橋洋樹",
+    author: "高橋洋樹",
+    name_path: "龙珠 - 魔訶不思議アドベンチャー - 高橋洋樹.mp3",
+    type: TYPE_7,
+    type_path: FILE_MUSIC_donghuapian,
+    imgPath: "./music/donghuapian/龙珠 - 魔訶不思議アドベンチャー - 高橋洋樹.jpg",
+    time: '03:50',
+    des: "", 
+    type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
+    lyrics_path: './music/donghuapian/龙珠 - 魔訶不思議アドベンチャー - 高橋洋樹.lrc'
+  },
+  {
+    title: "光能使者 - 光、出でよ、汝グランゾート - 田中公平",
+    author: "田中公平",
+    name_path: "光能使者 - 光、出でよ、汝グランゾート - 田中公平.mp3",
+    type: TYPE_7,
+    type_path: FILE_MUSIC_donghuapian,
+    imgPath: "./music/donghuapian/光能使者 - 光、出でよ、汝グランゾート - 田中公平.webp",
     time: '02:52',
     des: "",
     type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_chunyinyue
   },
-  {
-    title: "魔訶不思議アドベンチャー - 高橋洋樹",
-    author: "高橋洋樹",
-    name_path: "七龙珠.mp3",
-    type: TYPE_7,
-    type_path: FILE_MUSIC_donghuapian,
-    imgPath: "",
-    time: '03:50',
-    des: "",
-    type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
-    lyrics_path: '魔訶不思議アドベンチャー - 高橋洋樹.lrc'
-  },
-  {
-    title: "Butter-Fly - 和田光司",
-    author: "和田光司",
-    name_path: "数码宝贝.mp3",
-    type: TYPE_7,
-    type_path: FILE_MUSIC_donghuapian,
-    imgPath: "",
-    time: '04:18',
-    des: "",
-    type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
-    lyrics_path: 'Butter-Fly - 和田光司.lrc'
-  },
+
+
 
 ]
 
