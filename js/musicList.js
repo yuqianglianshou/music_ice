@@ -208,6 +208,56 @@ const musicList2 = [
     type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
     lyrics_path: 'call of silence.lrc'
   },
+  {
+    title: "天空之城 - 久石让",
+    author: "久石让",
+    name_path: "天空之城 - 久石让.mp3",
+    type: TYPE_2,
+    type_path: FILE_MUSIC_QINGYINYUE,
+    imgPath: "./music/qingyinyue/天空之城 - 久石让.webp",
+    time: '04:13',
+    des: "",
+    type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
+    lyrics_path: CONFIG.LOAD_LYRICS_TYPE.TYPE_chunyinyue
+  },
+  {
+    title: "時代を越える想い - 和田薫",
+    author: "和田薫",
+    name_path: "時代を越える想い - 和田薫.mp3",
+    type: TYPE_2,
+    type_path: FILE_MUSIC_QINGYINYUE,
+    imgPath: "./music/qingyinyue/時代を越える想い - 和田薫.webp",
+    time: '03:10',
+    des: "",
+    type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
+    lyrics_path: CONFIG.LOAD_LYRICS_TYPE.TYPE_chunyinyue
+  },
+  {
+    title: "Illusionary Daytime(幻昼) - Shirfine",
+    author: "Shirfine",
+    name_path: "Illusionary Daytime - Shirfine.mp3",
+    type: TYPE_2,
+    type_path: FILE_MUSIC_QINGYINYUE,
+    imgPath: "./music/qingyinyue/Illusionary Daytime - Shirfine.jpg",
+    time: '04:10',
+    des: "",
+    type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
+    lyrics_path: CONFIG.LOAD_LYRICS_TYPE.TYPE_chunyinyue
+  },
+  {
+    title: "You - Approaching Nirvana",
+    author: "Approaching Nirvana",
+    name_path: "You - Approaching Nirvana.mp3",
+    type: TYPE_2,
+    type_path: FILE_MUSIC_QINGYINYUE,
+    imgPath: "./music/qingyinyue/You - Approaching Nirvana.jpg",
+    time: '05:49',
+    des: "",
+    type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
+    lyrics_path: CONFIG.LOAD_LYRICS_TYPE.TYPE_chunyinyue
+  },
+
+
 ]
 
 //emo  不经意间 你已经悄然离去 只留下一段回忆  很遗憾，我没能成为你的偏爱和例外
@@ -686,6 +736,42 @@ const musicList3 = [
     type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
     lyrics_path: './music/emo/拯救 - 孙楠.lrc'
   },
+  {
+    title: "真爱的力量 - Maj7_Music 巴音孟克",
+    author: "Maj7_Music 巴音孟克",
+    name_path: "真爱的力量 - Maj7_Music 巴音孟克.mp3",
+    type: TYPE_3,
+    type_path: FILE_MUSIC_EMO,
+    imgPath: "./music/emo/真爱的力量 - Maj7_Music 巴音孟克.webp",
+    time: '03:59',
+    des: "真爱的力量",
+    type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
+    lyrics_path: './music/emo/真爱的力量 - Maj7_Music 巴音孟克.lrc'
+  },
+  {
+    title: "凉凉 - 杨宗纬",
+    author: "杨宗纬",
+    name_path: "凉凉 - 杨宗纬.mp3",
+    type: TYPE_3,
+    type_path: FILE_MUSIC_EMO,
+    imgPath: "./music/emo/凉凉 - 杨宗纬.webp",
+    time: '05:33',
+    des: "凉凉",
+    type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
+    lyrics_path: './music/emo/凉凉 - 杨宗纬.lrc'
+  },
+  {
+    title: "不要再来伤害我 - 张振宇",
+    author: "张振宇",
+    name_path: "不要再来伤害我 - 张振宇.mp3",
+    type: TYPE_3,
+    type_path: FILE_MUSIC_EMO,
+    imgPath: "./music/emo/不要再来伤害我 - 张振宇.jpg",
+    time: '05:23',
+    des: "不要再来伤害我",
+    type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
+    lyrics_path: './music/emo/不要再来伤害我 - 张振宇.lrc'
+  }
 
 
 ]
@@ -1592,7 +1678,7 @@ const musicList8 = [
     name_path: "理想三旬 - 陈鸿宇.mp3",
     type: TYPE_8,
     type_path: FILE_MUSIC_minyao,
-    imgPath: "",
+    imgPath: "./music/minyao/理想三旬 - 陈鸿宇.jpg",
     time: '03:30',
     des: "曾以为理想三旬，只是个诗意的词，后来才知道——是我们终究要长大的意思。",
     type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
@@ -1621,6 +1707,90 @@ const musicList8 = [
     des: "最让人难受的不是他死在白桦林里，而是她永远不知道。",
     type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
     lyrics_path: './music/minyao/白桦林 - 朴树.lrc'
+  },
+  {
+    title: "我们的时光 - 赵雷",
+    author: "赵雷",
+    name_path: "我们的时光 - 赵雷.mp3",
+    type: TYPE_8,
+    type_path: FILE_MUSIC_minyao,
+    imgPath: "./music/minyao/我们的时光 - 赵雷.jpg",
+    time: '04:30',
+    des: "我们的时光，我们的时光，我们的时光，我们的时光。",
+    type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
+    lyrics_path: './music/minyao/我们的时光 - 赵雷.lrc'
+  },
+  {
+    title: "南山南 - 马頔",
+    author: "马頔",
+    name_path: "南山南 - 马頔.mp3",
+    type: TYPE_8,
+    type_path: FILE_MUSIC_minyao,
+    imgPath: "./music/minyao/南山南 - 马頔.jpg",
+    time: '05:23',
+    des: "南山南，北秋悲，南山有谷堆，南风喃，北海北，北海有墓碑。",
+    type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
+    lyrics_path: './music/minyao/南山南 - 马頔.lrc'
+  },
+  {
+    title: "理想三旬 - 陈鸿宇",
+    author: "陈鸿宇",
+    name_path: "理想三旬 - 陈鸿宇.mp3",
+    type: TYPE_8,
+    type_path: FILE_MUSIC_minyao,
+    imgPath: "./music/minyao/理想三旬 - 陈鸿宇.jpg",
+    time: '0330',
+    des: "理想三旬，我们的时光，我们的时光，我们的时光。",
+    type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
+    lyrics_path: './music/minyao/理想三旬 - 陈鸿宇.lrc'
+  },
+  {
+    title: "写给黄淮 - 邵帅",
+    author: "邵帅",
+    name_path: "写给黄淮 - 邵帅.mp3",
+    type: TYPE_8,
+    type_path: FILE_MUSIC_minyao,
+    imgPath: "./music/minyao/写给黄淮 - 邵帅.jpg",
+    time: '04:01',
+    des: "写给黄淮，我们的时光，我们的时光，我们的时光。",
+    type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
+    lyrics_path: './music/minyao/写给黄淮 - 邵帅.lrc'
+  },
+  {
+    title: "七月上 - Jam",
+    author: "Jam",
+    name_path: "七月上 - Jam.mp3",
+    type: TYPE_8,
+    type_path: FILE_MUSIC_minyao,
+    imgPath: "./music/minyao/七月上 - Jam.jpg",
+    time: '03:10',
+    des: "我像个傻子一样记住了你。",
+    type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
+    lyrics_path: './music/minyao/七月上 - Jam.lrc'
+  },
+  {
+    title: "余香 - 张小九",
+    author: "张小九 ",
+    name_path: "余香 - 张小九.mp3",
+    type: TYPE_8,
+    type_path: FILE_MUSIC_minyao,
+    imgPath: "./music/minyao/余香 - 张小九.jpg",
+    time: '04:06',
+    des: "余香，我们的时光，我们的时光，我们的时光。",
+    type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
+    lyrics_path: './music/minyao/余香 - 张小九.lrc'
+  },
+  {
+    title: "云烟成雨 - 房东的猫",
+    author: "房东的猫",
+    name_path: "云烟成雨 - 房东的猫.mp3",
+    type: TYPE_8,
+    type_path: FILE_MUSIC_minyao,
+    imgPath: "./music/minyao/云烟成雨 - 房东的猫.jpg",
+    time: '04:00',
+    des: "",
+    type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
+    lyrics_path: './music/minyao/云烟成雨 - 房东的猫.lrc'
   },
 
 ]
