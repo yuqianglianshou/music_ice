@@ -275,16 +275,16 @@ const musicList3 = [
     lyrics_path: '堕 - 旺仔小乔.lrc'
   },
   {
-    title: "무지개는 있다 (有彩虹) ",
+    title: "무지개는 있다 (Band Ver.) - Vincent Blue 有彩虹",
     author: "빈센트 블루 (Vincent Blue)",
-    name_path: "有彩虹.mp3",
+    name_path: "무지개는 있다 (Band Ver.) - Vincent Blue 有彩虹.mp3",
     type: TYPE_3,
     type_path: FILE_MUSIC_EMO,
-    imgPath: "./imgs/有彩虹.png",
+    imgPath: "./music/emo/무지개는 있다 (Band Ver.) - Vincent Blue 有彩虹.webp",
     time: '03:23',
     des: "谢谢你， 听尽了我不堪的人生， 仍选择站在我这边。",
     type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
-    lyrics_path:'有彩虹.lrc'
+    lyrics_path:'/music/emo/무지개는 있다 (Band Ver.) - Vincent Blue 有彩虹.lrc'
   },
   {
     title: "ありがとう（泪的告白）",
@@ -771,6 +771,18 @@ const musicList3 = [
     des: "不要再来伤害我",
     type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
     lyrics_path: './music/emo/不要再来伤害我 - 张振宇.lrc'
+  },
+  {
+    title: "再次见到你 _Once Again（翻自 Mad Clown&金娜英） - 阿YueYue",
+    author: "阿YueYue",
+    name_path: "再次见到你 _Once Again（翻自 Mad Clown&金娜英） - 阿YueYue.mp3",
+    type: TYPE_3,
+    type_path: FILE_MUSIC_EMO,
+    imgPath: "./music/emo/再次见到你 _Once Again（翻自 Mad Clown&金娜英） - 阿YueYue.jpg",
+    time: '03:16',
+    des: "再次见到你",
+    type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
+    lyrics_path: './music/emo/再次见到你 _Once Again（翻自 Mad Clown&金娜英） - 阿YueYue.lrc'
   }
 
 
