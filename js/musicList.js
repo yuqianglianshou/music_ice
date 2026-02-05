@@ -280,11 +280,11 @@ const musicList3 = [
     name_path: "有彩虹.mp3",
     type: TYPE_3,
     type_path: FILE_MUSIC_EMO,
-    imgPath: "./music/emo/무지개는 있다 (Band Ver.) - Vincent Blue 有彩虹.webp",
+    imgPath: "./music/emo/有彩虹.webp",
     time: '03:23',
     des: "谢谢你， 听尽了我不堪的人生， 仍选择站在我这边。",
     type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
-    lyrics_path:'/music/emo/무지개는 있다 (Band Ver.) - Vincent Blue 有彩虹.lrc'
+    lyrics_path:'/music/emo/有彩虹.lrc'
   },
   {
     title: "ありがとう（泪的告白）",
