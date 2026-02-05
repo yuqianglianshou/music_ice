@@ -277,7 +277,7 @@ const musicList3 = [
   {
     title: "무지개는 있다 (Band Ver.) - Vincent Blue 有彩虹",
     author: "빈센트 블루 (Vincent Blue)",
-    name_path: "무지개는 있다 (Band Ver.) - Vincent Blue 有彩虹.mp3",
+    name_path: "有彩虹.mp3",
     type: TYPE_3,
     type_path: FILE_MUSIC_EMO,
     imgPath: "./music/emo/무지개는 있다 (Band Ver.) - Vincent Blue 有彩虹.webp",
