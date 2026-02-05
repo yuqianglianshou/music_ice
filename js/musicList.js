@@ -783,8 +783,19 @@ const musicList3 = [
     des: "再次见到你",
     type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
     lyrics_path: './music/emo/再次见到你 _Once Again（翻自 Mad Clown&金娜英） - 阿YueYue.lrc'
+  },
+  {
+    title: "你走 - 李宗锦（松紧先生）",
+    author: "李宗锦（松紧先生）",
+    name_path: "你走 - 李宗锦（松紧先生）.mp3",
+    type: TYPE_3,
+    type_path: FILE_MUSIC_EMO,
+    imgPath: "./music/emo/你走 - 李宗锦（松紧先生）.jpg",
+    time: '04:04',
+    des: "你走",
+    type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
+    lyrics_path: './music/emo/你走 - 李宗锦（松紧先生）.lrc'
   }
-
 
 ]
 
@@ -1541,7 +1552,18 @@ const musicList6 = [
     type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
     lyrics_path: './music/lvdong/街角的晚风 (粤语小春版) - 善宇.lrc'
   },
-
+  {
+    title: "追梦赤子心 - GALA",
+    author: "GALA",
+    name_path: "追梦赤子心 - GALA.mp3",
+    type: TYPE_6,
+    type_path: FILE_MUSIC_lvdong,
+    imgPath: "./music/lvdong/追梦赤子心 - GALA.jpg",
+    time: '05:18',
+    des: "",
+    type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
+    lyrics_path: './music/lvdong/追梦赤子心 - GALA.lrc'
+  },
 ]
 
 
@@ -1605,6 +1627,18 @@ const musicList7 = [
     time: '02:52',
     des: "",
     type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_chunyinyue
+  },
+  {
+    title: "憨八龟的故事 - 生命的云彩",
+    author: "沸点乐队",
+    name_path: "生命的云彩 - 沸点乐队.mp3",
+    type: TYPE_7,
+    type_path: FILE_MUSIC_donghuapian,
+    imgPath: "",
+    time: '02:16',
+    des: "",
+    type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
+    lyrics_path: './music/donghuapian/生命的云彩 - 沸点乐队.lrc'
   },
 
 
