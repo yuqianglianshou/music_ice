@@ -795,6 +795,18 @@ const musicList3 = [
     des: "你走",
     type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
     lyrics_path: './music/emo/你走 - 李宗锦（松紧先生）.lrc'
+  },
+  {
+    title: "她 - 不可撤销乐队",
+    author: "不可撤销乐队",
+    name_path: "她 - 不可撤销乐队.mp3",
+    type: TYPE_3,
+    type_path: FILE_MUSIC_EMO,
+    imgPath: "./music/emo/她 - 不可撤销乐队.jpg",
+    time: '04:32',
+    des: "她",
+    type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
+    lyrics_path: './music/emo/她 - 不可撤销乐队.lrc'
   }
 
 ]
@@ -1380,14 +1392,14 @@ const musicList4 = [
   {
     title: "情人 - BEYOND",
     author: "BEYOND",
-    name_path: "情人 - BEYOND.mp3",
+    name_path: "情人_Beyond.mp3",
     type: TYPE_4,
     type_path: FILE_MUSIC_JINGDIAN,
-    imgPath: "./music/jingdian/情人 - BEYOND.jpg",
+    imgPath: "./music/jingdian/情人_Beyond.jpg",
     time: '05:18',
     des: "情人，情人，情人。",
     type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
-    lyrics_path: './music/jingdian/情人 - BEYOND.lrc'
+    lyrics_path: './music/jingdian/情人_Beyond.lrc'
   },
   {
     title: "光辉岁月 - BEYOND",
@@ -1428,14 +1440,14 @@ const musicList4 = [
   {
     title: "灰色轨迹 - BEYOND",
     author: "BEYOND",
-    name_path: "灰色轨迹 - BEYOND.mp3",
+    name_path: "灰色轨迹 - Beyond.mp3",
     type: TYPE_4,
     type_path: FILE_MUSIC_JINGDIAN,
-    imgPath: "./music/jingdian/灰色轨迹 - BEYOND.jpg",
+    imgPath: "./music/jingdian/灰色轨迹 - Beyond.jpg",
     time: '05:25',
     des: "",
     type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
-    lyrics_path: './music/jingdian/灰色轨迹 - BEYOND.lrc'
+    lyrics_path: './music/jingdian/灰色轨迹 - Beyond.lrc'
   },
   {
     title: "大地 - BEYOND",
