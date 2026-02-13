@@ -3,7 +3,6 @@ import { CONFIG } from './config.js';
 //音乐根路径
 export const FILE_MUSIC_ROOT = './music/';
 
-//  生生世世爱  
 // type 分类  （轻音乐，伤感，）
 
 // musicPath: FILE_MUSIC_ROOT + type_path + name_path,  ./music/jingdian/我的歌声里.mp3
@@ -55,6 +54,18 @@ const musicList1 = [
     time: '03:36',
     des: "每次一听这深邃、高远的旋律，如雄鹰翱翔在蓝天，悠然自在，每个吹奏的音符敲击心怀，释放自己。",
     type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_chunyinyue
+  },
+  {
+    title: "Caribbean Blue - Enya",
+    author: "Enya",
+    name_path: "Caribbean Blue - Enya.mp3",
+    type: TYPE_1,
+    type_path: FILE_MUSIC_TIANLANZHIYIN,
+    imgPath: "./music/tianlaizhiyin/Caribbean Blue - Enya.jpg",
+    time: '03:58',
+    des: "",
+    type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
+    lyrics_path: './music/tianlaizhiyin/Caribbean Blue - Enya.lrc'
   },
 
 ]
@@ -256,19 +267,31 @@ const musicList2 = [
     type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
     lyrics_path: CONFIG.LOAD_LYRICS_TYPE.TYPE_chunyinyue
   },
-
+  {
+    title: "Only Time - Enya",
+    author: "Enya",
+    name_path: "Only Time - Enya.mp3",
+    type: TYPE_2,
+    type_path: FILE_MUSIC_QINGYINYUE,
+    imgPath: "./music/qingyinyue/Only Time - Enya.jpg",
+    time: '03:38',
+    des: "",
+    type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
+    lyrics_path: "./music/qingyinyue/Only Time - Enya.lrc"
+  },
 
 ]
+
 
 //emo  不经意间 你已经悄然离去 只留下一段回忆  很遗憾，我没能成为你的偏爱和例外
 const musicList3 = [
   {
     title: "堕",
     author: "Zyboy忠宇",
-    name_path: "堕 - 旺仔小乔.MP3",
+    name_path: "堕 - 旺仔小乔.mp3",
     type: TYPE_3,
     type_path: FILE_MUSIC_EMO,
-    imgPath: "",
+    imgPath: "./music/emo/堕.webp",
     time: '03:06',
     des: "爱不是突然坠落的，是从一点点心软开始的。",
     type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
@@ -807,6 +830,18 @@ const musicList3 = [
     des: "她",
     type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
     lyrics_path: './music/emo/她 - 不可撤销乐队.lrc'
+  },
+  {
+    title: "斯琴高丽的伤心 - Yichen9247",
+    author: "Yichen9247",
+    name_path: "斯琴高丽的伤心 - Yichen9247.mp3",
+    type: TYPE_3,
+    type_path: FILE_MUSIC_EMO,
+    imgPath: "./music/emo/斯琴高丽的伤心 - Yichen9247.jpg",
+    time: '03:52',
+    des: "斯琴高丽的伤心",
+    type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
+    lyrics_path: './music/emo/斯琴高丽的伤心 - Yichen9247.lrc'
   }
 
 ]
@@ -1620,14 +1655,14 @@ const musicList7 = [
   {
     title: "龙珠 - 魔訶不思議アドベンチャー - 高橋洋樹",
     author: "高橋洋樹",
-    name_path: "龙珠 - 魔訶不思議アドベンチャー - 高橋洋樹.mp3",
+    name_path: "龙珠.mp3",
     type: TYPE_7,
     type_path: FILE_MUSIC_donghuapian,
-    imgPath: "./music/donghuapian/龙珠 - 魔訶不思議アドベンチャー - 高橋洋樹.jpg",
+    imgPath: "./music/donghuapian/龙珠.jpg",
     time: '03:50',
     des: "", 
     type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
-    lyrics_path: './music/donghuapian/龙珠 - 魔訶不思議アドベンチャー - 高橋洋樹.lrc'
+    lyrics_path: './music/donghuapian/龙珠.lrc'
   },
   {
     title: "光能使者 - 光、出でよ、汝グランゾート - 田中公平",
