@@ -1897,7 +1897,8 @@ export const STORAGE_KEYS = {
   JINGDIAN: 'musicList4',
   BGM: 'musicList5',
   LVDONG: 'musicList6',
-  DONGHUAPIAN: 'musicList7'
+  DONGHUAPIAN: 'musicList7',
+  MINYAO: 'musicList8'
 };
 
 // 创建一个统一的存储管理类
@@ -1998,18 +1999,6 @@ export class MusicStorage {
     return allMusic[Math.floor(Math.random() * allMusic.length)];
   }
 
-  // 按关键词搜索音乐
-  static searchMusic(keyword) {
-    if (!keyword) return [];
-
-    const searchTerm = keyword.toLowerCase();
-    return this.getListAllMusic().filter(music =>
-      music.title.toLowerCase().includes(searchTerm) ||
-      music.author.toLowerCase().includes(searchTerm)
-    );
-  }
-
-
 }
 
 // 使用优化后的存储方式
@@ -2032,4 +2021,3 @@ export const getMusicList = (tabName) => {
   };
   return tabMusicMap[tabName] || [];
 };
-

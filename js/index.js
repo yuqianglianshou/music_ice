@@ -109,6 +109,16 @@ function getRandomDefaultImage() {
   return DEFAULT_IMAGES[defaultImageIndex];
 }
 
+function normalizeCurrentIndex() {
+  const length = state.currentMusicList.length;
+  if (!length) {
+    state.currentMusicIndex = 0;
+    return false;
+  }
+  state.currentMusicIndex = ((state.currentMusicIndex % length) + length) % length;
+  return true;
+}
+
 /**
  * 播放控制相关函数
  */
@@ -182,12 +192,13 @@ const playbackControl = {
   },
   async playSkipNext(e) {
     if (e) e.stopPropagation();
+    if (!normalizeCurrentIndex()) return;
+    const length = state.currentMusicList.length;
 
     if (state.isShuffle) {
       playModeControl.shuffleMusic();
     } else {
-      state.currentMusicIndex = state.currentMusicIndex >= state.currentMusicList.length - 1 ?
-        0 : state.currentMusicIndex + 1;
+      state.currentMusicIndex = (state.currentMusicIndex + 1) % length;
     }
 
     playlistControl.updatePlayInfo();
@@ -199,12 +210,13 @@ const playbackControl = {
 
   async playSkipPrev(e) {
     if (e) e.stopPropagation();
+    if (!normalizeCurrentIndex()) return;
+    const length = state.currentMusicList.length;
 
     if (state.isShuffle) {
       playModeControl.shuffleMusic();
     } else {
-      state.currentMusicIndex = state.currentMusicIndex <= 0 ?
-        state.currentMusicList.length - 1 : state.currentMusicIndex - 1;
+      state.currentMusicIndex = (state.currentMusicIndex - 1 + length) % length;
     }
 
     playlistControl.updatePlayInfo();
@@ -484,6 +496,7 @@ const playlistControl = {
   }, 100),  // 100ms的节流时间
 
   updatePlayInfo() {
+    if (!normalizeCurrentIndex()) return;
     const currentMusic = state.currentMusicList[state.currentMusicIndex];
     // 图片路径已经在初始化时处理过，这里直接使用
 
@@ -718,7 +731,7 @@ function initEventListeners() {
 const keyActionMap = {
   'Enter': () => document.getElementById("btn-play").click(),
   ' ': () => document.getElementById("btn-play").click(),
-  'ArrowLeft': () => document.getElementById("btn-pre").click(),
+  'ArrowLeft': () => document.getElementById("btn-prev").click(),
   'ArrowRight': () => document.getElementById("btn-next").click()
 };
 
@@ -894,7 +907,9 @@ function switchTab(tabElement) {
   const tabName = tabElement.dataset.tab;
   if (tabName) {
     state.currentMusicList = getMusicList(tabName);
+    state.currentMusicIndex = 0;
     playlistControl.initMusicList();
+    playlistControl.updatePlayInfo();
   }
 }
 
