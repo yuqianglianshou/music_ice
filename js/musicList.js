@@ -969,18 +969,6 @@ const musicList4 = [
     lyrics_path: '奇妙能力歌.lrc'
   },
   {
-    title: "七月上 - Jam",
-    author: "Jam",
-    name_path: "七月上 - Jam.mp3",
-    type: TYPE_4,
-    type_path: FILE_MUSIC_JINGDIAN,
-    imgPath: "./imgs/七月上 - Jam.jpg",
-    time: '03:11',
-    des: "我像个傻子一样记住了你。",
-    type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
-    lyrics_path: '七月上.lrc'
-  },
-  {
     title: "此生不换",
     author: "青鸟飞鱼",
     name_path: "此生不换 - 青鸟飞鱼.mp3",
@@ -1826,18 +1814,6 @@ const musicList8 = [
     lyrics_path: './music/minyao/南山南 - 马頔.lrc'
   },
   {
-    title: "理想三旬 - 陈鸿宇",
-    author: "陈鸿宇",
-    name_path: "理想三旬 - 陈鸿宇.mp3",
-    type: TYPE_8,
-    type_path: FILE_MUSIC_minyao,
-    imgPath: "./music/minyao/理想三旬 - 陈鸿宇.jpg",
-    time: '03:30',
-    des: "理想三旬，我们的时光，我们的时光，我们的时光。",
-    type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
-    lyrics_path: './music/minyao/理想三旬 - 陈鸿宇.lrc'
-  },
-  {
     title: "写给黄淮 - 邵帅",
     author: "邵帅",
     name_path: "写给黄淮 - 邵帅.mp3",
@@ -1903,6 +1879,25 @@ export const STORAGE_KEYS = {
 
 const STORAGE_META_KEY = 'musicListStorageVersion';
 const STORAGE_VERSION = '2026-02-25-v1';
+const memoryStorage = new Map();
+
+const safeStorage = {
+  getItem(key) {
+    try {
+      return localStorage.getItem(key);
+    } catch (_) {
+      return memoryStorage.get(key) ?? null;
+    }
+  },
+  setItem(key, value) {
+    const normalizedValue = String(value);
+    try {
+      localStorage.setItem(key, normalizedValue);
+    } catch (_) {
+      memoryStorage.set(key, normalizedValue);
+    }
+  }
+};
 
 // 创建一个统一的存储管理类
 export class MusicStorage {
@@ -1941,7 +1936,7 @@ export class MusicStorage {
   static saveList(key, list) {
     try {
       const validList = list.filter(this.validateMusic);
-      localStorage.setItem(key, JSON.stringify(validList));
+      safeStorage.setItem(key, JSON.stringify(validList));
       return true;
     } catch (error) {
       console.error(`存储音乐列表失败 (${key}):`, error);
@@ -1952,7 +1947,7 @@ export class MusicStorage {
   // 获取单个列表
   static getList(key) {
     try {
-      const list = JSON.parse(localStorage.getItem(key)) || [];
+      const list = JSON.parse(safeStorage.getItem(key)) || [];
       return list.filter(this.validateMusic);
     } catch (error) {
       console.error(`获取音乐列表失败 (${key}):`, error);
@@ -2005,10 +2000,10 @@ export class MusicStorage {
 }
 
 // 仅在首次加载或版本变更时更新本地缓存，避免每次启动全量写入
-const shouldRefreshStorage = localStorage.getItem(STORAGE_META_KEY) !== STORAGE_VERSION;
+const shouldRefreshStorage = safeStorage.getItem(STORAGE_META_KEY) !== STORAGE_VERSION;
 if (shouldRefreshStorage) {
   MusicStorage.saveAllLists();
-  localStorage.setItem(STORAGE_META_KEY, STORAGE_VERSION);
+  safeStorage.setItem(STORAGE_META_KEY, STORAGE_VERSION);
 }
 
 /**

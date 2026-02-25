@@ -2,6 +2,15 @@
 import { CONFIG } from './config.js';
 import { addEventListeners } from './utils.js';
 
+function escapeHtml(value) {
+    return String(value)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+}
+
 /**
  * 歌词管理类
  * 负责歌词的加载、解析、渲染和滚动等功能
@@ -299,11 +308,14 @@ export class LyricsManager {
             // 顶部填充
             ...Array(paddingLines).fill('<div class="lyric padding"><span></span></div>'),
             // 实际歌词
-            ...this.currentLyrics.map((text, index) => `
+            ...this.currentLyrics.map((text, index) => {
+                const safeText = escapeHtml(text).replace(/\n/g, '<br>');
+                return `
                 <div class="lyric" data-index="${index}" data-time="${this.timerArray[index] || 0}">
-                    <span>${text}</span>
+                    <span>${safeText}</span>
                 </div>
-            `),
+            `;
+            }),
             // 底部填充
             ...Array(paddingLines).fill('<div class="lyric padding"><span></span></div>')
         ].join('');

@@ -609,8 +609,6 @@ function initEventListeners() {
   });
 
   // 面板控制事件
-  $('#fullscreen-btn')?.addEventListener('click', panelControl.toggleFullscreen.bind(panelControl));
-  $('#close-panel-btn')?.addEventListener('click', panelControl.togglePanel.bind(panelControl));
   $('#app-footer')?.addEventListener('click', panelControl.togglePanel.bind(panelControl));
 
   // 防止面板内部点击关闭
@@ -668,7 +666,6 @@ function initEventListeners() {
 
   // 全局鼠标移动检测：如果鼠标不在歌单列表内，隐藏浮窗
   document.addEventListener('mousemove', (e) => {
-    const contentList = document.querySelector('.wrapper-contentList');
     if (!contentList) {
       hideHoverWindow();
       return;
@@ -730,8 +727,18 @@ const keyActionMap = {
   'ArrowRight': () => document.getElementById("btn-next").click()
 };
 
-function handleKeyboardEvents({ key }) {
+function isEditableTarget(target) {
+  if (!target) return false;
+  const editableSelector = 'input, textarea, [contenteditable="true"], [contenteditable=""]';
+  return !!target.closest?.(editableSelector) || target.isContentEditable === true;
+}
+
+function handleKeyboardEvents(event) {
+  const { key, target } = event;
+  if (isEditableTarget(target)) return;
+
   if (keyActionMap[key]) {
+    event.preventDefault();
     keyActionMap[key]();
   }
 }
@@ -792,7 +799,7 @@ function showHoverWindow(event) {
   }
 
   // 设置新内容
-  hoverContent.innerHTML = musicData.des.replace(/\n/g, '<br>');
+  hoverContent.textContent = musicData.des;
 
   // 计算悬浮窗位置，考虑导航栏和底部控制栏
   const hoverWindowWidth = 300;
@@ -824,7 +831,7 @@ function showHoverWindow(event) {
   // 只有在所有检查都通过后，才显示浮窗
   requestAnimationFrame(() => {
     // 再次确认内容不为空
-    if (hoverContent.innerHTML.trim() !== '') {
+    if (hoverContent.textContent.trim() !== '') {
       hoverWindow.classList.add('visible');
     } else {
       hoverWindow.classList.remove('visible');
@@ -842,7 +849,7 @@ function hideHoverWindow() {
     hoverWindow.classList.remove('visible');
     // 清空内容
     if (hoverContent) {
-      hoverContent.innerHTML = '';
+      hoverContent.textContent = '';
     }
   }
 }
@@ -904,7 +911,6 @@ function switchTab(tabElement) {
     state.currentMusicList = getMusicList(tabName);
     state.currentMusicIndex = 0;
     playlistControl.initMusicList();
-    playlistControl.updatePlayInfo();
   }
 }
 
