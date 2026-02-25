@@ -80,9 +80,17 @@ const audioControl = {
   },
 
   updateAudioSource() {
-    const audioUrl = FILE_MUSIC_ROOT +
-      state.currentMusicList[state.currentMusicIndex].type_path +
-      state.currentMusicList[state.currentMusicIndex].name_path;
+    if (!normalizeCurrentIndex()) {
+      this.audioSource.removeAttribute('src');
+      return;
+    }
+
+    const currentMusic = state.currentMusicList[state.currentMusicIndex];
+    const songDir = currentMusic.song_path || currentMusic.type_path;
+    const songFile = currentMusic.song_file || currentMusic.name_path;
+    if (!songDir || !songFile) return;
+
+    const audioUrl = FILE_MUSIC_ROOT + songDir + songFile;
     this.audioSource.src = audioUrl;
   }
 };
@@ -119,7 +127,7 @@ function resolveMusicAssetPath(music, assetPath) {
   ) {
     return normalized;
   }
-  return `${FILE_MUSIC_ROOT}${music.type_path}${normalized}`;
+  return `${FILE_MUSIC_ROOT}${music.song_path || music.type_path || ''}${normalized}`;
 }
 
 function normalizeCurrentIndex() {
@@ -435,11 +443,13 @@ const playlistControl = {
 
     // 预处理所有音乐的图片路径
     state.currentMusicList.forEach(music => {
-      if (!music.imgPath || music.imgPath.trim() === '') {
-        music.imgPath = getRandomDefaultImage();
+      const rawImagePath = music.img_file;
+      if (!rawImagePath || rawImagePath.trim() === '') {
+        music.img_file = getRandomDefaultImage();
       } else {
-        music.imgPath = resolveMusicAssetPath(music, music.imgPath);
+        music.img_file = resolveMusicAssetPath(music, rawImagePath);
       }
+      delete music.imgPath;
     });
 
     // 使用文档片段优化DOM操作
@@ -455,12 +465,12 @@ const playlistControl = {
         <div class="item-img">
           <img loading="lazy" 
                src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" 
-               data-src="${music.imgPath}" 
+               data-src="${music.img_file}" 
                alt="">
         </div>
-        <div class="item-title text-ol ">${music.title}</div>
+        <div class="item-title text-ol ">${music.song_name || music.title}</div>
         <div class="item-author text-ol ">${music.author}</div>
-        <div class="item-album text-ol ">${music.type}</div>
+        <div class="item-album text-ol ">${music.song_type || music.type}</div>
         <div class="item-totalTime text-ol flex">${music.time}</div>
       `;
 
@@ -515,12 +525,13 @@ const playlistControl = {
       elementGroup.forEach(element => {
         if (index === 0) {
           // 更新图片
-          element.src = currentMusic.imgPath;
+          element.src = currentMusic.img_file;
           element.alt = '...';
         } else if (index === 1) {
           // 更新歌曲名称
-          element.textContent = currentMusic.title;
-          element.title = currentMusic.title;
+          const songName = currentMusic.song_name || currentMusic.title || '';
+          element.textContent = songName;
+          element.title = songName;
           
           // 检测文本是否溢出，如果溢出则添加跑马灯效果
           setTimeout(() => {
@@ -940,6 +951,10 @@ function initTabs() {
  * 应用初始化
  */
 function init() {
+  if (!state.currentMusicList.length) {
+    state.currentMusicList = getMusicList('tab-A');
+  }
+
   audioControl.init();
   volumeControl.init();
   initTabs();

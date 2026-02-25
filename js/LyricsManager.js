@@ -147,7 +147,9 @@ export class LyricsManager {
         this.isAutoScrolling = true; // 重置自动滚动标志
 
         // 处理纯音乐
-        if (musicData.type_load_lyrics === CONFIG.LOAD_LYRICS_TYPE.TYPE_chunyinyue) {
+        const lyricsType = musicData.lyrics_type ?? musicData.type_load_lyrics;
+
+        if (lyricsType === CONFIG.LOAD_LYRICS_TYPE.TYPE_chunyinyue) {
             this.currentLyrics = ['纯音乐请欣赏。'];
             this.timerArray = [0];
             this.render();
@@ -155,8 +157,9 @@ export class LyricsManager {
         }
 
         let lyrics = null;
-        if (musicData.type_load_lyrics === CONFIG.LOAD_LYRICS_TYPE.TYPE_file) {
-            if (musicData.lyrics_path && musicData.lyrics_path.trim() !== '') {
+        if (lyricsType === CONFIG.LOAD_LYRICS_TYPE.TYPE_file) {
+            const lyricFile = musicData.lyrics_file ?? musicData.lyrics_path;
+            if (lyricFile && lyricFile.trim() !== '') {
                 lyrics = await this.parseLyricsType(musicData);
             } else {
                 lyrics = null;
@@ -180,7 +183,7 @@ export class LyricsManager {
      */
     async parseLyricsType(musicData) {
         try {
-            const rawPath = (musicData.lyrics_path || '').trim();
+            const rawPath = (musicData.lyrics_file || musicData.lyrics_path || '').trim();
             const isDirectPath = (
                 rawPath.startsWith('./') ||
                 rawPath.startsWith('/') ||
@@ -188,9 +191,11 @@ export class LyricsManager {
             );
 
             const fileName = rawPath.split('/').pop();
-            const typeScopedPath = `./music/${musicData.type_path || ''}${fileName}`;
+            const typeScopedPath = `./music/${musicData.song_path || musicData.type_path || ''}${fileName}`;
             const legacyPath = `./music_lyrics/${fileName}`;
-            const candidates = isDirectPath ? [rawPath] : [typeScopedPath, legacyPath];
+            const candidates = isDirectPath
+                ? Array.from(new Set([rawPath, typeScopedPath, legacyPath]))
+                : [typeScopedPath, legacyPath];
 
             let response = null;
             let lyricsPath = '';
