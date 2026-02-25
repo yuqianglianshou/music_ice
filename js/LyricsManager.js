@@ -180,22 +180,30 @@ export class LyricsManager {
      */
     async parseLyricsType(musicData) {
         try {
-            const basePath = './music_lyrics/';
             const rawPath = (musicData.lyrics_path || '').trim();
-            // 兼容两种路径：
-            // 1) 仅文件名 => 使用默认目录 ./music_lyrics/
-            // 2) 带相对/绝对路径（如 ./music/minyao/...）=> 直接使用该路径
-            const lyricsPath = (
+            const isDirectPath = (
                 rawPath.startsWith('./') ||
                 rawPath.startsWith('/') ||
                 rawPath.startsWith('http')
-            )
-                ? rawPath
-                : basePath + rawPath.split('/').pop();
+            );
 
-            const response = await fetch(lyricsPath);
-            if (!response.ok) {
-                throw new Error(`无法加载歌词文件: ${lyricsPath}`);
+            const fileName = rawPath.split('/').pop();
+            const typeScopedPath = `./music/${musicData.type_path || ''}${fileName}`;
+            const legacyPath = `./music_lyrics/${fileName}`;
+            const candidates = isDirectPath ? [rawPath] : [typeScopedPath, legacyPath];
+
+            let response = null;
+            let lyricsPath = '';
+            for (const candidate of candidates) {
+                response = await fetch(candidate);
+                if (response.ok) {
+                    lyricsPath = candidate;
+                    break;
+                }
+            }
+
+            if (!response || !response.ok) {
+                throw new Error(`无法加载歌词文件: ${candidates.join(' | ')}`);
             }
             const lyricsContent = await response.text();
             const lyricsText = lyricsContent.split('\n');

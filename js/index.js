@@ -109,6 +109,19 @@ function getRandomDefaultImage() {
   return DEFAULT_IMAGES[defaultImageIndex];
 }
 
+function resolveMusicAssetPath(music, assetPath) {
+  const normalized = (assetPath || '').trim();
+  if (!normalized) return '';
+  if (
+    normalized.startsWith('./') ||
+    normalized.startsWith('/') ||
+    normalized.startsWith('http')
+  ) {
+    return normalized;
+  }
+  return `${FILE_MUSIC_ROOT}${music.type_path}${normalized}`;
+}
+
 function normalizeCurrentIndex() {
   const length = state.currentMusicList.length;
   if (!length) {
@@ -424,6 +437,8 @@ const playlistControl = {
     state.currentMusicList.forEach(music => {
       if (!music.imgPath || music.imgPath.trim() === '') {
         music.imgPath = getRandomDefaultImage();
+      } else {
+        music.imgPath = resolveMusicAssetPath(music, music.imgPath);
       }
     });
 
