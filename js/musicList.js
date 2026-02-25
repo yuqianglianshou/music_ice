@@ -50,7 +50,7 @@ const musicList1 = [
     name_path: "天籁排箫 老鹰之歌.mp3",
     type: TYPE_1,
     type_path: FILE_MUSIC_TIANLANZHIYIN,
-    imgPath: "./imgs/leo_rojas.jpg",
+    imgPath: "./music/tianlaizhiyin/leo_rojas.jpg",
     time: '03:36',
     des: "每次一听这深邃、高远的旋律，如雄鹰翱翔在蓝天，悠然自在，每个吹奏的音符敲击心怀，释放自己。",
     type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_chunyinyue
@@ -78,7 +78,7 @@ const musicList2 = [
     name_path: "纯净如圣诗.mp3",
     type: TYPE_2,
     type_path: FILE_MUSIC_QINGYINYUE,
-    imgPath: "./imgs/music_ide.jpg",
+    imgPath: "./music/qingyinyue/music_ide.jpg",
     time: '07:59',
     des: "天人合一的自然美感。",
     type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_chunyinyue
@@ -89,7 +89,7 @@ const musicList2 = [
     name_path: "兰花草.mp3",
     type: TYPE_2,
     type_path: FILE_MUSIC_QINGYINYUE,
-    imgPath: "./imgs/卡洛儿.jpg",
+    imgPath: "./music/qingyinyue/卡洛儿.jpg",
     time: '04:19',
     des: "兰花草的香，兰花草的甜，我种兰花草，只待故人归，哪怕春去秋过冬又来。",
     type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_chunyinyue
@@ -100,7 +100,7 @@ const musicList2 = [
     name_path: "莫尔德颂歌.mp3",
     type: TYPE_2,
     type_path: FILE_MUSIC_QINGYINYUE,
-    imgPath: "./imgs/莫尔德颂歌.jpg",
+    imgPath: "./music/qingyinyue/莫尔德颂歌.jpg",
     time: '03:26',
     des: "一首空灵清澈令人感动令人着迷的天籁吟唱 \n 唯美的旋律，迷人的天籁，如空谷的风轻柔不羁，空灵清澈地吟唱着美丽与哀愁，让人怀想起那些曾经青涩而纯真的画面。 \n西丝尔(Sissel Kyrkjebo)挪威著名的女歌手，正如电影《泰坦尼克》配乐中那幽幽天籁，其歌声总能抚慰感伤的心绪。",
     type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_chunyinyue
@@ -111,7 +111,7 @@ const musicList2 = [
     name_path: "斯卡布罗集市.mp3",
     type: TYPE_2,
     type_path: FILE_MUSIC_QINGYINYUE,
-    imgPath: "./imgs/卡洛儿.jpg",
+    imgPath: "./music/qingyinyue/卡洛儿.jpg",
     time: '04:24',
     des: "完美的女声吟唱。选自卡洛儿《一尘不染》",
     type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_chunyinyue
@@ -122,11 +122,11 @@ const musicList2 = [
     name_path: "斯卡布罗集市 - Sarah Brightman.mp3",
     type: TYPE_2,
     type_path: FILE_MUSIC_QINGYINYUE,
-    imgPath: "./imgs/Simon & Garfunkel.jpeg",
+    imgPath: "./music/qingyinyue/Simon & Garfunkel.jpeg",
     time: '04:16',
     des: "《斯卡布罗集市》仿佛在倾诉什么，细雨敲窗的秋夜，她的倾诉，能把你带进逝去的情感伤痛中，回味曾经拥有的凄美的爱恋；\n心情烦躁的时候，她的倾诉，能把你带进寂静山林的深处，静坐在纯洁净美的幽谷里冷却自我；\n春风得意的时候，她的倾诉，能把你带进空灵梦幻苍穹里，感受并憧憬充满希望未来人生。\n总之，无论何时何地，《斯卡布罗集市》的天籁之声能陪你的心灵一起悲欢、一同祈祷……",
     type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
-    lyrics_path: '斯卡布罗集市.lrc'
+    lyrics_path: './music/qingyinyue/斯卡布罗集市.lrc'
   },
   {
     title: "我的歌声里-钢琴曲",
@@ -134,7 +134,7 @@ const musicList2 = [
     name_path: "我的歌声里-钢琴曲.mp3",
     type: TYPE_2,
     type_path: FILE_MUSIC_QINGYINYUE,
-    imgPath: "./imgs/我的歌声里.jpg",
+    imgPath: "./music/qingyinyue/我的歌声里.jpg",
     time: '03:29',
     des: "你没有办法在这个忘却的世间用声音来将谁记得\n回忆过了期\n你已不再年少\n病态\n焦躁\n彷徨还有不安\n尽管是这样不堪的我\n仍想牵着你的手\n拼尽整个青春\n与你一同到天涯\n她在我的梦里。",
     type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_chunyinyue
@@ -145,7 +145,7 @@ const musicList2 = [
     name_path: "西风（排箫）.mp3",
     type: TYPE_2,
     type_path: FILE_MUSIC_QINGYINYUE,
-    imgPath: "./imgs/西风.png",
+    imgPath: "./music/qingyinyue/西风.png",
     time: '05:04',
     des: "一曲琴韵瑟瑟，悲欢尘世离合。\n醮一抹沧桑，盈满袖暗香，将尘俗情思泯于无痕。\n在指间舞落一世繁华，弹尽一曲浪漫忧伤。\n掮一轮皓月，携一缕清风，穿越千年尘烟。\n寂寞纤指滑过灵魂的忧伤，多少深情未了。\n多少笑泪飞扬，蓦然回首，惘然一梦，\n惘然回顾中，却早已遗失了你。",
     type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_chunyinyue
@@ -156,7 +156,7 @@ const musicList2 = [
     name_path: "一叶子 - 林键标.mp3",
     type: TYPE_2,
     type_path: FILE_MUSIC_QINGYINYUE,
-    imgPath: "./imgs/一叶子.jpg",
+    imgPath: "./music/qingyinyue/一叶子.jpg",
     time: '03:16',
     des: "独孤轻吟",
     type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_chunyinyue
@@ -167,7 +167,7 @@ const musicList2 = [
     name_path: "秋日私语 - Richard Clayderman.mp3",
     type: TYPE_2,
     type_path: FILE_MUSIC_QINGYINYUE,
-    imgPath: "./imgs/15.jpg",
+    imgPath: "./music/qingyinyue/15.jpg",
     time: '03:22',
     des: "那日的午后",
     type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_chunyinyue
@@ -178,11 +178,11 @@ const musicList2 = [
     name_path: "醉清风 - 弦子.mp3",
     type: TYPE_2,
     type_path: FILE_MUSIC_QINGYINYUE,
-    imgPath: "./imgs/16.jpg",
+    imgPath: "./music/qingyinyue/16.jpg",
     time: '05:07',
     des: "且听清风拂过。",
     type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
-    lyrics_path: '醉清风.lrc'
+    lyrics_path: './music/qingyinyue/醉清风.lrc'
   },
   {
     title: "寂静的天空 (来自草原的寂静天籁) - 代青塔娜",
@@ -205,7 +205,7 @@ const musicList2 = [
     time: '04:54',
     des: "愿漂泊的人有酒喝，愿孤独的人会唱歌。\n往前走，别回头。",
     type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
-    lyrics_path:'送别.lrc'
+    lyrics_path: './music/qingyinyue/送别.lrc'
   },
   {
     title: "call of silence",
@@ -217,7 +217,7 @@ const musicList2 = [
     time: '04:39',
     des: "成长不是变得坚强，是学会了什么都不说。",
     type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
-    lyrics_path: 'call of silence.lrc'
+    lyrics_path: './music/qingyinyue/call of silence.lrc'
   },
   {
     title: "天空之城 - 久石让",
@@ -295,7 +295,7 @@ const musicList3 = [
     time: '03:06',
     des: "爱不是突然坠落的，是从一点点心软开始的。",
     type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
-    lyrics_path: '堕 - 旺仔小乔.lrc'
+    lyrics_path: './music/emo/堕 - 旺仔小乔.lrc'
   },
   {
     title: "무지개는 있다 (Band Ver.) - Vincent Blue 有彩虹",
@@ -315,11 +315,11 @@ const musicList3 = [
     name_path: "泪的告白.mp3",
     type: TYPE_3,
     type_path: FILE_MUSIC_EMO,
-    imgPath: "./imgs/泪的告白.jpg",
+    imgPath: "./music/emo/泪的告白.jpg",
     time: '04:11',
     des: "遇见的都是幸运，或许下次见面真的只能靠运气了。然而我几乎不出门啊",
     type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
-    lyrics_path: '泪的告白.lrc'
+    lyrics_path: './music/emo/泪的告白.lrc'
   },
   {
     title: "十一种孤独",
@@ -327,11 +327,11 @@ const musicList3 = [
     name_path: "十一种孤独 - 宿羽阳.mp3",
     type: TYPE_3,
     type_path: FILE_MUSIC_EMO,
-    imgPath: "./imgs/十一种孤独.webp",
+    imgPath: "./music/emo/十一种孤独.webp",
     time: '04:41',
     des: "如果一个人住，千万不要在下午睡午觉，一觉睡到六七点，等你一睁开眼，看着朦胧黑黑的天空和空荡的房间，会有一种被全世界遗弃的感觉，孤独在这一刻体现的淋漓尽致。",
     type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
-    lyrics_path: '十一种孤独.lrc'
+    lyrics_path: './music/emo/十一种孤独.lrc'
   },
   {
     title: "十一年（翻自 邱永传） - 阿宇",
@@ -339,11 +339,11 @@ const musicList3 = [
     name_path: "十一年（翻自 邱永传） - 阿宇.mp3",
     type: TYPE_3,
     type_path: FILE_MUSIC_EMO,
-    imgPath: "./imgs/十一年.webp",
+    imgPath: "./music/emo/十一年.webp",
     time: '04:08',
     des: "2011年，那年大一，这个调调成了永远的痛。",
     type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
-    lyrics_path: '十一年.lrc'
+    lyrics_path: './music/emo/十一年.lrc'
   },
   {
     title: "净化心灵的声音 (Moon Temple) - Karunesh",
@@ -351,7 +351,7 @@ const musicList3 = [
     name_path: "(Moon Temple) - Karunesh.mp3",
     type: TYPE_3,
     type_path: FILE_MUSIC_EMO,
-    imgPath: "./imgs/Moon Temple.jpg",
+    imgPath: "./music/emo/Moon Temple.jpg",
     time: '05:49',
     des: "Moon Temple中文意为\"庙堂\"，Zen Breakfast意为 道禅 。我想，专辑名为《道禅》是希望每一个听者都能从这飘缈的音乐声中，对社会，对人生，对情感有所感悟吧！\n在纷乱的现实生活中，在复杂的情感世界里，每一个人都活的很累。于是，人们都在尝试着找寻一个不被人所窥视的空间，卸下沉重的包袱，让不堪负重的心灵得到稍许的休憩。就在这一刻，就在《Moon Temple》响起的时候，人性、道德、情感恢复到了本原。尤其是在在钢琴和萧声中，似乎又多了一个空灵的女声，她用温柔和声轻柔的抚摸着每一个听者的心灵创伤。",
     type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_chunyinyue
@@ -362,11 +362,11 @@ const musicList3 = [
     name_path: "漠河舞厅·2022 - 柳爽.mp3",
     type: TYPE_3,
     type_path: FILE_MUSIC_EMO,
-    imgPath: "./imgs/漠河舞厅·2022 - 柳爽.jpg",
+    imgPath: "./music/emo/漠河舞厅·2022 - 柳爽.jpg",
     time: '05:04',
     des: "\"人类用什么衡量爱?\"\n \"用分开后的痛苦.\"",
     type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
-    lyrics_path: '漠河舞厅.lrc'
+    lyrics_path: './music/emo/漠河舞厅.lrc'
   },
   {
     title: "丁香花 (2007版) - 唐磊",
@@ -374,11 +374,11 @@ const musicList3 = [
     name_path: "丁香花 (2007版) - 唐磊.mp3",
     type: TYPE_3,
     type_path: FILE_MUSIC_EMO,
-    imgPath: "./imgs/丁香花 (2007版) - 唐磊.jpg",
+    imgPath: "./music/emo/丁香花 (2007版) - 唐磊.jpg",
     time: '04:25',
     des: "我再也没有见到过你，再也见不到了。",
     type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
-    lyrics_path: '丁香花.lrc'
+    lyrics_path: './music/emo/丁香花.lrc'
   },
   {
     title: "청춘（青春） - 金必",
@@ -386,11 +386,11 @@ const musicList3 = [
     name_path: "청춘 - 金必.mp3",
     type: TYPE_3,
     type_path: FILE_MUSIC_EMO,
-    imgPath: "./imgs/청춘 - 산울림（青春）.jpg",
+    imgPath: "./music/emo/청춘 - 산울림（青春）.jpg",
     time: '03:39',
     des: "你是否想起了请回答1988呢",
     type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
-    lyrics_path: '청춘 - 金必.lrc'
+    lyrics_path: './music/emo/청춘 - 金必.lrc'
   },
   {
     title: "一生所爱 - 卢冠廷,莫文蔚",
@@ -398,11 +398,11 @@ const musicList3 = [
     name_path: "一生所爱 - 卢冠廷,莫文蔚.mp3",
     type: TYPE_3,
     type_path: FILE_MUSIC_EMO,
-    imgPath: "./imgs/一生所爱 - 卢冠廷,莫文蔚.jpg",
+    imgPath: "./music/emo/一生所爱 - 卢冠廷,莫文蔚.jpg",
     time: '04:33',
     des: "她的手只有我的手四分之三那么大，可我还是没能抓住。",
     type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
-    lyrics_path: '一生所爱.lrc'
+    lyrics_path: './music/emo/一生所爱.lrc'
   },
   {
     title: "BINGBIAN病变 (女声版) - 鞠文娴",
@@ -410,11 +410,11 @@ const musicList3 = [
     name_path: "BINGBIAN病变 (女声版) - 鞠文娴.mp3",
     type: TYPE_3,
     type_path: FILE_MUSIC_EMO,
-    imgPath: "./imgs/BINGBIAN病变 (女声版) - 鞠文娴.jpg",
+    imgPath: "./music/emo/BINGBIAN病变 (女声版) - 鞠文娴.jpg",
     time: '04:07',
     des: "你要搞清楚，是你喜欢对方，不是人家喜欢你。\n既然你动心了，主动了，就算受了天大的委屈，也是预料中的事，怪不得任何人。你不是小朋友了，不开心不会死，结果只能自己承担，不管多难过，你也只能自己熬。\n谁叫你有本事喜欢人家，没本事让人家喜欢你呢。",
     type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
-    lyrics_path: 'BINGBIAN病变.lrc'
+    lyrics_path: './music/emo/BINGBIAN病变.lrc'
   },
   {
     title: "山海《完整版》cover(草东没有派对） - 万豹",
@@ -422,11 +422,11 @@ const musicList3 = [
     name_path: "山海《完整版》cover(草东没有派对） - 万豹.mp3",
     type: TYPE_3,
     type_path: FILE_MUSIC_EMO,
-    imgPath: "./imgs/山海《完整版》cover(草东没有派对） - 万豹.jpg",
+    imgPath: "./music/emo/山海《完整版》cover(草东没有派对） - 万豹.jpg",
     time: '04:09',
     des: "我们都太胆小了\n民国时不敢做军阀\n乱世里不敢去起义\n太平盛世不敢说我爱你",
     type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
-    lyrics_path: '山海.lrc'
+    lyrics_path: './music/emo/山海.lrc'
   },
   {
     title: "书房 - 顾君豪",
@@ -434,11 +434,11 @@ const musicList3 = [
     name_path: "书房 - 顾君豪.mp3",
     type: TYPE_3,
     type_path: FILE_MUSIC_EMO,
-    imgPath: "./imgs/12.jpg",
+    imgPath: "./music/emo/12.jpg",
     time: '04:52',
     des: "这种感觉真的很糟\n因为一句话就高兴半天\n发现了一件事就心凉半截\n喜欢不能太明显 不然不值钱",
     type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
-    lyrics_path: '书房.lrc'
+    lyrics_path: './music/emo/书房.lrc'
   },
   {
     title: "清新的小女孩 (For Ma) - July Tun",
@@ -446,11 +446,11 @@ const musicList3 = [
     name_path: "清新的小女孩 (For Ma) - July Tun.mp3",
     type: TYPE_3,
     type_path: FILE_MUSIC_EMO,
-    imgPath: "./imgs/14.jpg",
+    imgPath: "./music/emo/14.jpg",
     time: '04:01',
     des: "也许永远都不可能懂，但不影响她很好听。",
     type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
-    lyrics_path: '清新的小女孩.lrc'
+    lyrics_path: './music/emo/清新的小女孩.lrc'
   },
   {
     title: "思君黯然 - 陈国樑",
@@ -458,7 +458,7 @@ const musicList3 = [
     name_path: "思君黯然 - 陈国樑.mp3",
     type: TYPE_3,
     type_path: FILE_MUSIC_EMO,
-    imgPath: "./imgs/16.jpg",
+    imgPath: "./music/emo/16.jpg",
     time: '01:36',
     des: "可我还是在等你，哪怕只是在心里。",
     type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_chunyinyue
@@ -469,7 +469,7 @@ const musicList3 = [
     name_path: "思君黯然 二胡版.mp3",
     type: TYPE_3,
     type_path: FILE_MUSIC_EMO,
-    imgPath: "./imgs/16.jpg",
+    imgPath: "./music/emo/16.jpg",
     time: '01:26',
     des: "阿朱 。",
     type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_chunyinyue
@@ -480,7 +480,7 @@ const musicList3 = [
     name_path: "雪见—仙凡之旅 - 麦振鸿.mp3",
     type: TYPE_3,
     type_path: FILE_MUSIC_EMO,
-    imgPath: "./imgs/雪见—仙凡之旅 - 麦振鸿.jpg",
+    imgPath: "./music/emo/雪见—仙凡之旅 - 麦振鸿.jpg",
     time: '04:50',
     des: "记得那个为爱掏心的红毛怪，有着无尽相思的夕瑶，等待千年的龙葵，为老大割肉的茂茂，假装背叛死无全尸的必平，纠缠了三生三世放不下的紫萱和徐长卿，还有那个用自己的命换天下人复活的景天，以思念幻化成型的雪见。都说景天负了夕瑶，只有夕瑶知道，景天不是飞蓬。",
     type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_chunyinyue
@@ -491,7 +491,7 @@ const musicList3 = [
     name_path: "共伴闯天涯 - 麦振鸿.mp3",
     type: TYPE_3,
     type_path: FILE_MUSIC_EMO,
-    imgPath: "./imgs/共伴闯天涯 - 麦振鸿.jpg",
+    imgPath: "./music/emo/共伴闯天涯 - 麦振鸿.jpg",
     time: '03:22',
     des: "你最心疼编剧给哪个角色写死了  \"——茂茂，我们到长安了！\"",
     type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_chunyinyue
@@ -502,11 +502,11 @@ const musicList3 = [
     name_path: "The Sound Of Silence - Simon & Garfunkel.mp3",
     type: TYPE_3,
     type_path: FILE_MUSIC_EMO,
-    imgPath: "./imgs/The Sound Of Silence - Simon & Garfunkel.jpg",
+    imgPath: "./music/emo/The Sound Of Silence - Simon & Garfunkel.jpg",
     time: '03:05',
     des: "当我独自走在路上，在街道的灯光笼罩下，我看见人头攒动，有的人在说着无聊的话，有的人在听着别人说着无聊的话。",
     type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
-    lyrics_path: 'The Sound Of Silence.lrc'
+    lyrics_path: './music/emo/The Sound Of Silence.lrc'
   },
   {
     title: "无期-石白其",
@@ -514,11 +514,11 @@ const musicList3 = [
     name_path: "无期-石白其.mp3",
     type: TYPE_3,
     type_path: FILE_MUSIC_EMO,
-    imgPath: "./imgs/无期.webp",
+    imgPath: "./music/emo/无期.webp",
     time: '02:41',
     des: "我喜欢你",
     type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
-    lyrics_path: '无期.lrc'
+    lyrics_path: './music/emo/无期.lrc'
   },
   {
     title: "有没有人告诉你 - 陈楚生",
@@ -526,11 +526,11 @@ const musicList3 = [
     name_path: "有没有人告诉你 - 陈楚生.mp3",
     type: TYPE_3,
     type_path: FILE_MUSIC_EMO,
-    imgPath: "./imgs/有没有人告诉你 - 陈楚生.jpg",
+    imgPath: "./music/emo/有没有人告诉你 - 陈楚生.jpg",
     time: '04:21',
     des: "我们之间再无交集。",
     type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
-    lyrics_path:'有没有人告诉你.lrc'
+    lyrics_path: './music/emo/有没有人告诉你.lrc'
   },
   {
     title: "假如爱有天意 (Live) - 李健",
@@ -542,7 +542,7 @@ const musicList3 = [
     time: '05:13',
     des: "我们真的愿意为一个人变成更好的自己。",
     type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
-    lyrics_path:'假如爱有天意.lrc'
+    lyrics_path: './music/emo/假如爱有天意.lrc'
   },
   {
     title: "灰色空间 - 罗志祥",
@@ -554,7 +554,7 @@ const musicList3 = [
     time: '03:57',
     des: "灰色空间我是谁",
     type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
-      lyrics_path:'灰色空间.lrc'
+      lyrics_path: './music/emo/灰色空间.lrc'
   },
   {
     title: "Daughter of heaven - 段玫梅",
@@ -577,7 +577,7 @@ const musicList3 = [
     time: '05:41',
     des: "我曾经以为你会一直在，后来才知道，有的人走了就是走了。",
     type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
-    lyrics_path: '后来.lrc'
+    lyrics_path: './music/emo/后来.lrc'
   },
   {
     title: "我用什么把你留住-福禄寿",
@@ -589,7 +589,7 @@ const musicList3 = [
     time: '05:29',
     des: "我问过自己很多次：如果我再努力一点，你会不会留下？可惜答案永远都是沉默。",
     type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
-    lyrics_path: '我用什么把你留住.lrc'
+    lyrics_path: './music/emo/我用什么把你留住.lrc'
   },
   {
     title: "那些年 - 胡夏",
@@ -858,7 +858,7 @@ const musicList4 = [
     time: '04:12',
     des: "黑暗多的时候，我就抬头找光。不是为了看得更远，而是为了让自己不倒下。",
     type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
-    lyrics_path: '夜空中最亮的星 - 逃跑计划.lrc'
+    lyrics_path: './music/jingdian/夜空中最亮的星 - 逃跑计划.lrc'
   },
   {
     title: "我的歌声里-曲婉婷",
@@ -870,7 +870,7 @@ const musicList4 = [
     time: '03:37',
     des: "最心酸的不是忘不掉，而是突然在街角听到这首歌时，一秒就想起你。",
     type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
-    lyrics_path: '我的歌声里 - 曲婉婷.lrc'
+    lyrics_path: './music/jingdian/我的歌声里 - 曲婉婷.lrc'
   },
   {
     title: "我好想你-苏打绿",
@@ -882,7 +882,7 @@ const musicList4 = [
     time: '05:24',
     des: "这首歌每一句都像在替我说：我很好，也很想你，只是你不知道。",
     type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
-    lyrics_path:'我好想你.lrc'
+    lyrics_path: './music/jingdian/我好想你.lrc'
   },
   {
     title: "水木年华 - 一生有你",
@@ -894,7 +894,7 @@ const musicList4 = [
     time: '04:18',
     des: "此生未曾拥有。",
     type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
-    lyrics_path:'一生有你.lrc'
+    lyrics_path: './music/jingdian/一生有你.lrc'
   },
   {
     title: "陈一发儿 - 童话镇",
@@ -906,7 +906,7 @@ const musicList4 = [
     time: '04:18',
     des: "沉浸在童话的世界里不愿醒来。",
     type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
-    lyrics_path:'童话镇.lrc'
+    lyrics_path: './music/jingdian/童话镇.lrc'
   },
   {
     title: "大海 - 张雨生",
@@ -918,7 +918,7 @@ const musicList4 = [
     time: '04:40',
     des: "你是我这辈子跨不过去的大海，无论我在岸上喊得多用力，你都不会再回应了。",
     type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
-    lyrics_path:'大海.lrc'
+    lyrics_path: './music/jingdian/大海.lrc'
   },
   {
     title: "星星点灯 - 郑智化",
@@ -930,7 +930,7 @@ const musicList4 = [
     time: '05:00',
     des: "黑暗并不可怕，可怕的是忘了抬头看看那盏属于自己的灯。",
     type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
-    lyrics_path:'星星点灯.lrc'
+    lyrics_path: './music/jingdian/星星点灯.lrc'
   },
   {
     title: "老鼠爱大米 - 杨臣刚",
@@ -966,7 +966,7 @@ const musicList4 = [
     time: '04:13',
     des: "我听过一万首歌，看过一千部电影，读过一百本书，却从未俘获一个人的心。",
     type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
-    lyrics_path: '奇妙能力歌.lrc'
+    lyrics_path: './music/jingdian/奇妙能力歌.lrc'
   },
   {
     title: "此生不换",
@@ -974,11 +974,11 @@ const musicList4 = [
     name_path: "此生不换 - 青鸟飞鱼.mp3",
     type: TYPE_4,
     type_path: FILE_MUSIC_JINGDIAN,
-    imgPath: "./imgs/此生不换.jpg",
+    imgPath: "./music/jingdian/此生不换.jpg",
     time: '04:25',
     des: "在初中暗恋三年的同桌，有一天看见她在折星星，\n我问她，这是送给谁的啊，她说，送给她最爱的人，\n过了几天，她送了个熊娃娃给我，我在想，那些星星她是送给谁的?\n过了很多年，我结婚了，生了孩子，把熊给孩子玩，\n一天，孩子不小心把熊撕破了，一大把的星星掉了出来，我顿时泪目。",
     type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
-    lyrics_path: '此生不换.lrc'
+    lyrics_path: './music/jingdian/此生不换.lrc'
   },
   {
     title: "断点",
@@ -986,11 +986,11 @@ const musicList4 = [
     name_path: "断点.mp3",
     type: TYPE_4,
     type_path: FILE_MUSIC_JINGDIAN,
-    imgPath: "./imgs/断点.jpg",
+    imgPath: "./music/jingdian/断点.jpg",
     time: '04:28',
     des: "其实我挺羡慕火车的。 \n  为什么? \n 他们连擦肩而过都那么久。",
     type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
-    lyrics_path: '断点.lrc'
+    lyrics_path: './music/jingdian/断点.lrc'
   },
   {
     title: "美人吟 - 李玲玉",
@@ -998,11 +998,11 @@ const musicList4 = [
     name_path: "美人吟 - 李玲玉.mp3",
     type: TYPE_4,
     type_path: FILE_MUSIC_JINGDIAN,
-    imgPath: "./imgs/美人吟 - 李玲玉.jpg",
+    imgPath: "./music/jingdian/美人吟 - 李玲玉.jpg",
     time: '04:02',
     des: "舒畅。",
     type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
-    lyrics_path: '美人吟.lrc'
+    lyrics_path: './music/jingdian/美人吟.lrc'
   },
   {
     title: "天顶一粒星 - Tizzy T,宋佳",
@@ -1010,11 +1010,11 @@ const musicList4 = [
     name_path: "天顶一粒星 - Tizzy T,宋佳.mp3",
     type: TYPE_4,
     type_path: FILE_MUSIC_JINGDIAN,
-    imgPath: "./imgs/9.jpg",
+    imgPath: "./music/jingdian/9.jpg",
     time: '03:53',
     des: "嘿呀嘿呀咿儿呀",
     type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
-    lyrics_path: '天顶一粒星.lrc'
+    lyrics_path: './music/jingdian/天顶一粒星.lrc'
   },
   {
     title: "仙剑问情(主题曲) - 萧人凤",
@@ -1022,11 +1022,11 @@ const musicList4 = [
     name_path: "仙剑问情(主题曲) - 萧人凤.mp3",
     type: TYPE_4,
     type_path: FILE_MUSIC_JINGDIAN,
-    imgPath: "./imgs/仙剑问情(主题曲) - 萧人凤.jpg",
+    imgPath: "./music/jingdian/仙剑问情(主题曲) - 萧人凤.jpg",
     time: '04:16',
     des: "我李逍遥可以对天发誓从今以后不会再让你一人孤苦伶仃。",
     type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
-    lyrics_path: '仙剑问情.lrc'
+    lyrics_path: './music/jingdian/仙剑问情.lrc'
   },
   {
     title: "雨花石（电视连续剧《红红的雨花石》主题歌）",
@@ -1038,7 +1038,7 @@ const musicList4 = [
     time: '03:49',
     des: "我是一颗小小的石头",
     type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
-    lyrics_path:'雨花石.lrc'
+    lyrics_path: './music/jingdian/雨花石.lrc'
   },
   {
     title: "偏爱-张芸京",
@@ -1050,7 +1050,7 @@ const musicList4 = [
     time: '03:33',
     des: "如此喜欢你的偏爱",
     type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
-    lyrics_path: '偏爱.lrc'
+    lyrics_path: './music/jingdian/偏爱.lrc'
   },
   {
     title: "唯一-告五人",
@@ -1062,7 +1062,7 @@ const musicList4 = [
     time: '04:31',
     des: "我一直很清楚，喜欢你这件事，从来没办法平均分给别人。",
     type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
-    lyrics_path: '唯一.lrc'
+    lyrics_path: './music/jingdian/唯一.lrc'
   },
   {
     title: "不浪漫罪名-王杰",
@@ -1074,7 +1074,7 @@ const musicList4 = [
     time: '04:43',
     des: "我犯下了滔天的罪名",
     type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
-    lyrics_path: '不浪漫罪名.lrc'
+    lyrics_path: './music/jingdian/不浪漫罪名.lrc'
   },
   {
     title: "下雨天-南拳妈妈",
@@ -1086,7 +1086,7 @@ const musicList4 = [
     time: '04:13',
     des: "下雨天最适合想你，因为雨声刚好覆盖我所有没说出口的难过。",
     type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
-    lyrics_path: '下雨天.lrc'
+    lyrics_path: './music/jingdian/下雨天.lrc'
   },
   {
     title: "一直很安静-阿桑",
@@ -1098,7 +1098,7 @@ const musicList4 = [
     time: '04:07',
     des: "有些心碎从来都没有声音，所以没人知道你有多难过。",
     type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
-    lyrics_path: '一直很安静.lrc'
+    lyrics_path: './music/jingdian/一直很安静.lrc'
   },
   {
     title: "明天，你好 - 牛奶咖啡",
@@ -1494,7 +1494,7 @@ const musicList5 = [
     name_path: "The Dawn_亡灵序曲.mp3",
     type: TYPE_5,
     type_path: FILE_MUSIC_BGM,
-    imgPath: "./imgs/亡灵序曲.jpg",
+    imgPath: "./music/bgm/亡灵序曲.jpg",
     time: '04:06',
     des: "《The Dawn》的原意为黎明、拂晓、破晓，但在国内网络上，广被讹传为\"亡灵序曲\"。",
     type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_chunyinyue
@@ -1505,7 +1505,7 @@ const musicList5 = [
     name_path: "icarus.mp3",
     type: TYPE_5,
     type_path: FILE_MUSIC_BGM,
-    imgPath: "./imgs/Ivan Torrent.jpg",
+    imgPath: "./music/bgm/Ivan Torrent.jpg",
     time: '04:35',
     des: "Ivan Torrent 是西班牙一个独立作曲家和制作人。为流行音乐和舞蹈艺术家在西班牙工作多年，作为一个设计师，也为广播电台做广告宣传和广告歌曲。现在Ivan Torrent想更专注于电影音乐的场景，为预告片音乐公司工作，以及做演示样品库。",
     type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_chunyinyue
@@ -1522,7 +1522,7 @@ const musicList6 = [
     name_path: "Fade - Alan Walker.mp3",
     type: TYPE_6,
     type_path: FILE_MUSIC_lvdong,
-    imgPath: "./imgs/Fade - Alan Walker.jpg",
+    imgPath: "./music/lvdong/Fade - Alan Walker.jpg",
     time: '04:24',
     des: "跑起来吧",
     type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_chunyinyue
@@ -1533,11 +1533,11 @@ const musicList6 = [
     name_path: "Something Just Like This - The Chainsmokers,Coldplay.mp3",
     type: TYPE_6,
     type_path: FILE_MUSIC_lvdong,
-    imgPath: "./imgs/Something Just Like This - The Chainsmokers,Coldplay.jpg",
+    imgPath: "./music/lvdong/Something Just Like This - The Chainsmokers,Coldplay.jpg",
     time: '04:07',
     des: "喜欢iPad你就去买，喜欢莱卡你就去赚，想喝港式奶茶你就过口岸，想当team leader你就努力学习然后努力去工作，想去威尼斯你就攒钱去，想爱谁你就去爱，想追谁你就去追，想到了就去做，拼命努力，拼命享受，忍着守着惦记着，青春就过去了，何必用40岁的心态过20岁的年华。",
     type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
-    lyrics_path: 'Something Just Like This.lrc'
+    lyrics_path: './music/lvdong/Something Just Like This.lrc'
   },
   {
     title: "Dream It Possible - Delacey",
@@ -1545,11 +1545,11 @@ const musicList6 = [
     name_path: "Dream It Possible - Delacey.mp3",
     type: TYPE_6,
     type_path: FILE_MUSIC_lvdong,
-    imgPath: "./imgs/1.jpg",
+    imgPath: "./music/lvdong/1.jpg",
     time: '03:24',
     des: "不用等梦想成真，只要每天做一点点。",
     type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
-    lyrics_path: 'Dream It Possible.lrc'
+    lyrics_path: './music/lvdong/Dream It Possible.lrc'
   },
   {
     title: "挪威的森林 - 伍佰",
@@ -1557,11 +1557,11 @@ const musicList6 = [
     name_path: "挪威的森林 - 伍佰.mp3",
     type: TYPE_6,
     type_path: FILE_MUSIC_lvdong,
-    imgPath: "./imgs/挪威的森林 - 伍佰.jpg",
+    imgPath: "./music/lvdong/挪威的森林 - 伍佰.jpg",
     time: '06:33',
     des: "心中是否有我未曾到过的地方啊",
     type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
-    lyrics_path:'挪威的森林.lrc'
+    lyrics_path: './music/lvdong/挪威的森林.lrc'
   },
   {
     title: "dance monkey - Tones and I",
