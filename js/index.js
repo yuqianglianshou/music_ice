@@ -310,10 +310,6 @@ const progressControl = {
       fill.style.width = `${rangeValue}%`;
     });
 
-    if (rangeValue < CONFIG.TRANSITION.INTERVAL) {
-      element.value -= 1;
-    }
-
     elements.playProgress.forEach(progress => {
       progress.value = element.value;
     });
@@ -554,8 +550,6 @@ const playlistControl = {
       element.classList.remove('active');
     });
     clickedElement.classList.add('active');
-    // 修改这里，直接调用需要的方法
-    this.updatePlayInfo();
     playlistControl.updatePlayInfo();
     playbackControl.startPlayback().catch(error => {
       console.error('播放失败:', error);
@@ -574,6 +568,7 @@ const playModeControl = {
 
     if (state.playMode === 0) {
       state.isShuffle = false;
+      audioControl.audioSource.loop = false;
       this.classList.remove("singleLoop");
       this.classList.add("listLoop");
     } else if (state.playMode === 1) {

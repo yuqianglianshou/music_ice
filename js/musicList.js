@@ -1832,7 +1832,7 @@ const musicList8 = [
     type: TYPE_8,
     type_path: FILE_MUSIC_minyao,
     imgPath: "./music/minyao/理想三旬 - 陈鸿宇.jpg",
-    time: '0330',
+    time: '03:30',
     des: "理想三旬，我们的时光，我们的时光，我们的时光。",
     type_load_lyrics: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
     lyrics_path: './music/minyao/理想三旬 - 陈鸿宇.lrc'
@@ -1900,6 +1900,9 @@ export const STORAGE_KEYS = {
   DONGHUAPIAN: 'musicList7',
   MINYAO: 'musicList8'
 };
+
+const STORAGE_META_KEY = 'musicListStorageVersion';
+const STORAGE_VERSION = '2026-02-25-v1';
 
 // 创建一个统一的存储管理类
 export class MusicStorage {
@@ -2001,8 +2004,12 @@ export class MusicStorage {
 
 }
 
-// 使用优化后的存储方式
-MusicStorage.saveAllLists();
+// 仅在首次加载或版本变更时更新本地缓存，避免每次启动全量写入
+const shouldRefreshStorage = localStorage.getItem(STORAGE_META_KEY) !== STORAGE_VERSION;
+if (shouldRefreshStorage) {
+  MusicStorage.saveAllLists();
+  localStorage.setItem(STORAGE_META_KEY, STORAGE_VERSION);
+}
 
 /**
  * 获取音乐列表
