@@ -10,8 +10,8 @@ const themes = [
     primary: '#94f4ee',
     secondary: '#35c7d4',
     theme: '#d8fffb',
-    bgBase: '#173f4a',
-    bgGradient: ['#236a78', '#122a36'],
+    bgBase: '#286879',
+    bgGradient: ['#3c8fa0', '#1a4658'],
     aurora: [
       'rgba(255, 138, 92, 0.45)',
       'rgba(255, 193, 90, 0.35)',
@@ -33,8 +33,8 @@ const themes = [
     primary: '#9fd2ff',
     secondary: '#4e9dea',
     theme: '#d9efff',
-    bgBase: '#1b385d',
-    bgGradient: ['#285f95', '#132940'],
+    bgBase: '#2d5f93',
+    bgGradient: ['#4386c2', '#1e4268'],
     aurora: [
       'rgba(92, 158, 255, 0.45)',
       'rgba(139, 197, 255, 0.35)',
@@ -56,8 +56,8 @@ const themes = [
     primary: '#d4b3ff',
     secondary: '#9270e8',
     theme: '#eadcff',
-    bgBase: '#342c57',
-    bgGradient: ['#5e4a95', '#211c38'],
+    bgBase: '#574783',
+    bgGradient: ['#8066bd', '#392f60'],
     aurora: [
       'rgba(138, 92, 255, 0.45)',
       'rgba(193, 90, 255, 0.35)',
@@ -79,8 +79,8 @@ const themes = [
     primary: '#9df0c7',
     secondary: '#3ec885',
     theme: '#dcffed',
-    bgBase: '#1d4939',
-    bgGradient: ['#2f755a', '#142f27'],
+    bgBase: '#2f725a',
+    bgGradient: ['#47a076', '#20513f'],
     aurora: [
       'rgba(92, 255, 138, 0.45)',
       'rgba(139, 255, 193, 0.35)',
@@ -102,8 +102,8 @@ const themes = [
     primary: '#ff9cc8',
     secondary: '#e85b98',
     theme: '#ffddeb',
-    bgBase: '#563246',
-    bgGradient: ['#8a4b68', '#352130'],
+    bgBase: '#854f69',
+    bgGradient: ['#ba6f8d', '#5f344b'],
     aurora: [
       'rgba(255, 92, 138, 0.45)',
       'rgba(255, 139, 193, 0.35)',
@@ -125,8 +125,8 @@ const themes = [
     primary: '#ffd28a',
     secondary: '#ff8a5d',
     theme: '#ffe8bd',
-    bgBase: '#563726',
-    bgGradient: ['#8c5a36', '#2f211b'],
+    bgBase: '#89583a',
+    bgGradient: ['#bd7f4d', '#60402d'],
     aurora: [
       'rgba(92, 255, 232, 0.45)',
       'rgba(139, 255, 241, 0.35)',
@@ -149,7 +149,6 @@ class ThemeManager {
   constructor() {
     this.currentThemeIndex = 0;
     this.switchInterval = null;
-    // this.switchDuration = 1 * 5 * 1000; // 5秒钟（毫秒）
     this.switchDuration = 5 * 60 * 1000; // 5分钟（毫秒）
     this.init();
   }
@@ -200,6 +199,7 @@ class ThemeManager {
     root.style.setProperty('--primary-color', theme.primary);
     root.style.setProperty('--secondary-color', theme.secondary);
     root.style.setProperty('--theme-color', theme.theme);
+    root.style.setProperty('--blue-color', theme.secondary);
     root.style.setProperty('--aurora-a', theme.aurora[0]);
     root.style.setProperty('--aurora-b', theme.aurora[1]);
     root.style.setProperty('--aurora-c', theme.aurora[2]);
@@ -208,11 +208,19 @@ class ThemeManager {
     root.style.setProperty('--bg-base', theme.bgBase);
     root.style.setProperty('--bg-gradient-start', theme.bgGradient[0]);
     root.style.setProperty('--bg-gradient-end', theme.bgGradient[1]);
+    root.style.setProperty('--surface-color', 'rgba(18, 34, 46, 0.24)');
+    root.style.setProperty('--surface-strong', 'rgba(18, 34, 46, 0.42)');
+    root.style.setProperty('--glass-border', 'rgba(235, 252, 255, 0.34)');
 
-    // 更新body背景。保持轻量，避免滚动时大面积径向渐变重绘。
+    // 更新body背景。使用静态线性渐变恢复多主题色彩，避免动态光斑和滚动重绘。
+    const [accentA, accentB, accentC] = theme.radialGradients;
     body.style.backgroundColor = theme.bgBase;
     body.style.backgroundImage = `
-      linear-gradient(135deg, ${theme.bgGradient[0]} 0%, ${theme.bgBase} 52%, ${theme.bgGradient[1]} 100%)
+      linear-gradient(180deg, rgba(255, 255, 255, 0.22) 0%, rgba(255, 255, 255, 0.08) 42%, transparent 100%),
+      linear-gradient(120deg, ${accentA.color} 0%, rgba(255, 255, 255, 0.12) 38%, transparent 60%),
+      linear-gradient(235deg, ${accentB.color} 0%, rgba(255, 255, 255, 0.1) 38%, transparent 62%),
+      linear-gradient(165deg, transparent 48%, ${accentC.color} 100%),
+      linear-gradient(135deg, ${theme.bgGradient[0]} 0%, ${theme.bgBase} 48%, ${theme.bgGradient[1]} 100%)
     `;
 
     // 设置data-theme属性用于CSS选择器

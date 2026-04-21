@@ -52,8 +52,8 @@
 .layout-left,
 .layout-right {
 	border-radius: 32px;
-	border: 1px solid rgba(180, 231, 238, 0.14);
-	background: rgba(17, 29, 38, 0.58);
+	border: 1px solid var(--glass-border);
+	background: var(--surface-color);
 	box-shadow: 0 14px 30px rgba(4, 13, 18, 0.24);
 	display: flex;
 	flex-direction: column;
@@ -112,8 +112,8 @@
 	transform: translateX(-50%);
 	width: min(1500px, calc(100% - 64px));
 	height: 88px;
-	background: rgba(18, 32, 43, 0.72);
-	border: 1px solid rgba(180, 231, 238, 0.16);
+	background: var(--surface-strong);
+	border: 1px solid var(--glass-border);
 	box-shadow: 0 12px 28px rgba(4, 13, 18, 0.28);
 	border-radius: 24px;
 	padding: 0 32px;
@@ -501,14 +501,14 @@
 	position: relative;
 	width: 100%;
 	height: 72px;
-	background: rgba(180, 231, 238, 0.06);
+	background: rgba(230, 250, 255, 0.055);
 	border-radius: 20px;
-	border: 1px solid rgba(180, 231, 238, 0.12);
+	border: 1px solid rgba(230, 250, 255, 0.16);
 	padding: 0 16px;
 	display: flex;
 	align-items: center;
 	overflow: hidden;
-	box-shadow: inset 0 0 0 1px rgba(180, 231, 238, 0.04);
+	box-shadow: inset 0 0 0 1px rgba(230, 250, 255, 0.05);
 	flex-shrink: 0;
 }
 
@@ -604,10 +604,10 @@
 .song_panel {
 	width: 100%;
 	height: 100%;
-	background: linear-gradient(180deg, rgba(180, 231, 238, 0.08), rgba(8, 18, 26, 0.18));
+	background: linear-gradient(180deg, rgba(230, 250, 255, 0.065), rgba(8, 18, 26, 0.08));
 	border-radius: 28px;
-	border: 1px solid rgba(180, 231, 238, 0.12);
-	box-shadow: inset 0 0 0 1px rgba(180, 231, 238, 0.04);
+	border: 1px solid rgba(230, 250, 255, 0.18);
+	box-shadow: inset 0 0 0 1px rgba(230, 250, 255, 0.05);
 	padding: 32px;
 	display: flex;
 	flex-direction: column;
@@ -891,9 +891,9 @@
 	padding: 12px 16px;
 	overflow-y: auto;
 	overflow-x: hidden;
-	background: rgba(7, 16, 23, 0.16);
+	background: rgba(7, 16, 23, 0.08);
 	border-radius: 22px;
-	border: 1px solid rgba(180, 231, 238, 0.1);
+	border: 1px solid rgba(230, 250, 255, 0.14);
 	box-shadow: inset 0 0 0 1px rgba(180, 231, 238, 0.035);
 	contain: layout paint;
 	-webkit-overflow-scrolling: touch;

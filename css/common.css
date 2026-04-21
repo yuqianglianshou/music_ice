@@ -12,7 +12,7 @@ html {
   width: 100%;
   color: var(--text-color);
   /* 使用CSS变量，由themeManager动态设置 */
-  background-color: var(--bg-base, #173f4a);
+  background-color: var(--bg-base, #286879);
   /* 背景图片由themeManager动态设置 */
   transition: background-color 0.6s ease, background-image 0.6s ease;
   /* 字体渲染优化 */

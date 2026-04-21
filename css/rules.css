@@ -10,15 +10,15 @@
   --primary-color: #94f4ee;
   --secondary-color: #35c7d4;
   --theme-color: #d8fffb;
-  --surface-color: rgba(17, 29, 38, 0.58);
-  --surface-strong: rgba(18, 32, 43, 0.7);
-  --glass-border: rgba(180, 231, 238, 0.16);
+  --surface-color: rgba(18, 34, 46, 0.24);
+  --surface-strong: rgba(18, 34, 46, 0.42);
+  --glass-border: rgba(235, 252, 255, 0.34);
   --text-color: #f1fbff;
 
   /* 背景颜色变量（由themeManager动态设置） */
-  --bg-base: #173f4a;
-  --bg-gradient-start: #236a78;
-  --bg-gradient-end: #122a36;
+  --bg-base: #286879;
+  --bg-gradient-start: #3c8fa0;
+  --bg-gradient-end: #1a4658;
 
   --app-width: 100vw;
   --app-height: 100vh;
