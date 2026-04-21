@@ -12,12 +12,11 @@ html {
   width: 100%;
   color: var(--text-color);
   /* 使用CSS变量，由themeManager动态设置 */
-  background-color: var(--bg-base, #3c1301);
+  background-color: var(--bg-base, #173f4a);
   /* 背景图片由themeManager动态设置 */
+  transition: background-color 0.6s ease, background-image 0.6s ease;
   /* 字体渲染优化 */
   -webkit-font-smoothing: antialiased;
-  /* 平滑滚动 */
-  scroll-behavior: smooth;
   /* 设置字体 */
   font-family: 'Poppins', 'Noto Sans SC', 'Inter', sans-serif;
   /* 鼠标样式 */
@@ -26,32 +25,14 @@ html {
   user-select: none;
   position: relative;
   overflow: hidden;
-  /* 主题切换过渡效果 */
-  transition: background-color 1.5s ease, background-image 1.5s ease;
 }
 
 body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  z-index: -2;
-  /* 背景由themeManager动态设置 */
-  filter: blur(40px);
-  opacity: 0.8;
-  /* 过渡效果 */
-  transition: background 1.5s ease;
+  display: none;
 }
 
 body::after {
-  content: "";
-  position: fixed;
-  inset: 0;
-  z-index: -1;
-  background-image: linear-gradient(120deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px),
-    linear-gradient(60deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
-  background-size: 180px 180px;
-  opacity: 0.4;
-  pointer-events: none;
+  display: none;
 }
 
 /* ================ 滚动条样式 ================ */
@@ -112,6 +93,8 @@ button {
   cursor: pointer;
   background-color: transparent;
   border: 1px solid transparent;
+  color: inherit;
+  font: inherit;
 }
 
 /* 链接样式重置 */

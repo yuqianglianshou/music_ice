@@ -4,48 +4,48 @@
   /* 基础色板 */
   --white-color: #fff;
   --black-color: #000;
-  --blue-color: #ff9b45;
+  --blue-color: #35c7d4;
 
   /* 主题颜色（由themeManager动态设置） */
-  --primary-color: #ffd18b;
-  --secondary-color: #ff8a5c;
-  --theme-color: #ffe8c2;
-  --surface-color: rgba(255, 255, 255, 0.08);
-  --surface-strong: rgba(255, 255, 255, 0.14);
-  --glass-border: rgba(255, 255, 255, 0.25);
-  --text-color: #fff8ef;
+  --primary-color: #94f4ee;
+  --secondary-color: #35c7d4;
+  --theme-color: #d8fffb;
+  --surface-color: rgba(17, 29, 38, 0.58);
+  --surface-strong: rgba(18, 32, 43, 0.7);
+  --glass-border: rgba(180, 231, 238, 0.16);
+  --text-color: #f1fbff;
 
   /* 背景颜色变量（由themeManager动态设置） */
-  --bg-base: #3c1301;
-  --bg-gradient-start: #742d08;
-  --bg-gradient-end: #3c1301;
+  --bg-base: #173f4a;
+  --bg-gradient-start: #236a78;
+  --bg-gradient-end: #122a36;
 
   --app-width: 100vw;
   --app-height: 100vh;
 
-  --color-1: #fff1d9;
-  --color-2: #ffd3a5;
-  --color-3: #ffbc82;
-  --color-4: rgba(255, 255, 255, 0.08);
-  --color-5: rgba(255, 255, 255, 0.14);
-  --color-6: rgba(255, 255, 255, 0.22);
-  --color-7: rgba(255, 255, 255, 0.3);
-  --color-8: rgba(255, 255, 255, 0.4);
-  --color-9: #ffb880;
-  --color-10: #ff9f6f;
-  --color-11: rgba(255, 255, 255, 0.18);
-  --color-12: #ffd18b;
-  --color-13: rgba(255, 180, 120, 0.35);
-  --color-14: rgba(255, 255, 255, 0.2);
-  --color-15: rgba(0, 0, 0, 0.2);
-  --color-16: rgba(255, 255, 255, 0.06);
-  --color-17: rgba(90, 35, 0, 0.45);
-  --color-18: rgba(70, 25, 0, 0.65);
-  --color-19: rgba(255, 255, 255, 0.08);
-  --color-20: #fff7ef;
-  --color-21: rgba(255, 255, 255, 0.3);
-  --color-22: rgba(255, 255, 255, 0.12);
-  --color-23: rgba(255, 255, 255, 0.15);
+  --color-1: #dffcff;
+  --color-2: #b9edf3;
+  --color-3: #8fdbe6;
+  --color-4: rgba(180, 231, 238, 0.08);
+  --color-5: rgba(180, 231, 238, 0.13);
+  --color-6: rgba(180, 231, 238, 0.2);
+  --color-7: rgba(180, 231, 238, 0.28);
+  --color-8: rgba(180, 231, 238, 0.38);
+  --color-9: #7ddce5;
+  --color-10: #50c6d5;
+  --color-11: rgba(180, 231, 238, 0.16);
+  --color-12: #94f4ee;
+  --color-13: rgba(53, 199, 212, 0.28);
+  --color-14: rgba(180, 231, 238, 0.18);
+  --color-15: rgba(0, 0, 0, 0.24);
+  --color-16: rgba(180, 231, 238, 0.08);
+  --color-17: rgba(17, 29, 38, 0.58);
+  --color-18: rgba(18, 32, 43, 0.7);
+  --color-19: rgba(180, 231, 238, 0.1);
+  --color-20: #f1fbff;
+  --color-21: rgba(180, 231, 238, 0.24);
+  --color-22: rgba(180, 231, 238, 0.11);
+  --color-23: rgba(180, 231, 238, 0.14);
 
   --aurora-a: rgba(255, 138, 92, 0.45);
   --aurora-b: rgba(255, 193, 90, 0.35);
