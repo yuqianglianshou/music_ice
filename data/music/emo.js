@@ -356,7 +356,7 @@ export const musicList3 = [
     lyrics_type: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
     author: "崔子格",
     time: '03:36',
-    des: "卜卦",
+    des: "嘴上说随缘的人，心里其实早就把答案问了千百遍。",
   },
   {
     song_type: TYPE_3,
@@ -368,7 +368,7 @@ export const musicList3 = [
     lyrics_type: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
     author: "顾峰",
     time: '03:16',
-    des: "犯错",
+    des: "后来才明白，最难原谅的不是对方，是当时太用力的自己。",
   },
   {
     song_type: TYPE_3,
@@ -380,7 +380,7 @@ export const musicList3 = [
     lyrics_type: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
     author: "蓝心羽",
     time: '04:01',
-    des: "阿拉斯加海湾",
+    des: "有些人像海湾，看起来很远，其实一直在心里涨潮。",
   },
   {
     song_type: TYPE_3,
@@ -392,7 +392,7 @@ export const musicList3 = [
     lyrics_type: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
     author: "郭顶",
     time: '04:10',
-    des: "凄美地",
+    des: "真正的告别不是转身，是突然听懂了这首歌的某一句。",
   },
   {
     song_type: TYPE_3,
@@ -404,7 +404,7 @@ export const musicList3 = [
     lyrics_type: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
     author: "旺仔小乔",
     time: '03:17',
-    des: "悬溺",
+    des: "明知道会沉下去，还是舍不得松开那一点温柔。",
   },
   {
     song_type: TYPE_3,
@@ -416,7 +416,7 @@ export const musicList3 = [
     lyrics_type: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
     author: "华晨宇",
     time: '05:21',
-    des: "烟火里的尘埃",
+    des: "我们都曾在热闹里显得渺小，却还是想被世界温柔看见。",
   },
   {
     song_type: TYPE_3,
@@ -428,7 +428,7 @@ export const musicList3 = [
     lyrics_type: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
     author: "一支榴莲",
     time: '04:16',
-    des: "海底",
+    des: "有些难过像海底，没人看见，却压得人喘不过气。",
   },
   {
     song_type: TYPE_3,
@@ -440,7 +440,7 @@ export const musicList3 = [
     lyrics_type: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
     author: "华晨宇",
     time: '04:18',
-    des: "好想爱这个世界啊",
+    des: "这首歌像一句很轻的拥抱：你已经做得很好了。",
   },
   {
     song_type: TYPE_3,
@@ -452,7 +452,7 @@ export const musicList3 = [
     lyrics_type: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
     author: "白挺",
     time: '03:23',
-    des: "你从未离去",
+    des: "真正重要的人不会离开，他只是住进了回忆最柔软的地方。",
   },
   {
     song_type: TYPE_3,
@@ -464,7 +464,7 @@ export const musicList3 = [
     lyrics_type: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
     author: "大欢",
     time: '04:23',
-    des: "三生石下",
+    des: "有些缘分像旧誓言，明知荒唐，却还是让人红了眼眶。",
   },
   {
     song_type: TYPE_3,
@@ -476,7 +476,7 @@ export const musicList3 = [
     lyrics_type: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
     author: "孙楠",
     time: '05:32',
-    des: "拯救",
+    des: "每个快撑不住的夜晚，都希望有人听见那句无声的求救。",
   },
   {
     song_type: TYPE_3,
@@ -488,7 +488,7 @@ export const musicList3 = [
     lyrics_type: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
     author: "Maj7_Music 巴音孟克",
     time: '03:59',
-    des: "真爱的力量",
+    des: "真爱最动人的地方，是让普通人也有了对抗世界的勇气。",
   },
   {
     song_type: TYPE_3,
@@ -500,7 +500,7 @@ export const musicList3 = [
     lyrics_type: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
     author: "杨宗纬",
     time: '05:33',
-    des: "凉凉",
+    des: "最凉的不是结局，是明明还爱着，却只能把名字放回风里。",
   },
   {
     song_type: TYPE_3,
@@ -512,7 +512,7 @@ export const musicList3 = [
     lyrics_type: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
     author: "张振宇",
     time: '05:23',
-    des: "不要再来伤害我",
+    des: "有些歌听着像狠话，其实每一句都在替受伤的人求放过。",
   },
   {
     song_type: TYPE_3,
@@ -536,7 +536,7 @@ export const musicList3 = [
     lyrics_type: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
     author: "李宗锦（松紧先生）",
     time: '04:04',
-    des: "你走",
+    des: "你走以后，房间没有变空，是我突然不知道该往哪里放想念。",
   },
   {
     song_type: TYPE_3,
@@ -548,6 +548,18 @@ export const musicList3 = [
     lyrics_type: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
     author: "不可撤销乐队",
     time: '04:32',
-    des: "她",
+    des: "有些名字不能轻易提起，一提起，整段青春都会回头。",
+  },
+  {
+    song_type: TYPE_3,
+    song_path: FILE_MUSIC_EMO,
+    song_name: "盛夏的果实 - 莫文蔚",
+    song_file: "盛夏的果实 - 莫文蔚.mp3",
+    img_file: "盛夏的果实 - 莫文蔚.jpg",
+    lyrics_file: '盛夏的果实 - 莫文蔚.lrc',
+    lyrics_type: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
+    author: "莫文蔚",
+    time: '04:11',
+    des: "成年后再听才懂，成熟原来是把遗憾唱得云淡风轻。",
   },
 ];

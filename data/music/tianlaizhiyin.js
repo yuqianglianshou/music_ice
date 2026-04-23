@@ -25,7 +25,7 @@ export const musicList1 = [
     lyrics_type: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
     author: "Enya",
     time: '03:58',
-    des: "",
+    des: "像海风吹过蓝色梦境，听完心里会安静很久。",
   },
 
 ];

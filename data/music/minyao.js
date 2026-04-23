@@ -182,7 +182,7 @@ export const musicList8 = [
     lyrics_type: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
     author: "房东的猫",
     time: '04:00',
-    des: "",
+    des: "想念像云烟，落下来是雨，散开了还是你。",
   },
 
 ];

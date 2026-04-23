@@ -73,7 +73,7 @@ export const musicList6 = [
     lyrics_type: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
     author: "善宇",
     time: '02:35',
-    des: "",
+    des: "晚风吹过街角的时候，最容易想起那个没能一起走远的人。",
   },
   {
     song_type: TYPE_6,
@@ -85,6 +85,6 @@ export const musicList6 = [
     lyrics_type: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
     author: "GALA",
     time: '05:18',
-    des: "",
+    des: "愿你被现实按倒很多次，仍然能像第一次那样爬起来追梦。",
   },
 ];

@@ -27,8 +27,49 @@ export const STORAGE_KEYS = {
 };
 
 const STORAGE_META_KEY = 'musicListStorageVersion';
-const STORAGE_VERSION = '2026-04-20-v7';
 const memoryStorage = new Map();
+
+function stableStringify(value) {
+  if (Array.isArray(value)) {
+    return `[${value.map(stableStringify).join(',')}]`;
+  }
+
+  if (value && typeof value === 'object') {
+    return `{${Object.keys(value)
+      .sort()
+      .map(key => `${JSON.stringify(key)}:${stableStringify(value[key])}`)
+      .join(',')}}`;
+  }
+
+  return JSON.stringify(value);
+}
+
+function hashString(value) {
+  let hash = 2166136261;
+  for (let i = 0; i < value.length; i++) {
+    hash ^= value.charCodeAt(i);
+    hash = Math.imul(hash, 16777619);
+  }
+  return (hash >>> 0).toString(36);
+}
+
+function createStorageSignature(musicListMap) {
+  const payload = Object.entries(musicListMap).map(([key, list]) => [
+    key,
+    list.map(music => ({
+      song_name: music.song_name || music.title || '',
+      song_file: music.song_file || music.name_path || '',
+      song_path: music.song_path || music.type_path || '',
+      img_file: music.img_file || '',
+      lyrics_file: music.lyrics_file || music.lyrics_path || '',
+      author: music.author || '',
+      time: music.time || '',
+      des: music.des || ''
+    }))
+  ]);
+
+  return `auto-${hashString(stableStringify(payload))}`;
+}
 
 const safeStorage = {
   getItem(key) {
@@ -154,11 +195,12 @@ export class MusicStorage {
 
 }
 
-// 仅在首次加载或版本变更时更新本地缓存，避免每次启动全量写入
-const shouldRefreshStorage = safeStorage.getItem(STORAGE_META_KEY) !== STORAGE_VERSION;
+// 歌单内容变化时自动更新本地缓存，不需要手动维护版本号。
+const storageSignature = createStorageSignature(MusicStorage.musicListMap);
+const shouldRefreshStorage = safeStorage.getItem(STORAGE_META_KEY) !== storageSignature;
 if (shouldRefreshStorage) {
   MusicStorage.saveAllLists();
-  safeStorage.setItem(STORAGE_META_KEY, STORAGE_VERSION);
+  safeStorage.setItem(STORAGE_META_KEY, storageSignature);
 }
 
 /**

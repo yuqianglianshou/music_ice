@@ -367,12 +367,12 @@ export const musicList4 = [
   {
     song_type: TYPE_4,
     song_path: FILE_MUSIC_JINGDIAN,
-    song_name: "My Heart Will Go On (Love Theme from _Titanic_) - Céline Dion",
-    song_file: "My Heart Will Go On (Love Theme from _Titanic_) - Céline Dion.mp3",
+    song_name: "My Heart Will Go On (Love Theme from _Titanic_)",
+    song_file: "My Heart Will Go On (Love Theme from _Titanic_).mp3",
     img_file: " ",
-    lyrics_file: 'My Heart Will Go On (Love Theme from _Titanic_) - Céline Dion.lrc',
+    lyrics_file: 'My Heart Will Go On (Love Theme from _Titanic_).lrc',
     lyrics_type: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
-    author: "Céline Dion",
+    author: "Celine Dion",
     time: '05:10',
     des: "我心永恒",
   },
@@ -410,7 +410,7 @@ export const musicList4 = [
     lyrics_type: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
     author: "萧敬腾",
     time: '04:35',
-    des: "怎么说我不爱你",
+    des: "最怕的不是不爱了，是连解释爱过都显得多余。",
   },
   {
     song_type: TYPE_4,
@@ -422,7 +422,7 @@ export const musicList4 = [
     lyrics_type: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
     author: "胡莎莎",
     time: '02:28',
-    des: "",
+    des: "一声九儿，唱出来的是土地、命运和一个人倔强的时光。",
   },
   {
     song_type: TYPE_4,
@@ -434,7 +434,7 @@ export const musicList4 = [
     lyrics_type: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
     author: "Nana",
     time: '06:21',
-    des: "",
+    des: "孤独不是没人陪，是热闹散场后还要自己和自己说晚安。",
   },
   {
     song_type: TYPE_4,
@@ -446,7 +446,7 @@ export const musicList4 = [
     lyrics_type: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
     author: "许巍",
     time: '04:26',
-    des: "",
+    des: "许巍的歌总让人想出发，哪怕只是从疲惫里走出去一点。",
   },
   {
     song_type: TYPE_4,
@@ -470,7 +470,7 @@ export const musicList4 = [
     lyrics_type: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
     author: "迟志强",
     time: '08:27',
-    des: "",
+    des: "铁窗关住的是年月，关不住一个人回头看人生的叹息。",
   },
   {
     song_type: TYPE_4,
@@ -482,7 +482,7 @@ export const musicList4 = [
     lyrics_type: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
     author: "迟志强",
     time: '03:09',
-    des: "",
+    des: "小时候听的是调侃，长大后才知道每一句都扎在生活里。",
   },
   {
     song_type: TYPE_4,
@@ -494,7 +494,7 @@ export const musicList4 = [
     lyrics_type: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
     author: "迟志强",
     time: '04:43',
-    des: "",
+    des: "愁到深处反而唱得直白，像老朋友把苦水一口气倒完。",
   },
   {
     song_type: TYPE_4,
@@ -506,7 +506,7 @@ export const musicList4 = [
     lyrics_type: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
     author: "迟志强",
     time: '03:07',
-    des: "",
+    des: "把一年唱成十二个月的想家，听到最后只剩一声叹息。",
   },
   {
     song_type: TYPE_4,
@@ -518,7 +518,7 @@ export const musicList4 = [
     lyrics_type: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
     author: "翟惠民",
     time: '06:08',
-    des: "",
+    des: "为了生活奔波的人，最懂这首歌里那种又累又不肯倒下。",
   },
   {
     song_type: TYPE_4,
@@ -530,7 +530,7 @@ export const musicList4 = [
     lyrics_type: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
     author: "迟志强",
     time: '04:57',
-    des: "",
+    des: "流浪不是没有方向，是心里总有个回不去的地方。",
   },
   {
     song_type: TYPE_4,
@@ -542,7 +542,7 @@ export const musicList4 = [
     lyrics_type: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
     author: "陈慧琳",
     time: '04:11',
-    des: "",
+    des: "那些写进记事本的名字，后来都成了不敢翻开的旧页。",
   },
   {
     song_type: TYPE_4,
@@ -554,7 +554,7 @@ export const musicList4 = [
     lyrics_type: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
     author: "王童语",
     time: '05:32',
-    des: "",
+    des: "最朴素的情话，往往最像一个人认真爱过的样子。",
   },
   {
     song_type: TYPE_4,
@@ -566,7 +566,7 @@ export const musicList4 = [
     lyrics_type: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
     author: "BEYOND",
     time: '04:35',
-    des: "",
+    des: "这首歌不是唱给母亲听的，是唱给每个终于懂事的孩子听的。",
   },
   {
     song_type: TYPE_4,
@@ -590,7 +590,7 @@ export const musicList4 = [
     lyrics_type: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
     author: "BEYOND",
     time: '05:02',
-    des: "",
+    des: "真正的光辉不是没有黑暗，而是在黑暗里还愿意相信人。",
   },
   {
     song_type: TYPE_4,
@@ -602,7 +602,7 @@ export const musicList4 = [
     lyrics_type: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
     author: "BEYOND",
     time: '04:34',
-    des: "",
+    des: "一句喜欢你，藏着多少少年时代说不出口的认真。",
   },
   {
     song_type: TYPE_4,
@@ -614,7 +614,7 @@ export const musicList4 = [
     lyrics_type: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
     author: "BEYOND",
     time: '05:25',
-    des: "",
+    des: "每个不肯低头的人，心里大概都有一片自己的海阔天空。",
   },
   {
     song_type: TYPE_4,
@@ -626,6 +626,6 @@ export const musicList4 = [
     lyrics_type: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
     author: "BEYOND",
     time: '05:25',
-    des: "",
+    des: "灰色的不是轨迹，是走过青春后再回头看的沉默。",
   },
 ];

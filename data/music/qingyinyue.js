@@ -7,7 +7,7 @@ export const musicList2 = [
   {
     song_type: TYPE_2,
     song_path: FILE_MUSIC_QINGYINYUE,
-    song_name: "纯净如圣诗《Idé Were Were》",
+    song_name: "纯净如圣诗《Ide Were Were》",
     song_file: "纯净如圣诗.mp3",
     img_file: "music_ide.jpg",
     lyrics_type: CONFIG.LOAD_LYRICS_TYPE.TYPE_chunyinyue,
@@ -160,7 +160,7 @@ export const musicList2 = [
     lyrics_type: CONFIG.LOAD_LYRICS_TYPE.TYPE_chunyinyue,
     author: "久石让",
     time: '04:13',
-    des: "",
+    des: "不用歌词也能让人想哭，因为每个人心里都有一座回不去的城。",
   },
   {
     song_type: TYPE_2,
@@ -171,7 +171,7 @@ export const musicList2 = [
     lyrics_type: CONFIG.LOAD_LYRICS_TYPE.TYPE_chunyinyue,
     author: "和田薫",
     time: '03:10',
-    des: "",
+    des: "像隔着很长的岁月回望，所有离别都被旋律轻轻放下。",
   },
   {
     song_type: TYPE_2,
@@ -182,7 +182,7 @@ export const musicList2 = [
     lyrics_type: CONFIG.LOAD_LYRICS_TYPE.TYPE_chunyinyue,
     author: "Shirfine",
     time: '04:10',
-    des: "",
+    des: "适合一个人发呆的曲子，听着听着，白天也像做了一场梦。",
   },
   {
     song_type: TYPE_2,
@@ -193,7 +193,7 @@ export const musicList2 = [
     lyrics_type: CONFIG.LOAD_LYRICS_TYPE.TYPE_chunyinyue,
     author: "Approaching Nirvana",
     time: '05:49',
-    des: "",
+    des: "这首曲子像把世界调成静音，只留下心跳和远方。",
   },
   {
     song_type: TYPE_2,
@@ -205,7 +205,7 @@ export const musicList2 = [
     lyrics_type: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
     author: "Enya",
     time: '03:38',
-    des: "",
+    des: "时间会带走很多东西，也会把真正放不下的留下来。",
   },
 
 ];
