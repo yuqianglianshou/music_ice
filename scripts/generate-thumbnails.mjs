@@ -6,7 +6,7 @@ import path from 'node:path';
 import process from 'node:process';
 
 const projectRoot = process.cwd();
-const dataDir = path.join(projectRoot, 'data/music');
+const dataDir = path.join(projectRoot, 'catalog');
 const thumbSize = 160;
 const force = process.argv.includes('--force');
 const dryRun = process.argv.includes('--dry-run');
@@ -71,13 +71,13 @@ function collectMusicImages() {
       const songPath = parseSongPath(block, constants);
       const sourcePath = imgFile.startsWith('./')
         ? path.join(projectRoot, imgFile)
-        : path.join(projectRoot, 'music', songPath, imgFile);
+        : path.join(projectRoot, 'media', songPath, imgFile);
 
-      if (!toPosix(sourcePath).includes('/music/')) continue;
+      if (!toPosix(sourcePath).includes('/media/')) continue;
 
       const relativeSource = toPosix(path.relative(projectRoot, sourcePath));
       const thumbRelative = relativeSource
-        .replace(/^music\//, 'assets/covers/music-thumbs/')
+        .replace(/^media\//, 'assets/covers/music-thumbs/')
         .replace(/\.[^.]+$/, '.jpg');
 
       images.push({

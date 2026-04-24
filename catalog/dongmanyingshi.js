@@ -1,0 +1,78 @@
+import { CONFIG } from '../app/config.js';
+
+const TYPE = "动漫影视";
+const FILE_MUSIC_DONGMANYINGSHI = "dongmanyingshi/";
+
+export const animeScreenList = [
+  {
+    song_type: TYPE,
+    song_path: FILE_MUSIC_DONGMANYINGSHI,
+    song_name: "灌篮高手 - 好想大声说爱你",
+    song_file: "灌篮高手 - 好想大声说爱你.mp3",
+    img_file: "灌篮高手 - 好想大声说爱你.jpg",
+    lyrics_file: "灌篮高手 - 好想大声说爱你.lrc",
+    lyrics_type: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
+    author: "",
+    time: "03:51",
+    des: "前奏一响，那个夏天的球场和没说出口的热血就都回来了。",
+  },
+  {
+    song_type: TYPE,
+    song_path: FILE_MUSIC_DONGMANYINGSHI,
+    song_name: "数码宝贝 - ButterFly - 和田光司",
+    song_file: "数码宝贝 - Butter-Fly - 和田光司.mp3",
+    img_file: "数码宝贝 - Butter-Fly - 和田光司.webp",
+    lyrics_file: "数码宝贝 - Butter-Fly - 和田光司.lrc",
+    lyrics_type: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
+    author: "和田光司",
+    time: "04:18",
+    des: "长大后才懂，这首歌唱的不是进化，是不肯认输的自己。",
+  },
+  {
+    song_type: TYPE,
+    song_path: FILE_MUSIC_DONGMANYINGSHI,
+    song_name: "数码宝贝 - brave heart - 宮崎歩",
+    song_file: "数码宝贝 - brave heart - 宮崎歩.mp3",
+    img_file: "数码宝贝 - brave heart - 宮崎歩.jpg",
+    lyrics_file: "数码宝贝 - brave heart - 宮崎歩.lrc",
+    lyrics_type: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
+    author: " 宮崎歩",
+    time: "04:12",
+    des: "每次听到这里，心里那个小孩都会重新鼓起勇气。",
+  },
+  {
+    song_type: TYPE,
+    song_path: FILE_MUSIC_DONGMANYINGSHI,
+    song_name: "龙珠 - Makafushigi Adventure - 高橋洋樹",
+    song_file: "龙珠.mp3",
+    img_file: "龙珠.jpg",
+    lyrics_file: "龙珠.lrc",
+    lyrics_type: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
+    author: "高橋洋樹",
+    time: "03:50",
+    des: "童年的冒险没有结束，只是换成了我们在生活里继续闯关。",
+  },
+  {
+    song_type: TYPE,
+    song_path: FILE_MUSIC_DONGMANYINGSHI,
+    song_name: "光能使者 - Granzort",
+    song_file: "光能使者 - Granzort.mp3",
+    img_file: "光能使者 - Granzort.webp",
+    lyrics_type: CONFIG.LOAD_LYRICS_TYPE.TYPE_chunyinyue,
+    author: "田中公平",
+    time: "02:52",
+    des: "旋律一出来，小时候守在电视机前的黄昏又亮了起来。",
+  },
+  {
+    song_type: TYPE,
+    song_path: FILE_MUSIC_DONGMANYINGSHI,
+    song_name: "憨八龟的故事 - 生命的云彩",
+    song_file: "生命的云彩 - 沸点乐队.mp3",
+    img_file: "",
+    lyrics_file: "生命的云彩 - 沸点乐队.lrc",
+    lyrics_type: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
+    author: "沸点乐队",
+    time: "02:16",
+    des: "最治愈的童年歌，总像有人轻轻提醒你：别把天真弄丢了。",
+  }
+];
