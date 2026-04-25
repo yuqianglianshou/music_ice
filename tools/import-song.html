@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Music Icee Song Importer</title>
+  <link rel="stylesheet" href="../css/importer.css" />
+</head>
+
+<body>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <main class="importer-page">
+    <section class="hero">
+      <p class="eyebrow">Music Icee</p>
+      <h1>歌曲导入工具</h1>
+      <p class="summary">选择项目目录、上传歌曲资源、填写分类和基本信息，一次完成文件写入、歌单更新和缩略图生成。</p>
+    </section>
+
+    <section class="panel">
+      <div class="panel-head">
+        <div>
+          <h2>项目目录</h2>
+          <p>第一次使用时选择当前仓库根目录。</p>
+        </div>
+        <button id="pick-root" class="primary-button" type="button">选择项目目录</button>
+      </div>
+      <div id="root-status" class="status-line muted">尚未选择目录</div>
+    </section>
+
+    <section class="panel">
+      <div class="panel-head">
+        <div>
+          <h2>歌曲信息</h2>
+          <p>歌曲文件必填，歌词和头像按需添加。</p>
+        </div>
+      </div>
+      <div id="result-banner" class="result-banner" role="status" aria-live="polite">等待添加歌曲</div>
+
+      <form id="import-form" class="import-form">
+        <div class="grid two-columns">
+          <label class="field">
+            <span>分类</span>
+            <select id="category" required></select>
+          </label>
+          <label class="field">
+            <span>歌曲名</span>
+            <input id="song-name" type="text" placeholder="例如：直到世界尽头 - WANDS" required />
+          </label>
+          <label class="field">
+            <span>作者</span>
+            <input id="author" type="text" placeholder="例如：WANDS" required />
+          </label>
+          <label class="field">
+            <span>时长</span>
+            <input id="time" type="text" placeholder="自动识别，可手动改" />
+          </label>
+          <label class="field field-span">
+            <span>描述</span>
+            <textarea id="description" rows="3" placeholder="可选，留空则写入歌曲名。"></textarea>
+          </label>
+          <label class="field field-span">
+            <span>目标基础文件名</span>
+            <input id="base-name" type="text" placeholder="可选，例如：直到世界尽头 - WANDS；留空则使用你选择的原文件名" />
+          </label>
+        </div>
+
+        <div class="grid file-grid">
+          <label class="field">
+            <span>歌曲文件</span>
+            <input id="song-file" type="file" accept="audio/*,.mp3,.flac,.m4a,.wav,.ogg" required />
+            <small id="song-file-name" class="file-hint">未选择文件</small>
+          </label>
+          <label class="field">
+            <span>歌词文件</span>
+            <input id="lyrics-file" type="file" accept=".lrc,.txt" />
+            <small id="lyrics-file-name" class="file-hint">未选择文件</small>
+          </label>
+          <label class="field">
+            <span>头像文件</span>
+            <input id="cover-file" type="file" accept="image/*" />
+            <small id="cover-file-name" class="file-hint">未选择文件</small>
+          </label>
+        </div>
+
+        <div class="actions">
+          <button id="reset-form" class="secondary-button" type="button">清空表单</button>
+          <button class="primary-button" type="submit">添加歌曲</button>
+        </div>
+        <div id="form-status" class="form-status" role="status" aria-live="polite"></div>
+      </form>
+    </section>
+
+    <section class="panel">
+      <div class="panel-head">
+        <div>
+          <h2>写入预览</h2>
+          <p>确认后会把下面的条目追加到目标分类文件。</p>
+        </div>
+      </div>
+      <pre id="preview" class="preview-box">尚未生成预览</pre>
+    </section>
+
+    <section class="panel">
+      <div class="panel-head">
+        <div>
+          <h2>执行日志</h2>
+          <p>这里会显示文件写入、缩略图生成和歌单更新结果。</p>
+        </div>
+      </div>
+      <div id="log" class="log-box"></div>
+    </section>
+  </main>
+
+  <script type="module" src="../app/song-importer.js"></script>
+</body>
+
+</html>

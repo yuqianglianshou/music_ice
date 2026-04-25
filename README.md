@@ -34,3 +34,18 @@ node scripts/generate-thumbnails.mjs
 
 脚本会读取 `catalog/*.js` 中的 `img_file`，自动生成缺失或过期的 `assets/covers/music-thumbs/**/*.jpg` 列表小图。
 如需同时更新默认封面缩略图，可追加 `--defaults`。
+
+## 本地导入工具
+
+通过 `tools/import-song.html` 可以在浏览器里直接把歌曲、歌词、封面写入项目：
+
+1. 用本地 `localhost` 打开这个页面
+2. 选择仓库根目录
+3. 选择分类、歌曲文件、歌词、封面并填写基本信息
+4. 点击“添加歌曲”
+
+工具会自动：
+
+- 把文件写入 `media/对应分类/`
+- 把条目追加到 `catalog/对应分类.js`
+- 为封面生成 `assets/covers/music-thumbs/` 列表缩略图

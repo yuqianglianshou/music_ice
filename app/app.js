@@ -14,6 +14,8 @@ const $$ = document.querySelectorAll.bind(document);
  * 全局状态管理
  */
 const initialMusicList = MusicStorage.getListAllMusic();
+const IMPORT_SIGNAL_KEY = 'musicIceCatalogUpdatedAt';
+const importChannel = 'BroadcastChannel' in window ? new BroadcastChannel('music-ice-importer') : null;
 const state = {
   currentMusicIndex: 0,
   playMode: 0, // 0: 列表循环, 1: 随机播放, 2: 单曲循环
@@ -25,6 +27,7 @@ const state = {
   listScrollTimer: null,
   hoverItem: null,
   noticeTimer: null,
+  catalogReloadTimer: null,
   currentMusicList: initialMusicList,
   displayMusicList: initialMusicList
 };
@@ -224,6 +227,18 @@ function showNotice(message) {
 function showPlaybackError(error, prefix = '播放失败') {
   const detail = error?.message ? `：${error.message}` : '';
   showNotice(`${prefix}${detail}，请检查音频文件是否存在或已损坏`);
+}
+
+function scheduleCatalogReload() {
+  clearTimeout(state.catalogReloadTimer);
+  state.catalogReloadTimer = setTimeout(() => {
+    window.location.reload();
+  }, 900);
+}
+
+function handleCatalogUpdatedSignal() {
+  showNotice('歌单已更新，正在刷新列表...');
+  scheduleCatalogReload();
 }
 
 /**
@@ -1078,6 +1093,20 @@ function initTabs() {
   });
 }
 
+function bindCatalogUpdateEvents() {
+  window.addEventListener('storage', event => {
+    if (event.key === IMPORT_SIGNAL_KEY && event.newValue) {
+      handleCatalogUpdatedSignal();
+    }
+  });
+
+  importChannel?.addEventListener('message', event => {
+    if (event.data?.type === 'catalog-updated') {
+      handleCatalogUpdatedSignal();
+    }
+  });
+}
+
 /**
  * 应用初始化
  */
@@ -1090,6 +1119,7 @@ function init() {
   audioControl.init();
   volumeControl.init();
   initTabs();
+  bindCatalogUpdateEvents();
   playlistControl.initMusicList();
   initEventListeners();
   bindWakeLockEvents();
