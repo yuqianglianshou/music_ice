@@ -34,16 +34,20 @@
 
   .layout-right {
     position: fixed;
-    inset: auto 12px 76px;
+    inset: auto 28px 84px;
     z-index: 20;
     display: flex;
     height: min(72vh, 560px);
     padding: 0;
     border-radius: 22px;
+    background-color: var(--bg-base, #286879);
+    background-image: var(--page-background-image);
     opacity: 0;
     pointer-events: none;
     transform: translateY(24px);
     transition: opacity 0.24s ease, transform 0.24s ease;
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
   }
 
   .layout-right.panel-open {
@@ -123,44 +127,43 @@
     right: 0;
     transform: none;
     width: 100%;
-    height: 72px;
+    height: 84px;
     border-radius: 0;
-    padding: 0 16px;
+    padding: 12px 14px max(10px, env(safe-area-inset-bottom));
     border-left: none;
     border-right: none;
     border-bottom: none;
   }
 
   .app_footer .songs_play {
-    gap: 12px;
+    position: relative;
+    gap: 10px;
+    align-items: flex-end;
   }
 
   /* 播放控制区域 */
   .songs_play .play-control {
-    gap: 12px;
-    flex: 1;
-    min-width: 0;
+    display: contents;
   }
 
   .play-control .control-items {
-    gap: 8px;
     flex-shrink: 0;
+    order: 1;
   }
 
   .control-items .items-btn {
-    gap: 6px;
+    gap: 0;
   }
 
   /* 按钮尺寸调整 */
   .control-items :is(.btn-prev, .btn-next) {
-    width: 40px;
-    height: 40px;
+    display: none;
   }
 
   .control-items .btn-play {
     width: 52px;
     height: 52px;
-    margin-right: 4px;
+    margin-right: 0;
   }
 
   .control-items :is(.btn-prev, .btn-play, .btn-next) .icon {
@@ -175,23 +178,26 @@
 
   /* 进度条区域 */
   .play-control .control-progress {
-    gap: 8px;
-    flex: 1;
-    min-width: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 6px;
+    gap: 0;
+    z-index: 1;
   }
 
   .control-progress :is(.progress-currentTime, .progress-totalTime) {
-    min-width: 38px;
-    max-width: 38px;
-    font-size: 11px;
+    display: none;
   }
 
   .play-control .control-progress .progress-bar {
-    height: 3px;
+    height: 4px;
   }
 
   .control-progress input[type='range'] {
-    height: 3px;
+    height: 14px;
+    top: -5px;
   }
 
   .control-progress input[type='range']::-webkit-slider-thumb {
@@ -201,24 +207,27 @@
   }
 
   .control-progress .progress-colorFill {
-    height: 3px;
+    height: 4px;
   }
 
   /* 播放设置区域 */
   .songs_play .play-setting {
+    order: 2;
+    flex: 1;
     gap: 8px;
-    flex-shrink: 0;
     min-width: 0;
   }
 
   .play-setting .setting-options {
     gap: 8px;
+    flex-shrink: 0;
   }
 
   .footer-current-song {
     display: block;
     flex: 1;
-    max-width: 150px;
+    max-width: none;
+    height: 44px;
   }
 
   .setting-options :is(.options-circulationMode[play-mode], .options-sound[play-volume-icon]) {
@@ -239,7 +248,7 @@
 
   /* 音量滑块 */
   .setting-options .options-soundSlider {
-    width: 60px;
+    width: 64px;
     height: 24px;
   }
 
@@ -257,6 +266,10 @@
   .song_panel {
     padding: 20px 16px;
     border-radius: 20px 20px 0 0;
+    background-color: var(--bg-base, #286879);
+    background-image: var(--page-background-image);
+    background-size: cover;
+    background-position: center;
   }
 
   .panel-close {
@@ -322,6 +335,12 @@
     padding: 12px;
   }
 
+  .layout-right {
+    inset-right: 20px;
+    inset-left: 20px;
+    inset-bottom: 78px;
+  }
+
   .list_header {
     height: 52px;
     padding: 0 6px;
@@ -350,7 +369,7 @@
   }
 
   .app_footer {
-    height: 68px;
+    height: 78px;
     padding: 0 12px;
   }
 
@@ -359,8 +378,7 @@
   }
 
   .control-items :is(.btn-prev, .btn-next) {
-    width: 36px;
-    height: 36px;
+    display: none;
   }
 
   .control-items .btn-play {
@@ -379,9 +397,7 @@
   }
 
   .control-progress :is(.progress-currentTime, .progress-totalTime) {
-    min-width: 32px;
-    max-width: 32px;
-    font-size: 10px;
+    display: none;
   }
 
   .setting-options :is(.options-circulationMode[play-mode], .options-sound[play-volume-icon]) {
@@ -390,7 +406,7 @@
   }
 
   .setting-options .options-soundSlider {
-    width: 50px;
+    width: 54px;
   }
 
   .song_panel {
@@ -410,6 +426,10 @@
 
   .app_footer {
     height: 64px;
+  }
+
+  .layout-right {
+    inset-bottom: 64px;
   }
 
   .app-notice {

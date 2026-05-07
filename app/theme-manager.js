@@ -214,14 +214,16 @@ class ThemeManager {
 
     // 更新body背景。使用静态线性渐变恢复多主题色彩，避免动态光斑和滚动重绘。
     const [accentA, accentB, accentC] = theme.radialGradients;
-    body.style.backgroundColor = theme.bgBase;
-    body.style.backgroundImage = `
+    const pageBackgroundImage = `
       linear-gradient(180deg, rgba(255, 255, 255, 0.22) 0%, rgba(255, 255, 255, 0.08) 42%, transparent 100%),
       linear-gradient(120deg, ${accentA.color} 0%, rgba(255, 255, 255, 0.12) 38%, transparent 60%),
       linear-gradient(235deg, ${accentB.color} 0%, rgba(255, 255, 255, 0.1) 38%, transparent 62%),
       linear-gradient(165deg, transparent 48%, ${accentC.color} 100%),
       linear-gradient(135deg, ${theme.bgGradient[0]} 0%, ${theme.bgBase} 48%, ${theme.bgGradient[1]} 100%)
     `;
+    root.style.setProperty('--page-background-image', pageBackgroundImage);
+    body.style.backgroundColor = theme.bgBase;
+    body.style.backgroundImage = pageBackgroundImage;
 
     // 设置data-theme属性用于CSS选择器
     root.setAttribute('data-theme', theme.name);

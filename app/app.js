@@ -28,6 +28,10 @@ const state = {
   hoverItem: null,
   noticeTimer: null,
   catalogReloadTimer: null,
+  playRequestId: 0,
+  lastSelectIdentity: '',
+  lastSelectAt: 0,
+  isSeeking: false,
   currentMusicList: initialMusicList,
   displayMusicList: initialMusicList
 };
@@ -246,17 +250,24 @@ function handleCatalogUpdatedSignal() {
  */
 const playbackControl = {
   async startPlayback() {
+    const requestId = ++state.playRequestId;
     try {
       await audioControl.audioSource.play();
+      if (requestId !== state.playRequestId) return false;
       this.updateUIForPlaying();
       requestWakeLock();
+      return true;
     } catch (error) {
+      if (requestId !== state.playRequestId || error?.name === 'AbortError') {
+        return false;
+      }
       console.error('播放失败:', error);
       throw error;
     }
   },
 
   stopPlayback() {
+    state.playRequestId += 1;
     audioControl.audioSource.pause();
     this.updateUIForPaused();
     releaseWakeLock();
@@ -423,6 +434,7 @@ const panelControl = {
  */
 const progressControl = {
   reset() {
+    state.isSeeking = false;
     elements.playProgress.forEach((progress, i) => {
       progress.value = 0;
       progress.max = 0;
@@ -446,6 +458,7 @@ const progressControl = {
   },
 
   updateRunningTime() {
+    if (state.isSeeking) return;
     elements.playProgress.forEach((progress, i) => {
       progress.value = audioControl.audioSource.currentTime;
       elements.playCurrentTime[i].textContent = timeFormatSecondsToMinutes(audioControl.audioSource.currentTime);
@@ -459,7 +472,7 @@ const progressControl = {
   updateRangeColor(e) {
     let element = elements.playProgress[0];
     if (e) {
-      element = e.target;
+      element = e.target || e;
     }
 
     const max = Number(element.max);
@@ -487,6 +500,59 @@ const progressControl = {
       lyricsManager.isAutoScrolling = true;
       lyricsManager.update(currentTime);
     }
+  },
+
+  beginSeek(e) {
+    e.stopPropagation();
+    state.isSeeking = true;
+  },
+
+  previewSeek(e) {
+    e.stopPropagation();
+    const currentTime = this.getSeekTime(e);
+    if (currentTime === null) return;
+    this.syncProgressUI(currentTime, e.target);
+  },
+
+  commitSeek(e) {
+    e.stopPropagation();
+    const currentTime = this.getSeekTime(e);
+    state.isSeeking = false;
+    if (currentTime === null) return;
+
+    try {
+      if (typeof audioControl.audioSource.fastSeek === 'function') {
+        audioControl.audioSource.fastSeek(currentTime);
+      } else {
+        audioControl.audioSource.currentTime = currentTime;
+      }
+    } catch (error) {
+      audioControl.audioSource.currentTime = currentTime;
+    }
+
+    this.syncProgressUI(currentTime, e.target);
+    if (lyricsManager) {
+      lyricsManager.isAutoScrolling = true;
+      lyricsManager.update(currentTime);
+    }
+  },
+
+  getSeekTime(e) {
+    const progress = e.target;
+    const max = Number(progress.max) || 0;
+    if (max <= 0) return null;
+    return Math.max(0, Math.min(max, Number(progress.value) || 0));
+  },
+
+  syncProgressUI(currentTime, sourceProgress = elements.playProgress[0]) {
+    elements.playProgress.forEach(progress => {
+      progress.max = sourceProgress.max;
+      progress.value = currentTime;
+    });
+    elements.playCurrentTime.forEach(el => {
+      el.textContent = timeFormatSecondsToMinutes(currentTime);
+    });
+    this.updateRangeColor(sourceProgress);
   }
 };
 
@@ -498,14 +564,15 @@ const volumeControl = {
 
   change(e) {
     e.stopPropagation();
-    e.preventDefault();
 
-    const volume = elements.volumeRange.value;
-    const percentage = (volume / elements.volumeRange.max) * 100;
+    const volume = Math.max(0, Math.min(1, Number(elements.volumeRange.value)));
+    const percentage = (volume / Number(elements.volumeRange.max)) * 100;
 
     audioControl.audioSource.volume = volume;
-    audioControl.audioSource.muted = false;
-    this.lastVolume = volume;
+    audioControl.audioSource.muted = volume === 0;
+    if (volume > 0) {
+      this.lastVolume = volume;
+    }
     elements.volumeColorFill.style.width = `${percentage}%`;
 
     this.updateVolumeIcon(volume > 0);
@@ -531,8 +598,9 @@ const volumeControl = {
       elements.volumeRange.value = 0;
       elements.volumeColorFill.style.width = '0%';
     } else {
-      audioControl.audioSource.volume = this.lastVolume;
-      elements.volumeRange.value = this.lastVolume;
+      const restoredVolume = this.lastVolume > 0 ? this.lastVolume : CONFIG.VOLUME.DEFAULT;
+      audioControl.audioSource.volume = restoredVolume;
+      elements.volumeRange.value = restoredVolume;
       const percentage = (audioControl.audioSource.volume / elements.volumeRange.max) * 100;
       elements.volumeColorFill.style.width = `${percentage}%`;
     }
@@ -662,6 +730,15 @@ const playlistControl = {
       return;
     }
 
+    const selectedMusic = state.displayMusicList[musicIndex];
+    const selectedIdentity = getMusicIdentity(selectedMusic);
+    const now = Date.now();
+    if (selectedIdentity === state.lastSelectIdentity && now - state.lastSelectAt < 360) {
+      return;
+    }
+    state.lastSelectIdentity = selectedIdentity;
+    state.lastSelectAt = now;
+    state.playRequestId += 1;
     state.currentMusicList = state.displayMusicList;
     state.currentMusicIndex = musicIndex;
 
@@ -744,23 +821,24 @@ function initEventListeners() {
 
   // 进度条事件
   addEventListeners(elements.playProgress, {
+    'pointerdown': progressControl.beginSeek.bind(progressControl),
+    'touchstart': progressControl.beginSeek.bind(progressControl),
     'input': e => {
-      progressControl.updateRangeColor(e);
-      progressControl.updatePlaytime(e);
+      progressControl.previewSeek(e);
     },
     'change': e => {
-      progressControl.updateRangeColor(e);
-      progressControl.updatePlaytime(e);
+      progressControl.commitSeek(e);
     },
+    'pointerup': progressControl.commitSeek.bind(progressControl),
+    'touchend': progressControl.commitSeek.bind(progressControl),
     'click': e => e.stopPropagation()
   });
 
   // 音量控制事件
   elements.volumeRange.addEventListener("input", volumeControl.change.bind(volumeControl));
-  elements.volumeRange.addEventListener("click", e => {
-    e.stopPropagation();
-    e.preventDefault();
-  });
+  elements.volumeRange.addEventListener("change", volumeControl.change.bind(volumeControl));
+  elements.volumeRange.addEventListener("click", e => e.stopPropagation());
+  elements.volumeRange.addEventListener("pointerdown", e => e.stopPropagation());
   elements.volumeIcon.addEventListener("click", volumeControl.toggleMute.bind(volumeControl));
 
   const debouncedShowHover = debounce(showHoverWindow, 120);
