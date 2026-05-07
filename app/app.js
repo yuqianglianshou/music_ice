@@ -561,13 +561,19 @@ const progressControl = {
  */
 const volumeControl = {
   lastVolume: CONFIG.VOLUME.DEFAULT,
+  systemVolumeOnly: false,
 
   change(e) {
-    e.stopPropagation();
+    e?.stopPropagation?.();
 
     const volume = Math.max(0, Math.min(1, Number(elements.volumeRange.value)));
+    this.applyVolume(volume);
+  },
+
+  applyVolume(volume) {
     const percentage = (volume / Number(elements.volumeRange.max)) * 100;
 
+    elements.volumeRange.value = volume;
     audioControl.audioSource.volume = volume;
     audioControl.audioSource.muted = volume === 0;
     if (volume > 0) {
@@ -576,6 +582,28 @@ const volumeControl = {
     elements.volumeColorFill.style.width = `${percentage}%`;
 
     this.updateVolumeIcon(volume > 0);
+  },
+
+  changeByClientX(clientX) {
+    const rect = elements.volumeRange.getBoundingClientRect();
+    if (!rect.width) return;
+
+    const ratio = Math.max(0, Math.min(1, (clientX - rect.left) / rect.width));
+    const min = Number(elements.volumeRange.min) || 0;
+    const max = Number(elements.volumeRange.max) || 1;
+    const volume = min + (max - min) * ratio;
+    this.applyVolume(Number(volume.toFixed(2)));
+  },
+
+  handleTouch(e) {
+    e.stopPropagation();
+    e.preventDefault();
+
+    if (this.systemVolumeOnly) return;
+
+    const touch = e.touches?.[0] || e.changedTouches?.[0];
+    if (!touch) return;
+    this.changeByClientX(touch.clientX);
   },
 
   updateVolumeIcon(hasSound) {
@@ -609,6 +637,10 @@ const volumeControl = {
   },
 
   init() {
+    this.systemVolumeOnly = this.isSystemVolumeOnly();
+    document.documentElement.classList.toggle('system-volume-only', this.systemVolumeOnly);
+    elements.volumeRange.disabled = this.systemVolumeOnly;
+
     const initialVolume = CONFIG.VOLUME.DEFAULT;
     audioControl.audioSource.volume = initialVolume;
     this.lastVolume = initialVolume;
@@ -618,6 +650,13 @@ const volumeControl = {
     elements.volumeColorFill.style.width = `${percentage}%`;
 
     this.updateVolumeIcon(true);
+  },
+
+  isSystemVolumeOnly() {
+    const ua = navigator.userAgent || '';
+    const isiOS = /iPad|iPhone|iPod/.test(ua) ||
+      (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+    return isiOS;
   }
 };
 
@@ -835,10 +874,19 @@ function initEventListeners() {
   });
 
   // 音量控制事件
+  const volumeSlider = elements.volumeRange.closest('.options-soundSlider');
+  volumeSlider?.addEventListener("click", e => e.stopPropagation());
+  volumeSlider?.addEventListener("pointerdown", e => e.stopPropagation());
+  volumeSlider?.addEventListener("touchstart", volumeControl.handleTouch.bind(volumeControl), { passive: false });
+  volumeSlider?.addEventListener("touchmove", volumeControl.handleTouch.bind(volumeControl), { passive: false });
+  volumeSlider?.addEventListener("touchend", volumeControl.handleTouch.bind(volumeControl), { passive: false });
   elements.volumeRange.addEventListener("input", volumeControl.change.bind(volumeControl));
   elements.volumeRange.addEventListener("change", volumeControl.change.bind(volumeControl));
   elements.volumeRange.addEventListener("click", e => e.stopPropagation());
   elements.volumeRange.addEventListener("pointerdown", e => e.stopPropagation());
+  elements.volumeRange.addEventListener("touchstart", volumeControl.handleTouch.bind(volumeControl), { passive: false });
+  elements.volumeRange.addEventListener("touchmove", volumeControl.handleTouch.bind(volumeControl), { passive: false });
+  elements.volumeRange.addEventListener("touchend", volumeControl.handleTouch.bind(volumeControl), { passive: false });
   elements.volumeIcon.addEventListener("click", volumeControl.toggleMute.bind(volumeControl));
 
   const debouncedShowHover = debounce(showHoverWindow, 120);
