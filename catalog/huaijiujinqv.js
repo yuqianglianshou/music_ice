@@ -195,5 +195,17 @@ export const nostalgiaList = [
     author: "林俊杰",
     time: "04:28",
     des: "一场烟雨，一段放不下的旧梦。",
+  },
+  {
+    song_type: TYPE,
+    song_path: FILE_MUSIC_HUAIJIUJINQV,
+    song_name: "满江红",
+    song_file: "满江红 - 刘可.mp3",
+    img_file: "满江红 - 刘可.jpg",
+    lyrics_file: "满江红 - 刘可.lrc",
+    lyrics_type: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
+    author: "刘可",
+    time: "03:11",
+    des: "听到的是一腔热血，也是普通人心里那点不肯低头的劲。",
   }
 ];

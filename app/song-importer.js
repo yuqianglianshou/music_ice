@@ -15,12 +15,16 @@ const ROOT_STORE_NAME = 'settings';
 const ROOT_HANDLE_KEY = 'project-root-handle';
 const IMPORT_SIGNAL_KEY = 'musicIceCatalogUpdatedAt';
 const LAST_CATEGORY_KEY = 'musicIceImporterLastCategory';
+const IMPORTER_VERSION = '20260508-7';
+const WEBP_DEFAULT_IMAGE_IDS = new Set([18, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 31, 32, 33]);
+const DEFAULT_IMAGE_COUNT = 53;
 
 const state = {
   projectRootHandle: null,
   importChannel: 'BroadcastChannel' in window ? new BroadcastChannel('music-ice-importer') : null,
   duplicateCheckId: 0,
-  catalogSongs: []
+  catalogSongs: [],
+  defaultCoverPath: ''
 };
 
 const elements = {
@@ -39,6 +43,7 @@ const elements = {
   songFileName: document.getElementById('song-file-name'),
   lyricsFileName: document.getElementById('lyrics-file-name'),
   coverFileName: document.getElementById('cover-file-name'),
+  toolVersion: document.getElementById('tool-version'),
   songSearch: document.getElementById('song-search'),
   searchCategory: document.getElementById('search-category'),
   searchSummary: document.getElementById('search-summary'),
@@ -58,6 +63,7 @@ init().catch(error => {
 });
 
 async function init() {
+  renderToolVersion();
   renderCategoryOptions();
   renderSearchCategoryOptions();
   bindEvents();
@@ -67,6 +73,12 @@ async function init() {
   checkSupport();
   await restoreProjectRoot();
   setFeedback('等待添加歌曲');
+  addLog(`导入工具版本：${IMPORTER_VERSION}`, 'success');
+}
+
+function renderToolVersion() {
+  if (!elements.toolVersion) return;
+  elements.toolVersion.textContent = `导入脚本版本：${IMPORTER_VERSION}`;
 }
 
 function checkSupport() {
@@ -88,7 +100,12 @@ function bindEvents() {
     input.addEventListener('change', scheduleDuplicateWarning);
   }
 
-  elements.category.addEventListener('change', persistSelectedCategory);
+  elements.category.addEventListener('change', () => {
+    persistSelectedCategory();
+    updateFileHints();
+  });
+  elements.baseName.addEventListener('input', updateFileHints);
+  elements.baseName.addEventListener('change', updateFileHints);
 
   elements.songFile.addEventListener('change', async () => {
     updateFileHints();
@@ -134,9 +151,23 @@ function renderSearchCategoryOptions() {
 }
 
 function updateFileHints() {
-  elements.songFileName.textContent = elements.songFile.files[0]?.name || '未选择文件';
-  elements.lyricsFileName.textContent = elements.lyricsFile.files[0]?.name || '未选择文件';
-  elements.coverFileName.textContent = elements.coverFile.files[0]?.name || '未选择文件';
+  const category = getSelectedCategory();
+  const songFile = elements.songFile.files[0] || null;
+  const lyricsFile = elements.lyricsFile.files[0] || null;
+  const coverFile = elements.coverFile.files[0] || null;
+  const canBuildTargets = !!songFile;
+  const payload = canBuildTargets ? buildPayload(songFile, lyricsFile, coverFile, category) : null;
+
+  elements.songFileName.textContent = formatFileHint(songFile, payload?.song_file);
+  elements.lyricsFileName.textContent = formatFileHint(lyricsFile, payload?.lyrics_file);
+  elements.coverFileName.textContent = formatFileHint(coverFile, payload?.img_file);
+}
+
+function formatFileHint(file, targetName = '') {
+  if (!file && targetName) return `未选择文件\n将使用默认头像：${targetName}`;
+  if (!file) return '未选择文件';
+  if (!targetName || targetName === file.name) return `已选择：${file.name}`;
+  return `已选择：${file.name}\n将保存为：${targetName}`;
 }
 
 async function pickProjectRoot() {
@@ -220,15 +251,30 @@ async function handleSubmit(event) {
     if (!songFile) {
       throw new Error('请先选择歌曲文件。');
     }
+    validateSourceFiles(songFile, coverFile);
 
     const payload = buildPayload(songFile, lyricsFile, coverFile, category);
     await ensureNoDuplicate(payload);
     const catalogUpdate = await prepareCatalogUpdate(payload, category);
-    await writeMediaFiles(payload, category);
-    if (coverFile) {
-      await generateCoverThumbnail(payload, category);
+    const writtenFiles = await writeMediaFiles(payload, category);
+
+    try {
+      await updateCatalogFile(catalogUpdate, category);
+      await verifyCatalogEntry(catalogUpdate, payload, category);
+    } catch (error) {
+      await cleanupWrittenMediaFiles(category, writtenFiles);
+      throw error;
     }
-    await updateCatalogFile(catalogUpdate, category);
+
+    if (payload.sourceFiles.coverFile) {
+      try {
+        await generateCoverThumbnail(payload, category);
+      } catch (error) {
+        addLog(`头像原图已写入，但缩略图生成失败：${error.message || '未知错误'}`, 'error');
+      }
+    } else {
+      addLog(`未选择头像，已使用默认头像：${payload.img_file}`, 'success');
+    }
 
     await refreshCatalogSongs();
     notifyMusicCatalogUpdated();
@@ -248,6 +294,7 @@ async function handleSubmit(event) {
 function resetForm(options = {}) {
   elements.form.reset();
   restoreSelectedCategory();
+  state.defaultCoverPath = '';
   elements.time.value = '';
   updateFileHints();
   renderPreview();
@@ -272,7 +319,7 @@ function buildPayload(songFile, lyricsFile, coverFile, category) {
   const songTargetName = buildTargetFileName(songFile, baseName);
   const normalizedBaseName = stripFileExtension(songTargetName);
   const lyricsTargetName = lyricsFile ? buildSiblingFileName(lyricsFile, normalizedBaseName) : '';
-  const coverTargetName = coverFile ? buildSiblingFileName(coverFile, normalizedBaseName) : '';
+  const coverTargetName = coverFile ? buildSiblingFileName(coverFile, normalizedBaseName) : getDefaultCoverPath();
 
   return {
     song_type: category.label,
@@ -287,6 +334,36 @@ function buildPayload(songFile, lyricsFile, coverFile, category) {
     des: description || elements.songName.value.trim(),
     sourceFiles: { songFile, lyricsFile, coverFile }
   };
+}
+
+function validateSourceFiles(songFile, coverFile) {
+  if (songFile.size <= 0) {
+    throw new Error('歌曲文件为空，请重新选择。');
+  }
+
+  if (!coverFile) return;
+
+  if (coverFile.size <= 0) {
+    throw new Error('头像文件为空，请重新选择。');
+  }
+
+  const isImageFile = coverFile.type.startsWith('image/') || /\.(jpe?g|png|webp|gif|bmp)$/i.test(coverFile.name);
+  if (!isImageFile) {
+    throw new Error('头像文件格式不正确，请选择 jpg、png、webp 等图片文件。');
+  }
+}
+
+function pickDefaultCoverPath() {
+  const id = Math.floor(Math.random() * DEFAULT_IMAGE_COUNT) + 1;
+  const extension = WEBP_DEFAULT_IMAGE_IDS.has(id) ? 'webp' : 'jpg';
+  return `./assets/covers/defaults/${id}.${extension}`;
+}
+
+function getDefaultCoverPath() {
+  if (!state.defaultCoverPath) {
+    state.defaultCoverPath = pickDefaultCoverPath();
+  }
+  return state.defaultCoverPath;
 }
 
 function buildTargetFileName(file, baseName) {
@@ -529,16 +606,81 @@ function normalizeSearchValue(value) {
 async function writeMediaFiles(payload, category) {
   const mediaDir = await state.projectRootHandle.getDirectoryHandle('media');
   const categoryDir = await mediaDir.getDirectoryHandle(category.folder, { create: true });
+  const writtenFiles = [];
 
-  await writeFileToDirectory(categoryDir, payload.song_file, payload.sourceFiles.songFile);
-  if (payload.sourceFiles.lyricsFile) {
-    await writeFileToDirectory(categoryDir, payload.lyrics_file, payload.sourceFiles.lyricsFile);
+  try {
+    if (payload.sourceFiles.coverFile) {
+      writtenFiles.push(await writeAndVerifyFile(
+        categoryDir,
+        payload.img_file,
+        payload.sourceFiles.coverFile,
+        `media/${category.folder}/${payload.img_file}`,
+        '头像原图'
+      ));
+    }
+
+    writtenFiles.push(await writeAndVerifyFile(
+      categoryDir,
+      payload.song_file,
+      payload.sourceFiles.songFile,
+      `media/${category.folder}/${payload.song_file}`,
+      '音频'
+    ));
+
+    if (payload.sourceFiles.lyricsFile) {
+      writtenFiles.push(await writeAndVerifyFile(
+        categoryDir,
+        payload.lyrics_file,
+        payload.sourceFiles.lyricsFile,
+        `media/${category.folder}/${payload.lyrics_file}`,
+        '歌词'
+      ));
+    }
+
+    addLog(`媒体文件校验完成：media/${category.folder}/`, 'success');
+    return writtenFiles;
+  } catch (error) {
+    await removeWrittenFiles(categoryDir, writtenFiles);
+    throw error;
   }
-  if (payload.sourceFiles.coverFile) {
-    await writeFileToDirectory(categoryDir, payload.img_file, payload.sourceFiles.coverFile);
+}
+
+async function cleanupWrittenMediaFiles(category, writtenFiles) {
+  const mediaDir = await state.projectRootHandle.getDirectoryHandle('media');
+  const categoryDir = await mediaDir.getDirectoryHandle(category.folder, { create: true });
+  await removeWrittenFiles(categoryDir, writtenFiles);
+}
+
+async function removeWrittenFiles(directoryHandle, writtenFiles) {
+  for (const writtenFile of writtenFiles) {
+    if (writtenFile.existedBefore) {
+      addLog(`保留原有文件，请手动检查：${writtenFile.displayPath}`, 'error');
+      continue;
+    }
+
+    try {
+      await directoryHandle.removeEntry(writtenFile.fileName);
+      addLog(`已回滚：${writtenFile.displayPath}`, 'error');
+    } catch (_) {
+      addLog(`回滚失败，请手动检查：${writtenFile.displayPath}`, 'error');
+    }
+  }
+}
+
+async function writeAndVerifyFile(directoryHandle, fileName, sourceFile, displayPath, label) {
+  if (!fileName || !sourceFile) {
+    throw new Error(`${label}文件缺失，无法写入。`);
   }
 
-  addLog(`媒体文件已写入 media/${category.folder}/`, 'success');
+  const existedBefore = await fileExists(directoryHandle, fileName);
+  const fileHandle = await writeFileToDirectory(directoryHandle, fileName, sourceFile);
+  const writtenFile = await fileHandle.getFile();
+  if (writtenFile.size !== sourceFile.size) {
+    throw new Error(`${label}写入校验失败：${displayPath}`);
+  }
+
+  addLog(`${label}已写入：${displayPath}`, 'success');
+  return { fileName, displayPath, fileHandle, existedBefore };
 }
 
 async function writeFileToDirectory(directoryHandle, fileName, sourceFile) {
@@ -546,6 +688,7 @@ async function writeFileToDirectory(directoryHandle, fileName, sourceFile) {
   const writable = await fileHandle.createWritable();
   await writable.write(await sourceFile.arrayBuffer());
   await writable.close();
+  return fileHandle;
 }
 
 async function prepareCatalogUpdate(payload, category) {
@@ -565,14 +708,32 @@ async function prepareCatalogUpdate(payload, category) {
     throw new Error(`无法更新 ${category.catalogFile}，数组结尾格式不符合预期。`);
   }
 
-  return { fileHandle, nextSource };
+  return { fileHandle, source, nextSource };
 }
 
 async function updateCatalogFile(catalogUpdate, category) {
   const writable = await catalogUpdate.fileHandle.createWritable();
   await writable.write(catalogUpdate.nextSource);
   await writable.close();
+
+  const verifiedSource = await (await catalogUpdate.fileHandle.getFile()).text();
+  if (verifiedSource !== catalogUpdate.nextSource) {
+    throw new Error(`歌单文件写入后校验失败：catalog/${category.catalogFile}`);
+  }
+
   addLog(`歌单文件已更新：catalog/${category.catalogFile}`, 'success');
+}
+
+async function verifyCatalogEntry(catalogUpdate, payload, category) {
+  const verifiedSource = await (await catalogUpdate.fileHandle.getFile()).text();
+  const hasSongName = verifiedSource.includes(`song_name: ${JSON.stringify(payload.song_name)}`);
+  const hasSongFile = verifiedSource.includes(`song_file: ${JSON.stringify(payload.song_file)}`);
+
+  if (!hasSongName || !hasSongFile) {
+    throw new Error(`歌单更新后未找到新条目，请检查：catalog/${category.catalogFile}`);
+  }
+
+  addLog(`歌单条目已确认：${payload.song_name}`, 'success');
 }
 
 function renderEntry(payload, folderConstName) {

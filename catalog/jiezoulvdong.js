@@ -49,6 +49,18 @@ export const rhythmList = [
     lyrics_type: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
     author: "Imagine Dragons",
     time: "03:39",
-    des: "Believer",
+    des: "疼痛没有把人打倒，反而把心里的鼓点敲得更响。",
+  },
+  {
+    song_type: TYPE,
+    song_path: FILE_MUSIC_JIEZOULVDONG,
+    song_name: "We Are Electric - Flying Steps",
+    song_file: "We Are Electric - Flying Steps.mp3",
+    img_file: "We Are Electric - Flying Steps.jpg",
+    lyrics_file: "We Are Electric - Flying Steps.lrc",
+    lyrics_type: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
+    author: "Flying Steps",
+    time: "03:28",
+    des: "节拍一亮起来，整个人像被城市夜色重新充满了电。",
   }
 ];

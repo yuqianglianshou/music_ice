@@ -482,7 +482,7 @@ export const healingList = [
     lyrics_type: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
     author: "阿YueYue",
     time: "03:16",
-    des: "再次见到你",
+    des: "有些重逢只适合在歌里发生，现实里我们连问候都怕太用力。",
   },
   {
     song_type: TYPE,
@@ -675,5 +675,17 @@ export const healingList = [
     author: "陈奕迅",
     time: "03:25",
     des: "有几个十年呢？",
+  },
+  {
+    song_type: TYPE,
+    song_path: FILE_MUSIC_SHANGGANZHIYU,
+    song_name: "the lake heard everything",
+    song_file: "the lake heard everything - Paper Blush.mp3",
+    img_file: "the lake heard everything - Paper Blush.jpg",
+    lyrics_file: "the lake heard everything - Paper Blush.lrc",
+    lyrics_type: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
+    author: "Paper Blush",
+    time: "02:39",
+    des: "湖面什么都没说，却像替所有沉默的人保存了秘密。",
   }
 ];

@@ -76,6 +76,12 @@ textarea {
   line-height: 1.6;
 }
 
+.tool-version {
+  margin: 10px 0 0;
+  color: #a4693d;
+  font-size: 13px;
+}
+
 .panel {
   margin-top: 20px;
   padding: 20px;
@@ -152,6 +158,11 @@ textarea {
 .file-hint {
   color: #8c6e58;
   font-size: 14px;
+}
+
+.file-hint {
+  line-height: 1.5;
+  white-space: pre-line;
 }
 
 .muted {

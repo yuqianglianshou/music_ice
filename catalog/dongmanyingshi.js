@@ -85,6 +85,6 @@ export const animeScreenList = [
     lyrics_type: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
     author: "Ellie",
     time: "03:36",
-    des: "青鸟",
+    des: "每次听到副歌，都像有人把少年时的热血重新塞回胸口。",
   }
 ];

@@ -36,7 +36,7 @@ export const epicScoreList = [
     lyrics_type: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
     author: "Two Steps From Hell",
     time: "01:57",
-    des: "Heart of Courage",
+    des: "真正的勇气不是不害怕，而是害怕的时候还愿意往前一步。",
   },
     {
     song_type: TYPE,
@@ -48,7 +48,7 @@ export const epicScoreList = [
     lyrics_type: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
     author: "Two Steps From Hell",
     time: "05:22",
-    des: "Victory",
+    des: "这首一响，连失败过的自己都想重新站起来一次。",
   },
   {
     song_type: TYPE,
@@ -60,7 +60,7 @@ export const epicScoreList = [
     lyrics_type: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
     author: "Hans Zimmer",
     time: "04:35",
-    des: "Time",
+    des: "时间最温柔也最残忍，它带走很多东西，也留下我们成为现在的自己。",
   },
   {
     song_type: TYPE,
@@ -71,7 +71,7 @@ export const epicScoreList = [
     lyrics_type: CONFIG.LOAD_LYRICS_TYPE.TYPE_chunyinyue,
     author: "Audiomachine",
     time: "01:48",
-    des: "Breath and Life",
+    des: "像第一束光穿过云层，提醒人活着本身就是一场盛大的远行。",
   },
   {
     song_type: TYPE,
@@ -82,6 +82,17 @@ export const epicScoreList = [
     lyrics_type: CONFIG.LOAD_LYRICS_TYPE.TYPE_chunyinyue,
     author: "Immediate Music",
     time: "02:28",
-    des: "Electric Romeo",
+    des: "浪漫被鼓点点燃，像一场明知危险却仍要奔赴的梦。",
+  },
+  {
+    song_type: TYPE,
+    song_path: FILE_MUSIC_SHISHIPEIYUE,
+    song_name: "Experience - Ludovico Einaudi",
+    song_file: "Experience - Ludovico Einaudi.mp3",
+    img_file: "Experience - Ludovico Einaudi.jpg",
+    lyrics_type: CONFIG.LOAD_LYRICS_TYPE.TYPE_chunyinyue,
+    author: "Ludovico Einaudi",
+    time: "05:16",
+    des: "越安静的旋律越有力量，它不推你流泪，只陪你把情绪走完。",
   }
 ];

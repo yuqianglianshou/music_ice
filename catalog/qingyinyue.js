@@ -294,7 +294,7 @@ export const lightMusicList = [
     lyrics_type: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
     author: "久石让",
     time: "05:39",
-    des: "The Rain",
+    des: "雨声落下来的时候，世界忽然安静到只剩下自己的心跳。",
   },
   {
     song_type: TYPE,
@@ -306,6 +306,6 @@ export const lightMusicList = [
     lyrics_type: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
     author: "Martin Ermen",
     time: "03:18",
-    des: "River Flows In You",
+    des: "像一条很慢的河，把说不出口的温柔一点点送到心里。",
   }
 ];

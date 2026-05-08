@@ -15,6 +15,7 @@
       <p class="eyebrow">Music Icee</p>
       <h1>歌曲导入工具</h1>
       <p class="summary">选择项目目录、上传歌曲资源、填写分类和基本信息，一次完成文件写入、歌单更新和缩略图生成。</p>
+      <p id="tool-version" class="tool-version">正在加载导入脚本...</p>
     </section>
 
     <section class="panel">
@@ -34,7 +35,7 @@
           <div class="panel-head">
             <div>
               <h2>歌曲信息</h2>
-              <p>歌曲文件必填，歌词和头像按需添加。</p>
+              <p>歌曲文件必填，歌词和头像按需添加；不选头像会自动使用默认头像。</p>
             </div>
           </div>
           <div id="result-banner" class="result-banner" role="status" aria-live="polite">等待添加歌曲</div>
@@ -139,7 +140,7 @@
     </div>
   </main>
 
-  <script type="module" src="../app/song-importer.js"></script>
+  <script type="module" src="../app/song-importer.js?v=20260508-7"></script>
 </body>
 
 </html>
