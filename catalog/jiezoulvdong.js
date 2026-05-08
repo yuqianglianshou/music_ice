@@ -38,5 +38,17 @@ export const rhythmList = [
     author: "Tones and I",
     time: "03:30",
     des: "I'm a dance monkey, I'm a dance monkey, I'm a dance monkey.",
+  },
+  {
+    song_type: TYPE,
+    song_path: FILE_MUSIC_JIEZOULVDONG,
+    song_name: "Believer",
+    song_file: "Believer - Imagine Dragons.mp3",
+    img_file: "Believer - Imagine Dragons.jpg",
+    lyrics_file: "Believer - Imagine Dragons.lrc",
+    lyrics_type: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
+    author: "Imagine Dragons",
+    time: "03:39",
+    des: "Believer",
   }
 ];

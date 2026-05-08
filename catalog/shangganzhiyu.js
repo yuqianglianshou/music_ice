@@ -663,5 +663,17 @@ export const healingList = [
     author: "善宇",
     time: "02:35",
     des: "晚风吹过街角的时候，最容易想起那个没能一起走远的人。",
+  },
+  {
+    song_type: TYPE,
+    song_path: FILE_MUSIC_SHANGGANZHIYU,
+    song_name: "十年",
+    song_file: "十年 - 陈奕迅.mp3",
+    img_file: "十年 - 陈奕迅.jpg",
+    lyrics_file: "十年 - 陈奕迅.lrc",
+    lyrics_type: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
+    author: "陈奕迅",
+    time: "03:25",
+    des: "有几个十年呢？",
   }
 ];

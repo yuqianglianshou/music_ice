@@ -14,10 +14,13 @@ const ROOT_DB_NAME = 'music-ice-importer';
 const ROOT_STORE_NAME = 'settings';
 const ROOT_HANDLE_KEY = 'project-root-handle';
 const IMPORT_SIGNAL_KEY = 'musicIceCatalogUpdatedAt';
+const LAST_CATEGORY_KEY = 'musicIceImporterLastCategory';
 
 const state = {
   projectRootHandle: null,
-  importChannel: 'BroadcastChannel' in window ? new BroadcastChannel('music-ice-importer') : null
+  importChannel: 'BroadcastChannel' in window ? new BroadcastChannel('music-ice-importer') : null,
+  duplicateCheckId: 0,
+  catalogSongs: []
 };
 
 const elements = {
@@ -36,6 +39,10 @@ const elements = {
   songFileName: document.getElementById('song-file-name'),
   lyricsFileName: document.getElementById('lyrics-file-name'),
   coverFileName: document.getElementById('cover-file-name'),
+  songSearch: document.getElementById('song-search'),
+  searchCategory: document.getElementById('search-category'),
+  searchSummary: document.getElementById('search-summary'),
+  searchResults: document.getElementById('search-results'),
   preview: document.getElementById('preview'),
   log: document.getElementById('log'),
   resetForm: document.getElementById('reset-form'),
@@ -52,8 +59,10 @@ init().catch(error => {
 
 async function init() {
   renderCategoryOptions();
+  renderSearchCategoryOptions();
   bindEvents();
   renderPreview();
+  renderSearchResults();
   updateFileHints();
   checkSupport();
   await restoreProjectRoot();
@@ -69,30 +78,59 @@ function bindEvents() {
   elements.pickRoot.addEventListener('click', pickProjectRoot);
   elements.form.addEventListener('submit', handleSubmit);
   elements.resetForm.addEventListener('click', resetForm);
+  elements.songSearch.addEventListener('input', renderSearchResults);
+  elements.searchCategory.addEventListener('change', renderSearchResults);
 
   for (const input of [elements.category, elements.songName, elements.author, elements.time, elements.description, elements.baseName]) {
     input.addEventListener('input', renderPreview);
     input.addEventListener('change', renderPreview);
+    input.addEventListener('input', scheduleDuplicateWarning);
+    input.addEventListener('change', scheduleDuplicateWarning);
   }
+
+  elements.category.addEventListener('change', persistSelectedCategory);
 
   elements.songFile.addEventListener('change', async () => {
     updateFileHints();
     await fillDurationFromAudio();
     renderPreview();
+    scheduleDuplicateWarning();
   });
   elements.lyricsFile.addEventListener('change', () => {
     updateFileHints();
     renderPreview();
+    scheduleDuplicateWarning();
   });
   elements.coverFile.addEventListener('change', () => {
     updateFileHints();
     renderPreview();
+    scheduleDuplicateWarning();
   });
 }
 
 function renderCategoryOptions() {
   const options = CATEGORY_CONFIG.map(item => `<option value="${item.key}">${item.label}</option>`);
   elements.category.innerHTML = options.join('');
+  restoreSelectedCategory();
+}
+
+function persistSelectedCategory() {
+  localStorage.setItem(LAST_CATEGORY_KEY, elements.category.value);
+}
+
+function restoreSelectedCategory() {
+  const lastCategory = localStorage.getItem(LAST_CATEGORY_KEY);
+  if (CATEGORY_CONFIG.some(item => item.key === lastCategory)) {
+    elements.category.value = lastCategory;
+  }
+}
+
+function renderSearchCategoryOptions() {
+  const options = [
+    '<option value="">全部分类</option>',
+    ...CATEGORY_CONFIG.map(item => `<option value="${item.key}">${item.label}</option>`)
+  ];
+  elements.searchCategory.innerHTML = options.join('');
 }
 
 function updateFileHints() {
@@ -110,6 +148,8 @@ async function pickProjectRoot() {
     elements.rootStatus.textContent = `已连接：${handle.name}`;
     elements.rootStatus.classList.remove('muted');
     addLog(`项目目录已连接：${handle.name}`, 'success');
+    await refreshCatalogSongs();
+    scheduleDuplicateWarning();
   } catch (error) {
     if (error?.name === 'AbortError') return;
     addLog(error.message || '目录选择失败', 'error');
@@ -140,6 +180,8 @@ async function restoreProjectRoot() {
     elements.rootStatus.textContent = `已自动连接：${handle.name}`;
     elements.rootStatus.classList.remove('muted');
     addLog(`已恢复上次项目目录：${handle.name}`, 'success');
+    await refreshCatalogSongs();
+    scheduleDuplicateWarning();
   } catch (_) {
     elements.rootStatus.textContent = '上次保存的目录已失效，请重新选择项目目录。';
   }
@@ -181,19 +223,21 @@ async function handleSubmit(event) {
 
     const payload = buildPayload(songFile, lyricsFile, coverFile, category);
     await ensureNoDuplicate(payload);
+    const catalogUpdate = await prepareCatalogUpdate(payload, category);
     await writeMediaFiles(payload, category);
-    await updateCatalogFile(payload, category);
     if (coverFile) {
       await generateCoverThumbnail(payload, category);
     }
+    await updateCatalogFile(catalogUpdate, category);
 
+    await refreshCatalogSongs();
     notifyMusicCatalogUpdated();
 
     resetForm({ preserveStatus: true });
     addLog(`已添加《${payload.song_name}》到 ${category.label}`, 'success');
     showToast(`导入成功：${payload.song_name}`, 'success');
     setFeedback(`导入成功：${payload.song_name}`, 'success');
-    renderPreview(payload);
+    renderPreview(payload, category);
   } catch (error) {
     addLog(error.message || '添加失败', 'error');
     showToast(error.message || '添加失败', 'error');
@@ -203,6 +247,7 @@ async function handleSubmit(event) {
 
 function resetForm(options = {}) {
   elements.form.reset();
+  restoreSelectedCategory();
   elements.time.value = '';
   updateFileHints();
   renderPreview();
@@ -266,17 +311,219 @@ function stripFileExtension(fileName) {
 }
 
 async function ensureNoDuplicate(payload) {
-  const category = getSelectedCategory();
-  const catalogDir = await state.projectRootHandle.getDirectoryHandle('catalog');
-  const fileHandle = await catalogDir.getFileHandle(category.catalogFile);
-  const source = await (await fileHandle.getFile()).text();
-
-  const duplicateSongName = source.includes(`song_name: ${JSON.stringify(payload.song_name)}`);
-  const duplicateSongFile = source.includes(`song_file: ${JSON.stringify(payload.song_file)}`);
-
-  if (duplicateSongName || duplicateSongFile) {
-    throw new Error('目标分类里已经有同名歌曲或同名音频文件了。');
+  const duplicate = await findDuplicate(payload);
+  if (duplicate) {
+    throw new Error(duplicate.message);
   }
+}
+
+async function findDuplicate(payload) {
+  const songs = state.catalogSongs.length ? state.catalogSongs : await readCatalogSongs();
+  const payloadSongName = normalizeDuplicateValue(payload.song_name);
+  const payloadSongFile = normalizeDuplicateFile(payload.song_file);
+  const payloadSongBaseName = normalizeDuplicateFileBase(payload.song_file);
+
+  const matchedSong = songs.find(song => {
+    const songName = normalizeDuplicateValue(song.song_name);
+    const songFile = normalizeDuplicateFile(song.song_file);
+    const songBaseName = normalizeDuplicateFileBase(song.song_file);
+    return (
+      songName && songName === payloadSongName ||
+      songFile && songFile === payloadSongFile ||
+      songBaseName && songBaseName === payloadSongBaseName
+    );
+  });
+
+  if (matchedSong) {
+    return {
+      type: 'catalog',
+      message: `歌单中已经存在《${matchedSong.song_name || payload.song_name}》（分类：${matchedSong.categoryLabel}），请不要重复添加。`
+    };
+  }
+
+  const selectedCategory = getSelectedCategory();
+  const mediaDir = await state.projectRootHandle.getDirectoryHandle('media');
+  const categoryDir = await mediaDir.getDirectoryHandle(selectedCategory.folder, { create: true });
+
+  if (await fileExists(categoryDir, payload.song_file)) {
+    addLog(`检测到媒体文件已存在，将复用并更新歌单：media/${selectedCategory.folder}/${payload.song_file}`, 'success');
+  }
+
+  return null;
+}
+
+async function refreshCatalogSongs() {
+  if (!state.projectRootHandle) {
+    state.catalogSongs = [];
+    renderSearchResults();
+    return;
+  }
+
+  try {
+    state.catalogSongs = await readCatalogSongs();
+    renderSearchResults();
+  } catch (error) {
+    state.catalogSongs = [];
+    elements.searchSummary.textContent = error.message || '读取歌单失败。';
+    elements.searchSummary.classList.add('muted');
+    elements.searchResults.innerHTML = '';
+  }
+}
+
+async function readCatalogSongs() {
+  const catalogDir = await state.projectRootHandle.getDirectoryHandle('catalog');
+  const songs = [];
+
+  for (const category of CATEGORY_CONFIG) {
+    const fileHandle = await catalogDir.getFileHandle(category.catalogFile);
+    const source = await (await fileHandle.getFile()).text();
+    songs.push(...extractCatalogSongs(source, category));
+  }
+
+  return songs;
+}
+
+function extractCatalogSongs(source, category) {
+  const entryMatches = source.match(/\{[\s\S]*?\n\s*\}/g) || [];
+  return entryMatches.map(entry => ({
+    categoryKey: category.key,
+    categoryLabel: category.label,
+    song_name: readStringProperty(entry, 'song_name'),
+    song_file: readStringProperty(entry, 'song_file'),
+    author: readStringProperty(entry, 'author'),
+    time: readStringProperty(entry, 'time')
+  })).filter(song => song.song_name || song.song_file);
+}
+
+function readStringProperty(entry, key) {
+  const match = entry.match(new RegExp(`${key}\\s*:\\s*(["'\`])([\\s\\S]*?)\\1`));
+  return match ? match[2] : '';
+}
+
+function normalizeDuplicateValue(value) {
+  return String(value || '')
+    .trim()
+    .toLowerCase()
+    .replace(/\s+/g, '')
+    .replace(/[·・._\-—–（）()【】\[\]《》<>]/g, '');
+}
+
+function normalizeDuplicateFile(fileName) {
+  return normalizeDuplicateValue(decodeURIComponent(String(fileName || '')));
+}
+
+function normalizeDuplicateFileBase(fileName) {
+  return normalizeDuplicateValue(stripFileExtension(decodeURIComponent(String(fileName || ''))));
+}
+
+async function fileExists(directoryHandle, fileName) {
+  if (!fileName) return false;
+  try {
+    await directoryHandle.getFileHandle(fileName);
+    return true;
+  } catch (error) {
+    if (error?.name === 'NotFoundError') return false;
+    throw error;
+  }
+}
+
+async function scheduleDuplicateWarning() {
+  const checkId = ++state.duplicateCheckId;
+
+  if (!state.projectRootHandle || !elements.songName.value.trim() || !elements.songFile.files[0]) {
+    return;
+  }
+
+  try {
+    const category = getSelectedCategory();
+    const payload = buildPayload(
+      elements.songFile.files[0],
+      elements.lyricsFile.files[0] || null,
+      elements.coverFile.files[0] || null,
+      category
+    );
+    const duplicate = await findDuplicate(payload);
+    if (checkId !== state.duplicateCheckId) return;
+
+    if (duplicate) {
+      setFeedback(duplicate.message, 'error');
+    } else {
+      setFeedback('未发现重复歌曲，可以添加。', 'success');
+    }
+  } catch (_) {
+    // 实时检查失败不阻塞表单填写，提交时会再次严格校验。
+  }
+}
+
+function renderSearchResults() {
+  if (!elements.searchSummary || !elements.searchResults) return;
+
+  if (!state.projectRootHandle) {
+    elements.searchSummary.textContent = '选择项目目录后可以搜索现有歌曲。';
+    elements.searchSummary.classList.add('muted');
+    elements.searchResults.innerHTML = '';
+    return;
+  }
+
+  const query = normalizeSearchValue(elements.songSearch.value);
+  const categoryKey = elements.searchCategory.value;
+  const matchedSongs = state.catalogSongs
+    .filter(song => !categoryKey || song.categoryKey === categoryKey)
+    .filter(song => {
+      if (!query) return true;
+      return normalizeSearchValue([
+        song.song_name,
+        song.author,
+        song.song_file,
+        song.categoryLabel
+      ].join(' ')).includes(query);
+    });
+
+  const visibleSongs = matchedSongs.slice(0, 10);
+  const categoryText = categoryKey
+    ? CATEGORY_CONFIG.find(item => item.key === categoryKey)?.label || '当前分类'
+    : '全部分类';
+  elements.searchSummary.textContent = query
+    ? `${categoryText}中找到 ${matchedSongs.length} 首匹配歌曲`
+    : `${categoryText}共有 ${matchedSongs.length} 首歌曲`;
+  elements.searchSummary.classList.toggle('muted', matchedSongs.length === 0);
+
+  elements.searchResults.innerHTML = '';
+  const fragment = document.createDocumentFragment();
+  visibleSongs.forEach(song => {
+    fragment.appendChild(renderSearchResultItem(song));
+  });
+
+  if (matchedSongs.length > visibleSongs.length) {
+    const moreItem = document.createElement('div');
+    moreItem.className = 'status-line muted';
+    moreItem.textContent = `还有 ${matchedSongs.length - visibleSongs.length} 首未显示，请输入更具体的关键词。`;
+    fragment.appendChild(moreItem);
+  }
+
+  elements.searchResults.appendChild(fragment);
+}
+
+function renderSearchResultItem(song) {
+  const item = document.createElement('article');
+  item.className = 'search-result';
+
+  const content = document.createElement('div');
+  const title = document.createElement('p');
+  title.className = 'search-result-title';
+  title.textContent = song.song_name || '未命名歌曲';
+
+  const category = document.createElement('span');
+  category.className = 'search-result-category';
+  category.textContent = song.categoryLabel;
+
+  content.append(title);
+  item.append(content, category);
+  return item;
+}
+
+function normalizeSearchValue(value) {
+  return String(value || '').trim().toLowerCase().replace(/\s+/g, '');
 }
 
 async function writeMediaFiles(payload, category) {
@@ -301,7 +548,7 @@ async function writeFileToDirectory(directoryHandle, fileName, sourceFile) {
   await writable.close();
 }
 
-async function updateCatalogFile(payload, category) {
+async function prepareCatalogUpdate(payload, category) {
   const catalogDir = await state.projectRootHandle.getDirectoryHandle('catalog');
   const fileHandle = await catalogDir.getFileHandle(category.catalogFile);
   const source = await (await fileHandle.getFile()).text();
@@ -312,14 +559,18 @@ async function updateCatalogFile(payload, category) {
   }
 
   const entry = renderEntry(payload, folderConstName);
-  const nextSource = source.replace(/\n\];\s*$/, `,\n${entry}\n];\n`);
+  const nextSource = source.replace(/(\n\];\s*)$/, `,\n${entry}$1`);
 
   if (nextSource === source) {
     throw new Error(`无法更新 ${category.catalogFile}，数组结尾格式不符合预期。`);
   }
 
-  const writable = await fileHandle.createWritable();
-  await writable.write(nextSource);
+  return { fileHandle, nextSource };
+}
+
+async function updateCatalogFile(catalogUpdate, category) {
+  const writable = await catalogUpdate.fileHandle.createWritable();
+  await writable.write(catalogUpdate.nextSource);
   await writable.close();
   addLog(`歌单文件已更新：catalog/${category.catalogFile}`, 'success');
 }
@@ -398,24 +649,42 @@ function formatDuration(duration) {
   return `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
 }
 
-function renderPreview(payload = null) {
-  const category = CATEGORY_CONFIG.find(item => item.key === elements.category.value);
+function renderPreview(payload = null, payloadCategory = null) {
+  const previewPayload = isPayloadObject(payload) ? payload : null;
+  const category = payloadCategory || resolvePreviewCategory(previewPayload);
   const songFile = elements.songFile.files[0] || null;
   const lyricsFile = elements.lyricsFile.files[0] || null;
   const coverFile = elements.coverFile.files[0] || null;
 
-  if (!category || !elements.songName.value.trim() || !songFile) {
+  if (!category || (!previewPayload && (!elements.songName.value.trim() || !songFile))) {
     elements.preview.textContent = '尚未生成预览';
     return;
   }
 
-  const previewPayload = payload || buildPayload(songFile, lyricsFile, coverFile, category);
+  const nextPayload = previewPayload || buildPayload(songFile, lyricsFile, coverFile, category);
   elements.preview.textContent = [
     `分类：${category.label}`,
     `目标目录：media/${category.folder}/`,
     '',
-    renderEntry(previewPayload, category.folderConst)
+    renderEntry(nextPayload, category.folderConst)
   ].join('\n');
+}
+
+function isPayloadObject(value) {
+  return !!value && typeof value === 'object' && 'song_name' in value && 'song_file' in value;
+}
+
+function resolvePreviewCategory(payload = null) {
+  if (payload) {
+    const category = CATEGORY_CONFIG.find(item => (
+      item.label === payload.song_type ||
+      `${item.folder}/` === payload.song_path ||
+      item.folder === payload.song_path
+    ));
+    if (category) return category;
+  }
+
+  return CATEGORY_CONFIG.find(item => item.key === elements.category.value);
 }
 
 function addLog(message, type = '') {

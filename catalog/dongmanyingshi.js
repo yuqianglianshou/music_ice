@@ -74,5 +74,17 @@ export const animeScreenList = [
     author: "沸点乐队",
     time: "02:16",
     des: "最治愈的童年歌，总像有人轻轻提醒你：别把天真弄丢了。",
+  },
+  {
+    song_type: TYPE,
+    song_path: FILE_MUSIC_DONGMANYINGSHI,
+    song_name: "青鸟",
+    song_file: "青鸟（《火影忍者》主题曲） - Ellie方紫薇.mp3",
+    img_file: "青鸟（《火影忍者》主题曲） - Ellie方紫薇.jpg",
+    lyrics_file: "青鸟（《火影忍者》主题曲） - Ellie方紫薇.lrc",
+    lyrics_type: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
+    author: "Ellie",
+    time: "03:36",
+    des: "青鸟",
   }
 ];
