@@ -1,6 +1,21 @@
 # music_ice
 网页版个人音乐播放器
 
+线上地址：[yuqianglianshou.com/music_ice/](https://yuqianglianshou.com/music_ice/)
+
+## 运行界面
+
+桌面端：
+
+![Music Icee 桌面端播放界面](assets/picture/desktop-player.jpg)
+
+移动端：
+
+<p>
+  <img src="assets/picture/mobile-list.jpg" alt="Music Icee 移动端歌单界面" width="320" />
+  <img src="assets/picture/mobile-detail.jpg" alt="Music Icee 移动端播放详情界面" width="320" />
+</p>
+
 ## 目录结构
 
 ```txt
@@ -8,6 +23,7 @@
 ├── index.html
 ├── assets/
 │   ├── icons/                 # 页面图标和 SVG symbol
+│   ├── picture/               # README 项目截图
 │   └── covers/
 │       ├── defaults/          # 默认封面原图
 │       ├── defaults/thumbs/   # 默认封面列表缩略图
