@@ -40,7 +40,7 @@
           </div>
           <div id="result-banner" class="result-banner" role="status" aria-live="polite">等待添加歌曲</div>
 
-          <form id="import-form" class="import-form">
+          <form id="import-form" class="import-form" novalidate>
             <div class="grid two-columns">
               <label class="field">
                 <span>分类</span>
@@ -66,6 +66,14 @@
                 <span>目标基础文件名</span>
                 <input id="base-name" type="text" placeholder="可选，例如：直到世界尽头 - WANDS；留空则使用你选择的原文件名" />
               </label>
+            </div>
+
+            <div class="folder-import">
+              <div>
+                <span>导入歌曲文件夹</span>
+                <small id="song-folder-status" class="file-hint">选择包含歌曲、歌词和头像的文件夹，只会自动填充下面的文件；确认信息后还需要点击“添加歌曲”。</small>
+              </div>
+              <button id="pick-song-folder" class="secondary-button" type="button">选择歌曲文件夹</button>
             </div>
 
             <div class="grid file-grid">
@@ -140,7 +148,7 @@
     </div>
   </main>
 
-  <script type="module" src="../app/song-importer.js?v=20260508-7"></script>
+  <script type="module" src="../app/song-importer.js?v=20260508-11"></script>
 </body>
 
 </html>

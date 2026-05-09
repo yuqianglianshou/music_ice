@@ -307,5 +307,16 @@ export const lightMusicList = [
     author: "Martin Ermen",
     time: "03:18",
     des: "像一条很慢的河，把说不出口的温柔一点点送到心里。",
+  },
+  {
+    song_type: TYPE,
+    song_path: FILE_MUSIC_QINGYINYUE,
+    song_name: "故乡的原风景 - 宗次郎",
+    song_file: "故乡的原风景 - 宗次郎.mp3",
+    img_file: "故乡的原风景 - 宗次郎.jpg",
+    lyrics_type: CONFIG.LOAD_LYRICS_TYPE.TYPE_chunyinyue,
+    author: "宗次郎",
+    time: "04:42",
+    des: "故乡的原风景 - 宗次郎",
   }
 ];

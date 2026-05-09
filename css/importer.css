@@ -187,6 +187,24 @@ textarea {
   grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
+.folder-import {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px;
+  border: 1px dashed rgba(198, 131, 78, 0.28);
+  border-radius: 8px;
+  background: rgba(255, 248, 241, 0.72);
+}
+
+.folder-import span {
+  display: block;
+  margin-bottom: 6px;
+  color: #754d32;
+  font-size: 14px;
+}
+
 .search-tools {
   display: grid;
   grid-template-columns: 1fr;
@@ -268,7 +286,7 @@ textarea {
 
 .search-result {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-columns: minmax(0, 1fr) auto auto;
   gap: 8px;
   align-items: center;
   padding: 9px 10px;
@@ -311,6 +329,21 @@ textarea {
 .secondary-button {
   background: #f7e8da;
   color: #7a5338;
+}
+
+.danger-button {
+  min-height: 32px;
+  padding: 0 10px;
+  border: 1px solid rgba(204, 88, 72, 0.28);
+  border-radius: 8px;
+  background: rgba(255, 238, 232, 0.96);
+  color: #8b3f32;
+  cursor: pointer;
+}
+
+.search-delete-button {
+  font-size: 12px;
+  white-space: nowrap;
 }
 
 .preview-box,
