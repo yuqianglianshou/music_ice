@@ -321,10 +321,11 @@
 
   .left-songInfo .songInfo-item {
     display: flex;
-    gap: 10px;
   }
 
   .song-download-btn {
+    top: 18px;
+    right: 18px;
     width: 38px;
     height: 38px;
     padding: 0;

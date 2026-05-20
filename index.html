@@ -53,6 +53,13 @@
                     <!-- 歌曲播放控制面板 -->
                     <div class="song_panel" song-panel>
                         <button class="panel-close" type="button" panel-close-btn aria-label="关闭歌词面板"></button>
+                        <button class="song-download-btn flex" type="button" download-current-audio
+                            aria-label="下载当前音频" title="下载音频">
+                            <svg fill="none" stroke="currentColor" class="icon" stroke-width="3.5"
+                                stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                <use href="#icon-download"></use>
+                            </svg>
+                        </button>
                         <!-- 面板主要内容 -->
                         <div class="panel-content flex">
                             <!-- 歌曲信息区域 -->
@@ -66,13 +73,6 @@
                                             <span title="" class="name text-ol fs-20 fw-6"
                                                 currentPlay-name></span>
                                         </div>
-                                        <button class="song-download-btn flex" type="button" download-current-audio
-                                            aria-label="下载当前音频" title="下载音频">
-                                            <svg fill="none" stroke="currentColor" class="icon" stroke-width="3.5"
-                                                stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                                                <use href="#icon-download"></use>
-                                            </svg>
-                                        </button>
                                     </div>
                                 </div>
                             </div>

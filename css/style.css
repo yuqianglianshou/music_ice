@@ -692,9 +692,6 @@
 /* 歌曲信息项 */
 .songInfo-item {
 	justify-content: center;
-	align-items: center;
-	flex-direction: column;
-	gap: 12px;
 	margin-bottom: 0;
 	width: 100%;
 }
@@ -773,6 +770,10 @@
 }
 
 .song-download-btn {
+	position: absolute;
+	top: 24px;
+	right: 24px;
+	z-index: 2;
 	width: 40px;
 	height: 40px;
 	padding: 0;
