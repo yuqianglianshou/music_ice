@@ -692,6 +692,9 @@
 /* 歌曲信息项 */
 .songInfo-item {
 	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	gap: 12px;
 	margin-bottom: 0;
 	width: 100%;
 }
@@ -767,6 +770,36 @@
 	height: 24px;
 	opacity: .75;
 	cursor: pointer;
+}
+
+.song-download-btn {
+	width: 40px;
+	height: 40px;
+	padding: 0;
+	border-radius: 14px;
+	border: 1px solid rgba(230, 250, 255, 0.18);
+	background: rgba(255, 255, 255, 0.045);
+	color: var(--text-color);
+	box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.035);
+	cursor: pointer;
+	transition: background 0.18s ease, border-color 0.18s ease, transform 0.18s ease, box-shadow 0.18s ease;
+}
+
+.song-download-btn .icon {
+	width: 18px;
+	height: 18px;
+	flex: 0 0 18px;
+}
+
+.song-download-btn:hover {
+	background: rgba(180, 231, 238, 0.12);
+	border-color: rgba(180, 231, 238, 0.28);
+	transform: translateY(-1px);
+	box-shadow: 0 10px 20px rgba(6, 12, 28, 0.34);
+}
+
+.song-download-btn:active {
+	transform: translateY(0);
 }
 
 /* 更多操作按钮 */

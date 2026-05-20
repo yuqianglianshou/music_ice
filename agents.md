@@ -1,0 +1,92 @@
+# Agents Guide
+
+本文件给后续在本仓库中工作的 AI agent / 自动化协作者使用。请先阅读 `README.md`，再根据下面约定修改代码或资源。
+
+## 项目概览
+
+`music_ice` 是一个静态网页个人音乐播放器。入口为 `index.html`，无需构建步骤即可运行；页面逻辑位于 `app/`，样式位于 `css/`，歌单数据位于 `catalog/`，音频、歌词和封面原资源位于 `media/`。
+
+线上地址见 `README.md`。
+
+## 主要目录
+
+- `index.html`：页面结构和资源引用。
+- `app/`：播放器逻辑、配置、歌词、主题和导入相关 JS 模块。
+- `css/`：页面样式，包含通用样式、响应式样式和导入工具样式。
+- `catalog/`：按分类拆分的歌单数据，`catalog/index.js` 统一导出。
+- `media/`：歌曲音频、歌词和封面原图。
+- `assets/`：图标、截图、默认封面及歌曲封面缩略图。
+- `tools/import-song.html`：本地浏览器导入歌曲工具。
+- `scripts/generate-thumbnails.mjs`：根据歌单数据生成封面缩略图。
+
+## 开发与运行
+
+这是静态站点。可在仓库根目录启动本地服务：
+
+```bash
+python3 -m http.server 8000
+```
+
+然后访问 `http://localhost:8000/`。
+
+如果只修改 HTML、CSS、JS 或歌单数据，通常不需要安装依赖。
+
+## 代码约定
+
+- JS 模块文件名使用 kebab-case，例如 `lyrics-manager.js`、`music-store.js`。
+- 保持 ES module 写法，优先沿用现有模块边界和命名风格。
+- 修改播放器行为时，优先查看 `app/app.js`、`app/music-store.js`、`app/lyrics-manager.js` 和 `app/config.js`。
+- 修改视觉样式时，先确认 `css/common.css`、`css/style.css`、`css/response.css` 中是否已有可复用规则。
+- 不要为小改动引入构建工具、包管理器或新的运行时依赖。
+
+## 歌曲与资源约定
+
+- 新增歌曲时，音频、歌词、封面原图应放入 `media/对应分类/`。
+- 歌单条目添加到对应的 `catalog/*.js` 文件中，并确认 `catalog/index.js` 已导出该分类。
+- 歌词文件通常使用 `.lrc`。
+- 封面原图可放在 `media/` 对应分类下，列表缩略图由脚本生成到 `assets/covers/music-thumbs/`。
+- 不要手动改动大量二进制媒体文件，除非任务明确要求。
+
+生成或检查缩略图：
+
+```bash
+node scripts/generate-thumbnails.mjs
+```
+
+同时更新默认封面缩略图：
+
+```bash
+node scripts/generate-thumbnails.mjs --defaults
+```
+
+仅查看将要生成的文件：
+
+```bash
+node scripts/generate-thumbnails.mjs --dry-run
+```
+
+注意：缩略图脚本依赖 macOS 自带的 `sips` 命令。
+
+## 导入工具
+
+`tools/import-song.html` 用于本地浏览器导入歌曲。修改该工具时，需要同时关注：
+
+- 浏览器 File System Access API 的兼容性。
+- 写入 `media/`、追加 `catalog/`、生成缩略图这几类操作是否仍然一致。
+- 页面样式应放在 `css/importer.css` 或复用已有样式。
+
+## 验证建议
+
+根据改动范围选择验证方式：
+
+- HTML/CSS/JS 改动：启动本地服务并在桌面和移动视口检查播放器。
+- 歌单数据改动：确认页面能加载分类、歌曲可播放、封面和歌词路径正确。
+- 封面资源改动：运行 `node scripts/generate-thumbnails.mjs --dry-run` 或实际生成缩略图。
+- 导入工具改动：用本地服务打开 `tools/import-song.html`，至少跑通一次导入流程或手动检查关键路径。
+
+## 协作注意事项
+
+- 仓库包含大量音频和图片资源，搜索文件时优先用 `rg` 或限定目录，避免无谓扫描二进制文件。
+- 不要删除或重命名媒体资源，除非已同步更新所有引用它们的歌单数据。
+- 保持 README 中的目录说明、命名约定和脚本说明与实际项目一致。
+- 修改已有文件前，留意工作区中可能已有用户改动；不要覆盖与当前任务无关的更改。

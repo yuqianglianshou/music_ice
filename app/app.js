@@ -55,6 +55,7 @@ const elements = {
   playNextBtns: $$("[play-next-btn]"),
   playPrevBtns: $$("[play-prev-btn]"),
   playModeBtn: $("[play-mode]"),
+  downloadCurrentAudioBtn: $("[download-current-audio]"),
 
   // 音量控制
   volumeRange: $("[play-volume-range]"),
@@ -205,6 +206,22 @@ function getMusicIdentity(music) {
   return `${music.song_path || music.type_path || ''}${music.song_file || music.name_path || ''}`;
 }
 
+function getMusicAudioUrl(music) {
+  if (!music) return '';
+  const songDir = music.song_path || music.type_path;
+  const songFile = music.song_file || music.name_path;
+  if (!songDir || !songFile) return '';
+  return FILE_MUSIC_ROOT + songDir + songFile;
+}
+
+function getDownloadFileName(music) {
+  const songFile = music.song_file || music.name_path || 'music.mp3';
+  const extension = songFile.includes('.') ? songFile.slice(songFile.lastIndexOf('.')) : '.mp3';
+  const songName = music.song_name || music.title || songFile.replace(/\.[^.]+$/, '') || 'music';
+  const author = music.author ? ` - ${music.author}` : '';
+  return `${songName}${author}${extension}`.replace(/[\\/:*?"<>|]/g, '_');
+}
+
 function isCurrentMusic(music) {
   return getMusicIdentity(music) === getMusicIdentity(state.currentMusicList[state.currentMusicIndex]);
 }
@@ -231,6 +248,30 @@ function showNotice(message) {
 function showPlaybackError(error, prefix = '播放失败') {
   const detail = error?.message ? `：${error.message}` : '';
   showNotice(`${prefix}${detail}，请检查音频文件是否存在或已损坏`);
+}
+
+function downloadCurrentAudio(event) {
+  event?.stopPropagation();
+
+  if (!normalizeCurrentIndex()) {
+    showNotice('暂无可下载的音频');
+    return;
+  }
+
+  const currentMusic = state.currentMusicList[state.currentMusicIndex];
+  const audioUrl = getMusicAudioUrl(currentMusic);
+  if (!audioUrl) {
+    showNotice('音频文件不可用，请检查文件路径');
+    return;
+  }
+
+  const link = document.createElement('a');
+  link.href = audioUrl;
+  link.download = getDownloadFileName(currentMusic);
+  document.body.appendChild(link);
+  link.click();
+  link.remove();
+  showNotice('开始下载音频');
 }
 
 function scheduleCatalogReload() {
@@ -857,6 +898,7 @@ function initEventListeners() {
   // 防止面板内部点击关闭
   $('.song_panel')?.addEventListener('click', e => e.stopPropagation());
   elements.panelCloseBtn?.addEventListener('click', panelControl.closePanel.bind(panelControl));
+  elements.downloadCurrentAudioBtn?.addEventListener('click', downloadCurrentAudio);
 
   // 进度条事件
   addEventListeners(elements.playProgress, {
