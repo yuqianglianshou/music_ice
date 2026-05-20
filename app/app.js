@@ -214,6 +214,14 @@ function getMusicAudioUrl(music) {
   return FILE_MUSIC_ROOT + songDir + songFile;
 }
 
+function getAbsoluteAssetUrl(assetUrl) {
+  try {
+    return new URL(assetUrl, window.location.href).href;
+  } catch (_) {
+    return assetUrl;
+  }
+}
+
 function getDownloadFileName(music) {
   const songFile = music.song_file || music.name_path || 'music.mp3';
   const extension = songFile.includes('.') ? songFile.slice(songFile.lastIndexOf('.')) : '.mp3';
@@ -250,7 +258,23 @@ function showPlaybackError(error, prefix = '播放失败') {
   showNotice(`${prefix}${detail}，请检查音频文件是否存在或已损坏`);
 }
 
-function downloadCurrentAudio(event) {
+function triggerDownload(url, fileName, revokeUrl = false) {
+  const link = document.createElement('a');
+  link.href = url;
+  link.download = fileName;
+  link.rel = 'noopener';
+  document.body.appendChild(link);
+  link.click();
+
+  setTimeout(() => {
+    link.remove();
+    if (revokeUrl) {
+      URL.revokeObjectURL(url);
+    }
+  }, 3000);
+}
+
+async function downloadCurrentAudio(event) {
   event?.stopPropagation();
 
   if (!normalizeCurrentIndex()) {
@@ -260,18 +284,33 @@ function downloadCurrentAudio(event) {
 
   const currentMusic = state.currentMusicList[state.currentMusicIndex];
   const audioUrl = getMusicAudioUrl(currentMusic);
+  const fileName = getDownloadFileName(currentMusic);
   if (!audioUrl) {
     showNotice('音频文件不可用，请检查文件路径');
     return;
   }
 
-  const link = document.createElement('a');
-  link.href = audioUrl;
-  link.download = getDownloadFileName(currentMusic);
-  document.body.appendChild(link);
-  link.click();
-  link.remove();
-  showNotice('开始下载音频');
+  showNotice('正在准备下载音频...');
+
+  try {
+    const response = await fetch(getAbsoluteAssetUrl(audioUrl));
+    if (!response.ok) {
+      throw new Error(`HTTP ${response.status}`);
+    }
+
+    const blob = await response.blob();
+    if (!blob.size) {
+      throw new Error('empty audio file');
+    }
+
+    const blobUrl = URL.createObjectURL(blob);
+    triggerDownload(blobUrl, fileName, true);
+    showNotice('开始下载音频');
+  } catch (error) {
+    console.warn('Blob 下载失败，尝试直接下载:', error);
+    triggerDownload(getAbsoluteAssetUrl(audioUrl), fileName);
+    showNotice('开始下载音频');
+  }
 }
 
 function scheduleCatalogReload() {
