@@ -17,7 +17,8 @@ const ROOT_STORE_NAME = 'settings';
 const ROOT_HANDLE_KEY = 'project-root-handle';
 const IMPORT_SIGNAL_KEY = 'musicIceCatalogUpdatedAt';
 const LAST_CATEGORY_KEY = 'musicIceImporterLastCategory';
-const IMPORTER_VERSION = '20260508-11';
+const IMPORT_LOCK_NAME = 'music-ice-importer-write';
+const IMPORTER_VERSION = '20260508-12';
 const WEBP_DEFAULT_IMAGE_IDS = new Set([18, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 31, 32, 33]);
 const DEFAULT_IMAGE_COUNT = 53;
 const AUDIO_EXTENSIONS = new Set(['mp3', 'flac', 'm4a', 'wav', 'ogg']);
@@ -29,7 +30,8 @@ const state = {
   importChannel: 'BroadcastChannel' in window ? new BroadcastChannel('music-ice-importer') : null,
   duplicateCheckId: 0,
   catalogSongs: [],
-  defaultCoverPath: ''
+  defaultCoverPath: '',
+  isSubmitting: false
 };
 
 const elements = {
@@ -58,6 +60,7 @@ const elements = {
   preview: document.getElementById('preview'),
   log: document.getElementById('log'),
   resetForm: document.getElementById('reset-form'),
+  submitButton: document.querySelector('#import-form button[type="submit"]'),
   toast: document.getElementById('toast'),
   formStatus: document.getElementById('form-status'),
   resultBanner: document.getElementById('result-banner')
@@ -377,6 +380,12 @@ async function requireWritableProjectRoot() {
 async function handleSubmit(event) {
   event.preventDefault();
 
+  if (state.isSubmitting) {
+    setFeedback('正在添加上一首歌曲，请稍候。', 'error');
+    return;
+  }
+
+  setSubmitting(true);
   try {
     await requireWritableProjectRoot();
     const category = getSelectedCategory();
@@ -389,17 +398,20 @@ async function handleSubmit(event) {
     validateSourceFiles(songFile, coverFile);
 
     const payload = buildPayload(songFile, lyricsFile, coverFile, category);
-    await ensureNoDuplicate(payload);
-    const catalogUpdate = await prepareCatalogUpdate(payload, category);
-    const writtenFiles = await writeMediaFiles(payload, category);
+    await withImportLock(async () => {
+      state.catalogSongs = await readCatalogSongs();
+      await ensureNoDuplicate(payload);
+      const catalogUpdate = await prepareCatalogUpdate(payload, category);
+      const writtenFiles = await writeMediaFiles(payload, category);
 
-    try {
-      await updateCatalogFile(catalogUpdate, category);
-      await verifyCatalogEntry(catalogUpdate, payload, category);
-    } catch (error) {
-      await cleanupWrittenMediaFiles(category, writtenFiles);
-      throw error;
-    }
+      try {
+        await updateCatalogFile(catalogUpdate, payload, category);
+        await verifyCatalogEntry(catalogUpdate, payload, category);
+      } catch (error) {
+        await cleanupWrittenMediaFiles(category, writtenFiles);
+        throw error;
+      }
+    });
 
     if (payload.sourceFiles.coverFile) {
       try {
@@ -423,6 +435,23 @@ async function handleSubmit(event) {
     addLog(error.message || '添加失败', 'error');
     showToast(error.message || '添加失败', 'error');
     setFeedback(error.message || '添加失败', 'error');
+  } finally {
+    setSubmitting(false);
+  }
+}
+
+async function withImportLock(callback) {
+  if (navigator.locks?.request) {
+    return navigator.locks.request(IMPORT_LOCK_NAME, { mode: 'exclusive' }, callback);
+  }
+  return callback();
+}
+
+function setSubmitting(isSubmitting) {
+  state.isSubmitting = isSubmitting;
+  if (elements.submitButton) {
+    elements.submitButton.disabled = isSubmitting;
+    elements.submitButton.textContent = isSubmitting ? '添加中...' : '添加歌曲';
   }
 }
 
@@ -1019,26 +1048,47 @@ async function prepareCatalogUpdate(payload, category) {
   }
 
   const entry = renderEntry(payload, folderConstName);
-  const nextSource = source.replace(/(\n\];\s*)$/, `,\n${entry}$1`);
+  const nextSource = appendEntryToCatalogSource(source, entry);
 
   if (nextSource === source) {
     throw new Error(`无法更新 ${category.catalogFile}，数组结尾格式不符合预期。`);
   }
 
-  return { fileHandle, source, nextSource };
+  return { fileHandle, source, nextSource, entry };
 }
 
-async function updateCatalogFile(catalogUpdate, category) {
+async function updateCatalogFile(catalogUpdate, payload, category) {
+  const latestSource = await (await catalogUpdate.fileHandle.getFile()).text();
+  const nextSource = latestSource === catalogUpdate.source
+    ? catalogUpdate.nextSource
+    : appendEntryToLatestCatalogSource(latestSource, catalogUpdate.entry, payload, category);
+
   const writable = await catalogUpdate.fileHandle.createWritable();
-  await writable.write(catalogUpdate.nextSource);
+  await writable.write(nextSource);
   await writable.close();
 
   const verifiedSource = await (await catalogUpdate.fileHandle.getFile()).text();
-  if (verifiedSource !== catalogUpdate.nextSource) {
+  if (verifiedSource !== nextSource) {
     throw new Error(`歌单文件写入后校验失败：catalog/${category.catalogFile}`);
   }
 
   addLog(`歌单文件已更新：catalog/${category.catalogFile}`, 'success');
+}
+
+function appendEntryToLatestCatalogSource(source, entry, payload, category) {
+  if (source.includes(`song_file: ${JSON.stringify(payload.song_file)}`)) {
+    return source;
+  }
+
+  const nextSource = appendEntryToCatalogSource(source, entry);
+  if (nextSource === source) {
+    throw new Error(`无法更新 ${category.catalogFile}，数组结尾格式不符合预期。`);
+  }
+  return nextSource;
+}
+
+function appendEntryToCatalogSource(source, entry) {
+  return source.replace(/(\n\];\s*)$/, `,\n${entry}$1`);
 }
 
 async function verifyCatalogEntry(catalogUpdate, payload, category) {

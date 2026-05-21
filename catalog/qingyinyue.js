@@ -318,5 +318,16 @@ export const lightMusicList = [
     author: "宗次郎",
     time: "04:42",
     des: "故乡的原风景 - 宗次郎",
+  },
+  {
+    song_type: TYPE,
+    song_path: FILE_MUSIC_QINGYINYUE,
+    song_name: "The Path - Zoe Keating",
+    song_file: "The Path - Zoe Keating.mp3",
+    img_file: "The Path - Zoe Keating.jpg",
+    lyrics_type: CONFIG.LOAD_LYRICS_TYPE.TYPE_chunyinyue,
+    author: "Zoe Keating",
+    time: "05:42",
+    des: "The Path - Zoe Keating",
   }
 ];
