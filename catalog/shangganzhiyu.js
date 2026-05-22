@@ -723,5 +723,17 @@ export const healingList = [
     author: "孙燕姿",
     time: "03:29",
     des: "遇见 - 孙燕姿",
+  },
+  {
+    song_type: TYPE,
+    song_path: FILE_MUSIC_SHANGGANZHIYU,
+    song_name: "她说 - 林俊杰",
+    song_file: "她说 - 林俊杰.mp3",
+    img_file: "她说 - 林俊杰.jpg",
+    lyrics_file: "她说 - 林俊杰.lrc",
+    lyrics_type: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
+    author: "林俊杰",
+    time: "05:20",
+    des: "她说 - 林俊杰",
   }
 ];

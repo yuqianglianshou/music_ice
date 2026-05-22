@@ -329,5 +329,17 @@ export const lightMusicList = [
     author: "Zoe Keating",
     time: "05:42",
     des: "The Path - Zoe Keating",
+  },
+  {
+    song_type: TYPE,
+    song_path: FILE_MUSIC_QINGYINYUE,
+    song_name: "Kiss The Rain - Yiruma",
+    song_file: "Kiss The Rain - Yiruma.mp3",
+    img_file: "./assets/covers/defaults/12.jpg",
+    lyrics_file: "Kiss The Rain - Yiruma.lrc",
+    lyrics_type: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
+    author: "Yiruma",
+    time: "04:20",
+    des: "Kiss The Rain - Yiruma",
   }
 ];

@@ -377,6 +377,11 @@ textarea {
   font-size: 14px;
 }
 
+.log-entry.info {
+  border: 1px solid rgba(135, 112, 92, 0.22);
+  color: #65442e;
+}
+
 .log-entry.error {
   border: 1px solid rgba(204, 88, 72, 0.3);
   color: #8b3f32;

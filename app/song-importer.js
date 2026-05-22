@@ -18,7 +18,9 @@ const ROOT_HANDLE_KEY = 'project-root-handle';
 const IMPORT_SIGNAL_KEY = 'musicIceCatalogUpdatedAt';
 const LAST_CATEGORY_KEY = 'musicIceImporterLastCategory';
 const IMPORT_LOCK_NAME = 'music-ice-importer-write';
-const IMPORTER_VERSION = '20260508-12';
+const IMPORT_LOG_KEY = 'musicIceImporterLogs';
+const MAX_IMPORT_LOGS = 120;
+const IMPORTER_VERSION = '20260508-16';
 const WEBP_DEFAULT_IMAGE_IDS = new Set([18, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 31, 32, 33]);
 const DEFAULT_IMAGE_COUNT = 53;
 const AUDIO_EXTENSIONS = new Set(['mp3', 'flac', 'm4a', 'wav', 'ogg']);
@@ -61,6 +63,7 @@ const elements = {
   log: document.getElementById('log'),
   resetForm: document.getElementById('reset-form'),
   submitButton: document.querySelector('#import-form button[type="submit"]'),
+  formControls: document.querySelectorAll('#import-form input, #import-form select, #import-form textarea, #import-form button'),
   toast: document.getElementById('toast'),
   formStatus: document.getElementById('form-status'),
   resultBanner: document.getElementById('result-banner')
@@ -79,6 +82,7 @@ async function init() {
   renderCategoryOptions();
   renderSearchCategoryOptions();
   bindEvents();
+  restoreLogs();
   renderPreview();
   renderSearchResults();
   updateFileHints();
@@ -395,23 +399,17 @@ async function handleSubmit(event) {
       throw new Error('请先选择歌曲文件。');
     }
     validateRequiredMetadata();
-    validateSourceFiles(songFile, coverFile);
+    validateSourceFiles(songFile, lyricsFile, coverFile);
 
     const payload = buildPayload(songFile, lyricsFile, coverFile, category);
-    await withImportLock(async () => {
-      state.catalogSongs = await readCatalogSongs();
-      await ensureNoDuplicate(payload);
-      const catalogUpdate = await prepareCatalogUpdate(payload, category);
-      const writtenFiles = await writeMediaFiles(payload, category);
-
-      try {
-        await updateCatalogFile(catalogUpdate, payload, category);
-        await verifyCatalogEntry(catalogUpdate, payload, category);
-      } catch (error) {
-        await cleanupWrittenMediaFiles(category, writtenFiles);
-        throw error;
-      }
-    });
+    addLog(`开始导入《${payload.song_name}》到 ${category.label}`, 'info');
+    addLog(`目标文件：media/${category.folder}/${payload.song_file}`, 'info');
+    if (payload.lyrics_file) {
+      addLog(`目标歌词：media/${category.folder}/${payload.lyrics_file}`, 'info');
+    } else {
+      addLog('本次未选择歌词文件，将按纯音乐写入。', 'info');
+    }
+    await runImportTransaction(payload, category);
 
     if (payload.sourceFiles.coverFile) {
       try {
@@ -424,10 +422,9 @@ async function handleSubmit(event) {
     }
 
     await refreshCatalogSongs();
-    notifyMusicCatalogUpdated();
-
     resetForm({ preserveStatus: true });
     addLog(`已添加《${payload.song_name}》到 ${category.label}`, 'success');
+    notifyMusicCatalogUpdated();
     showToast(`导入成功：${payload.song_name}`, 'success');
     setFeedback(`导入成功：${payload.song_name}`, 'success');
     renderPreview(payload, category);
@@ -449,10 +446,15 @@ async function withImportLock(callback) {
 
 function setSubmitting(isSubmitting) {
   state.isSubmitting = isSubmitting;
+  elements.formControls.forEach(control => {
+    control.disabled = isSubmitting;
+  });
   if (elements.submitButton) {
     elements.submitButton.disabled = isSubmitting;
     elements.submitButton.textContent = isSubmitting ? '添加中...' : '添加歌曲';
   }
+  elements.pickRoot.disabled = isSubmitting;
+  elements.pickSongFolder.disabled = isSubmitting;
 }
 
 function getSelectedSourceFiles() {
@@ -521,9 +523,24 @@ function buildPayload(songFile, lyricsFile, coverFile, category) {
   };
 }
 
-function validateSourceFiles(songFile, coverFile) {
+function validateSourceFiles(songFile, lyricsFile, coverFile) {
   if (songFile.size <= 0) {
     throw new Error('歌曲文件为空，请重新选择。');
+  }
+
+  const isAudioFile = songFile.type.startsWith('audio/') || AUDIO_EXTENSIONS.has(getNormalizedExtension(songFile.name));
+  if (!isAudioFile) {
+    throw new Error('歌曲文件格式不正确，请选择 mp3、flac、m4a、wav 或 ogg 文件。');
+  }
+
+  if (lyricsFile) {
+    if (lyricsFile.size <= 0) {
+      throw new Error('歌词文件为空，请重新选择。');
+    }
+
+    if (!isLyricsFile(lyricsFile)) {
+      throw new Error('歌词文件格式不正确，请选择 lrc 或 txt 文件。');
+    }
   }
 
   if (!coverFile) return;
@@ -949,6 +966,29 @@ function normalizeSearchValue(value) {
 
 // ==================== 文件写入、回滚与歌单更新 ====================
 
+async function runImportTransaction(payload, category) {
+  return withImportLock(async () => {
+    state.catalogSongs = await readCatalogSongs();
+    await ensureNoDuplicate(payload);
+
+    const catalogUpdate = await prepareCatalogUpdate(payload, category);
+    let appliedCatalogUpdate = null;
+    let writtenFiles = [];
+
+    try {
+      appliedCatalogUpdate = await updateCatalogFile(catalogUpdate, payload, category);
+      writtenFiles = await writeMediaFiles(payload, category);
+      await verifyImportTransaction(payload, category);
+    } catch (error) {
+      await cleanupWrittenMediaFiles(category, writtenFiles);
+      if (appliedCatalogUpdate) {
+        await restoreCatalogFile(catalogUpdate.fileHandle, appliedCatalogUpdate.previousSource, category);
+      }
+      throw error;
+    }
+  });
+}
+
 async function writeMediaFiles(payload, category) {
   const mediaDir = await state.projectRootHandle.getDirectoryHandle('media');
   const categoryDir = await mediaDir.getDirectoryHandle(category.folder, { create: true });
@@ -1019,10 +1059,24 @@ async function writeAndVerifyFile(directoryHandle, fileName, sourceFile, display
   }
 
   const existedBefore = await fileExists(directoryHandle, fileName);
-  const fileHandle = await writeFileToDirectory(directoryHandle, fileName, sourceFile);
-  const writtenFile = await fileHandle.getFile();
-  if (writtenFile.size !== sourceFile.size) {
-    throw new Error(`${label}写入校验失败：${displayPath}`);
+  let fileHandle = null;
+
+  try {
+    fileHandle = await writeFileToDirectory(directoryHandle, fileName, sourceFile);
+    const writtenFile = await fileHandle.getFile();
+    if (writtenFile.size !== sourceFile.size) {
+      throw new Error(`${label}写入校验失败：${displayPath}`);
+    }
+  } catch (error) {
+    if (!existedBefore) {
+      try {
+        await directoryHandle.removeEntry(fileName);
+        addLog(`已清理失败文件：${displayPath}`, 'error');
+      } catch (_) {
+        addLog(`失败文件清理失败，请手动检查：${displayPath}`, 'error');
+      }
+    }
+    throw error;
   }
 
   addLog(`${label}已写入：${displayPath}`, 'success');
@@ -1073,6 +1127,18 @@ async function updateCatalogFile(catalogUpdate, payload, category) {
   }
 
   addLog(`歌单文件已更新：catalog/${category.catalogFile}`, 'success');
+  return { previousSource: latestSource, nextSource };
+}
+
+async function restoreCatalogFile(fileHandle, previousSource, category) {
+  try {
+    const writable = await fileHandle.createWritable();
+    await writable.write(previousSource);
+    await writable.close();
+    addLog(`已回滚歌单文件：catalog/${category.catalogFile}`, 'error');
+  } catch (_) {
+    addLog(`歌单回滚失败，请手动检查：catalog/${category.catalogFile}`, 'error');
+  }
 }
 
 function appendEntryToLatestCatalogSource(source, entry, payload, category) {
@@ -1101,6 +1167,43 @@ async function verifyCatalogEntry(catalogUpdate, payload, category) {
   }
 
   addLog(`歌单条目已确认：${payload.song_name}`, 'success');
+}
+
+async function verifyImportTransaction(payload, category) {
+  const catalogDir = await state.projectRootHandle.getDirectoryHandle('catalog');
+  const catalogFile = await catalogDir.getFileHandle(category.catalogFile);
+  await verifyCatalogEntry({ fileHandle: catalogFile }, payload, category);
+
+  const mediaDir = await state.projectRootHandle.getDirectoryHandle('media');
+  const categoryDir = await mediaDir.getDirectoryHandle(category.folder, { create: true });
+  await verifyImportedFile(categoryDir, payload.song_file, payload.sourceFiles.songFile.size, '音频');
+
+  if (payload.lyrics_file) {
+    if (!payload.sourceFiles.lyricsFile) {
+      throw new Error(`歌单已记录歌词文件，但表单中没有歌词源文件：${payload.lyrics_file}`);
+    }
+    await verifyImportedFile(categoryDir, payload.lyrics_file, payload.sourceFiles.lyricsFile.size, '歌词');
+  }
+
+  if (payload.sourceFiles.coverFile) {
+    await verifyImportedFile(categoryDir, payload.img_file, payload.sourceFiles.coverFile.size, '头像原图');
+  }
+
+  addLog(`导入一致性校验完成：${payload.song_name}`, 'success');
+}
+
+async function verifyImportedFile(directoryHandle, fileName, expectedSize, label) {
+  try {
+    const file = await (await directoryHandle.getFileHandle(fileName)).getFile();
+    if (file.size !== expectedSize) {
+      throw new Error(`${label}大小不一致：${fileName}`);
+    }
+  } catch (error) {
+    if (error?.name === 'NotFoundError') {
+      throw new Error(`${label}文件未写入：${fileName}`);
+    }
+    throw error;
+  }
 }
 
 function renderEntry(payload, folderConstName) {
@@ -1220,10 +1323,46 @@ function resolvePreviewCategory(payload = null) {
 // ==================== 页面反馈与跨页面通知 ====================
 
 function addLog(message, type = '') {
+  const entry = createLogEntry(message, type);
+  persistLogEntry(entry);
+  renderLogEntry(entry);
+}
+
+function createLogEntry(message, type = '') {
+  return {
+    message,
+    type,
+    time: new Date().toLocaleString('zh-CN', { hour12: false })
+  };
+}
+
+function renderLogEntry(entry) {
   const item = document.createElement('div');
-  item.className = `log-entry ${type}`.trim();
-  item.textContent = message;
+  item.className = `log-entry ${entry.type || ''}`.trim();
+  item.textContent = `[${entry.time}] ${entry.message}`;
   elements.log.prepend(item);
+}
+
+function persistLogEntry(entry) {
+  try {
+    const logs = JSON.parse(localStorage.getItem(IMPORT_LOG_KEY) || '[]');
+    logs.unshift(entry);
+    localStorage.setItem(IMPORT_LOG_KEY, JSON.stringify(logs.slice(0, MAX_IMPORT_LOGS)));
+  } catch (_) {
+    // 日志持久化失败不影响导入流程。
+  }
+}
+
+function restoreLogs() {
+  if (!elements.log) return;
+
+  try {
+    const logs = JSON.parse(localStorage.getItem(IMPORT_LOG_KEY) || '[]');
+    elements.log.innerHTML = '';
+    logs.slice(0, MAX_IMPORT_LOGS).reverse().forEach(renderLogEntry);
+  } catch (_) {
+    elements.log.innerHTML = '';
+  }
 }
 
 function showToast(message, type = 'success') {
