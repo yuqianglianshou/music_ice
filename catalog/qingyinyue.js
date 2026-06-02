@@ -341,5 +341,16 @@ export const lightMusicList = [
     author: "Yiruma",
     time: "04:20",
     des: "Kiss The Rain - Yiruma",
+  },
+  {
+    song_type: TYPE,
+    song_path: FILE_MUSIC_QINGYINYUE,
+    song_name: "鸟之诗 (八音盒版) - 折戸伸治",
+    song_file: "鸟之诗 (八音盒版) - 折戸伸治.mp3",
+    img_file: "./assets/covers/defaults/19.jpg",
+    lyrics_type: CONFIG.LOAD_LYRICS_TYPE.TYPE_chunyinyue,
+    author: "折戸伸治",
+    time: "03:27",
+    des: "鸟之诗 (八音盒版) - 折戸伸治",
   }
 ];

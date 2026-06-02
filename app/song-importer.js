@@ -20,7 +20,7 @@ const LAST_CATEGORY_KEY = 'musicIceImporterLastCategory';
 const IMPORT_LOCK_NAME = 'music-ice-importer-write';
 const IMPORT_LOG_KEY = 'musicIceImporterLogs';
 const MAX_IMPORT_LOGS = 120;
-const IMPORTER_VERSION = '20260508-16';
+const IMPORTER_VERSION = '20260508-17';
 const WEBP_DEFAULT_IMAGE_IDS = new Set([18, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 31, 32, 33]);
 const DEFAULT_IMAGE_COUNT = 53;
 const AUDIO_EXTENSIONS = new Set(['mp3', 'flac', 'm4a', 'wav', 'ogg']);
@@ -971,18 +971,18 @@ async function runImportTransaction(payload, category) {
     state.catalogSongs = await readCatalogSongs();
     await ensureNoDuplicate(payload);
 
-    const catalogUpdate = await prepareCatalogUpdate(payload, category);
     let appliedCatalogUpdate = null;
     let writtenFiles = [];
 
     try {
-      appliedCatalogUpdate = await updateCatalogFile(catalogUpdate, payload, category);
       writtenFiles = await writeMediaFiles(payload, category);
+      const catalogUpdate = await prepareCatalogUpdate(payload, category);
+      appliedCatalogUpdate = await updateCatalogFile(catalogUpdate, payload, category);
       await verifyImportTransaction(payload, category);
     } catch (error) {
       await cleanupWrittenMediaFiles(category, writtenFiles);
       if (appliedCatalogUpdate) {
-        await restoreCatalogFile(catalogUpdate.fileHandle, appliedCatalogUpdate.previousSource, category);
+        await restoreCatalogFile(appliedCatalogUpdate.fileHandle, appliedCatalogUpdate.previousSource, category);
       }
       throw error;
     }
@@ -1127,7 +1127,7 @@ async function updateCatalogFile(catalogUpdate, payload, category) {
   }
 
   addLog(`歌单文件已更新：catalog/${category.catalogFile}`, 'success');
-  return { previousSource: latestSource, nextSource };
+  return { fileHandle: catalogUpdate.fileHandle, previousSource: latestSource, nextSource };
 }
 
 async function restoreCatalogFile(fileHandle, previousSource, category) {
