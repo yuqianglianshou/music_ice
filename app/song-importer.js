@@ -20,7 +20,7 @@ const LAST_CATEGORY_KEY = 'musicIceImporterLastCategory';
 const IMPORT_LOCK_NAME = 'music-ice-importer-write';
 const IMPORT_LOG_KEY = 'musicIceImporterLogs';
 const MAX_IMPORT_LOGS = 120;
-const IMPORTER_VERSION = '20260508-17';
+const IMPORTER_VERSION = '20260604-05';
 const WEBP_DEFAULT_IMAGE_IDS = new Set([18, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 31, 32, 33]);
 const DEFAULT_IMAGE_COUNT = 53;
 const AUDIO_EXTENSIONS = new Set(['mp3', 'flac', 'm4a', 'wav', 'ogg']);
@@ -125,6 +125,7 @@ function bindEvents() {
   elements.baseName.addEventListener('change', updateFileHints);
 
   elements.songFile.addEventListener('change', async () => {
+    handleSongFileChanged();
     updateFileHints();
     await fillDurationFromAudio();
     renderPreview();
@@ -207,7 +208,7 @@ async function pickSongFolder() {
     setFileInputFiles(elements.lyricsFile, selectedFiles.lyricsFile ? [selectedFiles.lyricsFile] : []);
     setFileInputFiles(elements.coverFile, selectedFiles.coverFile ? [selectedFiles.coverFile] : []);
     state.defaultCoverPath = '';
-    fillMetadataFromFolderFile(selectedFiles.songFile);
+    applyMetadataFromSongFile(selectedFiles.songFile);
 
     updateFileHints();
     await fillDurationFromAudio();
@@ -278,16 +279,27 @@ function setFileInputFiles(input, files) {
   input.files = dataTransfer.files;
 }
 
-function fillMetadataFromFolderFile(songFile) {
+function handleSongFileChanged() {
+  const songFile = elements.songFile.files[0] || null;
+  state.defaultCoverPath = '';
+  elements.time.value = '';
+
+  if (!songFile) {
+    renderPreview();
+    return;
+  }
+
+  applyMetadataFromSongFile(songFile);
+}
+
+function applyMetadataFromSongFile(songFile) {
   const baseName = stripFileExtension(songFile.name).trim();
   const metadata = inferMetadataFromFileName(baseName);
 
-  if (!elements.songName.value.trim()) {
-    elements.songName.value = metadata.songName;
-  }
-  if (!elements.author.value.trim() && metadata.author) {
-    elements.author.value = metadata.author;
-  }
+  elements.songName.value = metadata.songName;
+  elements.author.value = metadata.author;
+  elements.description.value = '';
+  elements.baseName.value = '';
 }
 
 function inferMetadataFromFileName(baseName) {
@@ -402,6 +414,7 @@ async function handleSubmit(event) {
     validateSourceFiles(songFile, lyricsFile, coverFile);
 
     const payload = buildPayload(songFile, lyricsFile, coverFile, category);
+    validatePayloadTargets(payload);
     addLog(`开始导入《${payload.song_name}》到 ${category.label}`, 'info');
     addLog(`目标文件：media/${category.folder}/${payload.song_file}`, 'info');
     if (payload.lyrics_file) {
@@ -429,9 +442,10 @@ async function handleSubmit(event) {
     setFeedback(`导入成功：${payload.song_name}`, 'success');
     renderPreview(payload, category);
   } catch (error) {
-    addLog(error.message || '添加失败', 'error');
-    showToast(error.message || '添加失败', 'error');
-    setFeedback(error.message || '添加失败', 'error');
+    const message = formatErrorMessage(error) || '添加失败';
+    addLog(message, 'error');
+    showToast(message, 'error');
+    setFeedback(message, 'error');
   } finally {
     setSubmitting(false);
   }
@@ -552,6 +566,28 @@ function validateSourceFiles(songFile, lyricsFile, coverFile) {
   const isImageFile = coverFile.type.startsWith('image/') || /\.(jpe?g|png|webp|gif|bmp)$/i.test(coverFile.name);
   if (!isImageFile) {
     throw new Error('头像文件格式不正确，请选择 jpg、png、webp 等图片文件。');
+  }
+}
+
+function validatePayloadTargets(payload) {
+  validateTargetFileName(payload.song_file, '歌曲');
+
+  if (payload.lyrics_file) {
+    validateTargetFileName(payload.lyrics_file, '歌词');
+  }
+
+  if (payload.sourceFiles.coverFile) {
+    validateTargetFileName(payload.img_file, '头像');
+  }
+}
+
+function validateTargetFileName(fileName, label) {
+  if (!fileName || typeof fileName !== 'string') {
+    throw new Error(`${label}目标文件名为空。`);
+  }
+
+  if (/[\\/]/.test(fileName) || /[\u0000-\u001f]/.test(fileName)) {
+    throw new Error(`${label}目标文件名不能包含路径分隔符或控制字符：${fileName}`);
   }
 }
 
@@ -970,13 +1006,15 @@ async function runImportTransaction(payload, category) {
   return withImportLock(async () => {
     state.catalogSongs = await readCatalogSongs();
     await ensureNoDuplicate(payload);
+    const catalogUpdate = await prepareCatalogUpdate(payload, category);
+    await verifyCatalogUpdatePreview(catalogUpdate, payload, category);
+    addLog(`歌单写入预检通过：catalog/${category.catalogFile}`, 'success');
 
     let appliedCatalogUpdate = null;
     let writtenFiles = [];
 
     try {
       writtenFiles = await writeMediaFiles(payload, category);
-      const catalogUpdate = await prepareCatalogUpdate(payload, category);
       appliedCatalogUpdate = await updateCatalogFile(catalogUpdate, payload, category);
       await verifyImportTransaction(payload, category);
     } catch (error) {
@@ -1059,6 +1097,16 @@ async function writeAndVerifyFile(directoryHandle, fileName, sourceFile, display
   }
 
   const existedBefore = await fileExists(directoryHandle, fileName);
+  if (existedBefore) {
+    const existingFile = await (await directoryHandle.getFileHandle(fileName)).getFile();
+    if (existingFile.size === sourceFile.size) {
+      addLog(`${label}已存在且大小一致，复用：${displayPath}`, 'success');
+      return { fileName, displayPath, fileHandle: null, existedBefore };
+    }
+
+    throw new Error(`${label}目标文件已存在但大小不一致，请修改目标基础文件名或先手动处理：${displayPath}`);
+  }
+
   let fileHandle = null;
 
   try {
@@ -1111,6 +1159,15 @@ async function prepareCatalogUpdate(payload, category) {
   return { fileHandle, source, nextSource, entry };
 }
 
+async function verifyCatalogUpdatePreview(catalogUpdate, payload, category) {
+  const hasSongName = catalogUpdate.nextSource.includes(`song_name: ${JSON.stringify(payload.song_name)}`);
+  const hasSongFile = catalogUpdate.nextSource.includes(`song_file: ${JSON.stringify(payload.song_file)}`);
+
+  if (!hasSongName || !hasSongFile) {
+    throw new Error(`歌单预览中未找到新条目，请检查：catalog/${category.catalogFile}`);
+  }
+}
+
 async function updateCatalogFile(catalogUpdate, payload, category) {
   const latestSource = await (await catalogUpdate.fileHandle.getFile()).text();
   const nextSource = latestSource === catalogUpdate.source
@@ -1154,7 +1211,18 @@ function appendEntryToLatestCatalogSource(source, entry, payload, category) {
 }
 
 function appendEntryToCatalogSource(source, entry) {
-  return source.replace(/(\n\];\s*)$/, `,\n${entry}$1`);
+  const closeIndex = findCatalogArrayCloseIndex(source);
+  if (closeIndex < 0) return source;
+
+  const beforeClose = source.slice(0, closeIndex).replace(/\s*$/, '');
+  const afterClose = source.slice(closeIndex);
+  const separator = beforeClose.endsWith('[') ? '\n' : ',\n';
+  return `${beforeClose}${separator}${entry}\n${afterClose}`;
+}
+
+function findCatalogArrayCloseIndex(source) {
+  const match = source.match(/\s*\];\s*$/);
+  return match ? match.index + match[0].indexOf(']') : -1;
 }
 
 async function verifyCatalogEntry(catalogUpdate, payload, category) {
@@ -1246,11 +1314,20 @@ async function generateCoverThumbnail(payload, category) {
   bitmap.close();
 
   const blob = await new Promise(resolve => canvas.toBlob(resolve, 'image/jpeg', 0.9));
+  if (!blob || blob.size <= 0) {
+    throw new Error(`缩略图编码失败：${payload.img_file}`);
+  }
+
   const thumbName = payload.img_file.replace(/\.[^.]+$/, '.jpg');
   const thumbHandle = await categoryDir.getFileHandle(thumbName, { create: true });
   const writable = await thumbHandle.createWritable();
   await writable.write(await blob.arrayBuffer());
   await writable.close();
+
+  const thumbFile = await thumbHandle.getFile();
+  if (thumbFile.size <= 0) {
+    throw new Error(`缩略图写入为空：assets/covers/music-thumbs/${category.folder}/${thumbName}`);
+  }
 
   addLog(`缩略图已生成：assets/covers/music-thumbs/${category.folder}/${thumbName}`, 'success');
 }
@@ -1397,6 +1474,12 @@ function notifyMusicCatalogUpdated() {
   const updatedAt = Date.now();
   localStorage.setItem(IMPORT_SIGNAL_KEY, String(updatedAt));
   state.importChannel?.postMessage({ type: 'catalog-updated', updatedAt });
+}
+
+function formatErrorMessage(error) {
+  if (!error) return '';
+  if (typeof error === 'string') return error;
+  return error.message || error.name || '未知错误';
 }
 
 // ==================== IndexedDB 目录记忆 ====================

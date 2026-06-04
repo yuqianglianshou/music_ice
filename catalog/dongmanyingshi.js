@@ -86,5 +86,17 @@ export const animeScreenList = [
     author: "Ellie",
     time: "03:36",
     des: "每次听到副歌，都像有人把少年时的热血重新塞回胸口。",
+  },
+  {
+    song_type: TYPE,
+    song_path: FILE_MUSIC_DONGMANYINGSHI,
+    song_name: "一个师傅仨徒弟 - 吸引力合唱组",
+    song_file: "一个师傅仨徒弟 - 吸引力合唱组.mp3",
+    img_file: "一个师傅仨徒弟 - 吸引力合唱组.jpg",
+    lyrics_file: "一个师傅仨徒弟 - 吸引力合唱组.lrc",
+    lyrics_type: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
+    author: "吸引力合唱组",
+    time: "02:11",
+    des: "一个师傅仨徒弟 - 吸引力合唱组",
   }
 ];

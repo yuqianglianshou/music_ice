@@ -303,16 +303,5 @@ export const nostalgiaList = [
     author: "韩磊",
     time: "03:12",
     des: "向天再借五百年 - 韩磊",
-  },
-  {
-    song_type: TYPE,
-    song_path: FILE_MUSIC_HUAIJIUJINQV,
-    song_name: "故乡的原风景 - 宗次郎",
-    song_file: "故乡的原风景 - 宗次郎.mp3",
-    img_file: "故乡的原风景 - 宗次郎.jpg",
-    lyrics_type: CONFIG.LOAD_LYRICS_TYPE.TYPE_chunyinyue,
-    author: "宗次郎",
-    time: "04:43",
-    des: "故乡的原风景 - 宗次郎",
   }
 ];

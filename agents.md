@@ -38,6 +38,7 @@ python3 -m http.server 8000
 - 修改播放器行为时，优先查看 `app/app.js`、`app/music-store.js`、`app/lyrics-manager.js` 和 `app/config.js`。
 - 修改视觉样式时，先确认 `css/common.css`、`css/style.css`、`css/response.css` 中是否已有可复用规则。
 - 不要为小改动引入构建工具、包管理器或新的运行时依赖。
+- 修改时添加必要的中文注释。
 
 ## 歌曲与资源约定
 

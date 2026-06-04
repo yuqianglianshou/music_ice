@@ -114,7 +114,11 @@ function shouldGenerate(source, target) {
   }
 
   if (force || !fs.existsSync(target)) return true;
-  return fs.statSync(source).mtimeMs > fs.statSync(target).mtimeMs;
+
+  const targetStats = fs.statSync(target);
+  if (targetStats.size <= 0) return true;
+
+  return fs.statSync(source).mtimeMs > targetStats.mtimeMs;
 }
 
 function generateThumbnail(source, target) {

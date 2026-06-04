@@ -55,13 +55,27 @@ node scripts/generate-thumbnails.mjs
 
 通过 `tools/import-song.html` 可以在浏览器里直接把歌曲、歌词、封面写入项目：
 
-1. 用本地 `localhost` 打开这个页面
-2. 选择仓库根目录
-3. 选择分类、歌曲文件、歌词、封面并填写基本信息
-4. 点击“添加歌曲”
+1. 在仓库根目录启动普通静态服务：
+
+   ```bash
+   python3 -m http.server 8000
+   ```
+
+2. 打开导入页面：
+
+   ```txt
+   http://localhost:8000/tools/import-song.html
+   ```
+
+3. 点击“选择项目目录”，选择当前 `music_ice` 仓库根目录并授权。
+4. 选择分类，填写歌曲名、作者、描述等信息。
+5. 可以点击“选择歌曲文件夹”自动填充歌曲、歌词和封面，也可以分别选择单个文件。
+6. 确认“写入预览”无误后，点击“添加歌曲”。
 
 工具会自动：
 
 - 把文件写入 `media/对应分类/`
 - 把条目追加到 `catalog/对应分类.js`
 - 为封面生成 `assets/covers/music-thumbs/` 列表缩略图
+
+注意：导入工具不建议使用 VS Code Live Server 打开。Live Server 会监听文件变化并自动刷新页面，导入过程中写入 `media/`、`catalog/` 或 `assets/` 文件时可能中断导入流程。使用上面的 `python3 -m http.server 8000` 普通静态服务更稳定。
