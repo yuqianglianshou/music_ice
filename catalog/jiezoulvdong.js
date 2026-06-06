@@ -21,7 +21,7 @@ export const rhythmList = [
     song_name: "Something Just Like This - The Chainsmokers,Coldplay",
     song_file: "Something Just Like This - The Chainsmokers,Coldplay.mp3",
     img_file: "Something Just Like This - The Chainsmokers,Coldplay.jpg",
-    lyrics_file: "Something Just Like This.lrc",
+    lyrics_file: "Something Just Like This - The Chainsmokers,Coldplay.lrc",
     lyrics_type: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
     author: "The Chainsmokers,Coldplay",
     time: "04:07",
