@@ -57,7 +57,7 @@ export const popClassicsList = [
     song_path: FILE_MUSIC_LIUXINGJINGDIAN,
     song_name: "此生不换",
     song_file: "此生不换 - 青鸟飞鱼.mp3",
-    img_file: "此生不换.jpg",
+    img_file: "此生不换 - 青鸟飞鱼.jpg",
     lyrics_file: "此生不换 - 青鸟飞鱼.lrc",
     lyrics_type: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
     author: "青鸟飞鱼",
@@ -81,7 +81,7 @@ export const popClassicsList = [
     song_path: FILE_MUSIC_LIUXINGJINGDIAN,
     song_name: "天顶一粒星 - Tizzy T,宋佳",
     song_file: "天顶一粒星 - Tizzy T,宋佳.mp3",
-    img_file: "9.jpg",
+    img_file: "天顶一粒星 - Tizzy T,宋佳.jpg",
     lyrics_file: "天顶一粒星 - Tizzy T,宋佳.lrc",
     lyrics_type: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
     author: "Tizzy T,宋佳",
@@ -225,7 +225,7 @@ export const popClassicsList = [
     song_path: FILE_MUSIC_LIUXINGJINGDIAN,
     song_name: "九儿 - 胡莎莎",
     song_file: "九儿 - 胡莎莎.mp3",
-    img_file: "九儿.jpg",
+    img_file: "九儿 - 胡莎莎.jpg",
     lyrics_file: "九儿 - 胡莎莎.lrc",
     lyrics_type: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
     author: "胡莎莎",
@@ -333,7 +333,7 @@ export const popClassicsList = [
     song_path: FILE_MUSIC_LIUXINGJINGDIAN,
     song_name: "Dream It Possible - Delacey",
     song_file: "Dream It Possible - Delacey.mp3",
-    img_file: "1.jpg",
+    img_file: "Dream It Possible - Delacey.jpg",
     lyrics_file: "Dream It Possible - Delacey.lrc",
     lyrics_type: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
     author: "Delacey",
@@ -434,7 +434,7 @@ export const popClassicsList = [
     lyrics_type: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
     author: "王心凌",
     time: "03:49",
-    des: "第一次爱的人 - 王心凌",
+    des: "初恋最难忘的不是结局，是多年后还会突然心软的瞬间。",
   },
   {
     song_type: TYPE,
@@ -446,7 +446,7 @@ export const popClassicsList = [
     lyrics_type: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
     author: "许慧欣",
     time: "04:03",
-    des: "七月七日晴 - 许慧欣",
+    des: "晴天也会让人想哭，因为有些约定只剩天空记得。",
   },
   {
     song_type: TYPE,
@@ -458,7 +458,7 @@ export const popClassicsList = [
     lyrics_type: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
     author: "刀郎",
     time: "05:43",
-    des: "西海情歌 - 刀郎",
+    des: "风从荒原吹过来，把思念唱得辽阔又孤单。",
   },
   {
     song_type: TYPE,
@@ -470,7 +470,7 @@ export const popClassicsList = [
     lyrics_type: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
     author: "周传雄",
     time: "04:57",
-    des: "青花 - 周传雄",
+    des: "像瓷器上的旧花纹，越是安静越藏着破碎的深情。",
   },
   {
     song_type: TYPE,
@@ -482,7 +482,7 @@ export const popClassicsList = [
     lyrics_type: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
     author: "莫文蔚",
     time: "03:21",
-    des: "忽然之间 - 莫文蔚",
+    des: "很多情绪都是突然来的，来不及防备就湿了眼眶。",
   },
   {
     song_type: TYPE,
@@ -494,7 +494,7 @@ export const popClassicsList = [
     lyrics_type: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
     author: "朴树",
     time: "03:44",
-    des: "New Boy - 朴树",
+    des: "那是新世纪入口的少年感，明亮、笨拙，又真心相信未来。",
   },
   {
     song_type: TYPE,
@@ -506,7 +506,7 @@ export const popClassicsList = [
     lyrics_type: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
     author: "朴树",
     time: "05:02",
-    des: "平凡之路 - 朴树",
+    des: "走过热闹和迷茫，才懂平凡并不是退场，而是继续往前。",
   },
   {
     song_type: TYPE,
@@ -518,7 +518,7 @@ export const popClassicsList = [
     lyrics_type: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
     author: "五月天",
     time: "04:29",
-    des: "温柔 - 五月天",
+    des: "最温柔的放手，是明明很痛，却仍愿意祝你自由。",
   },
   {
     song_type: TYPE,
@@ -530,7 +530,7 @@ export const popClassicsList = [
     lyrics_type: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
     author: "五月天",
     time: "04:25",
-    des: "突然好想你 - 五月天",
+    des: "想念总是不讲道理，越安静的时候越汹涌。",
   },
   {
     song_type: TYPE,
@@ -542,7 +542,7 @@ export const popClassicsList = [
     lyrics_type: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
     author: "胡杨林",
     time: "04:50",
-    des: "香水有毒 - 胡杨林",
+    des: "爱错的人像气味留在衣角，明知该散却还舍不得。",
   },
   {
     song_type: TYPE,
@@ -554,7 +554,7 @@ export const popClassicsList = [
     lyrics_type: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
     author: "薛之谦",
     time: "04:21",
-    des: "演员 - 薛之谦",
+    des: "感情里最累的不是争吵，是两个人都在扮演没事。",
   },
   {
     song_type: TYPE,
@@ -566,7 +566,7 @@ export const popClassicsList = [
     lyrics_type: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
     author: "柯柯柯啊",
     time: "03:55",
-    des: "姑娘别哭泣 - 柯柯柯啊",
+    des: "把委屈慢慢唱开，像有人在夜里轻轻递来一句安慰。",
   },
   {
     song_type: TYPE,
@@ -578,7 +578,7 @@ export const popClassicsList = [
     lyrics_type: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
     author: "G.E.M. 邓紫棋",
     time: "04:18",
-    des: "泡沫 - G.E.M. 邓紫棋",
+    des: "越美的幻象越容易破，爱到最后只剩透明的疼。",
   },
   {
     song_type: TYPE,
@@ -590,6 +590,6 @@ export const popClassicsList = [
     lyrics_type: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
     author: "蔡琴",
     time: "04:11",
-    des: "你的眼神 - 蔡琴",
+    des: "蔡琴的低回一响，旧时光就像一盏灯慢慢亮起来。",
   }
 ];

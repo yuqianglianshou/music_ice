@@ -218,7 +218,7 @@ export const nostalgiaList = [
     lyrics_type: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
     author: "杨洪基",
     time: "02:58",
-    des: "滚滚长江东逝水",
+    des: "一开口就是历史的江水，英雄成败都被浪花慢慢带远。",
   },
   {
     song_type: TYPE,
@@ -230,7 +230,7 @@ export const nostalgiaList = [
     lyrics_type: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
     author: "罗文",
     time: "02:54",
-    des: "铁血丹心",
+    des: "家国、江湖与儿女情长，都在这股豪气里烧得滚烫。",
   },
   {
     song_type: TYPE,
@@ -242,7 +242,7 @@ export const nostalgiaList = [
     lyrics_type: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
     author: "叶丽仪",
     time: "03:14",
-    des: "上海滩",
+    des: "风浪、霓虹和旧时代的恩怨，一起卷进那声苍茫的开场。",
   },
   {
     song_type: TYPE,
@@ -254,7 +254,7 @@ export const nostalgiaList = [
     lyrics_type: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
     author: "罗文",
     time: "02:47",
-    des: "世间始终你好",
+    des: "江湖路远，最难忘的还是并肩看过风雨的人。",
   },
   {
     song_type: TYPE,
@@ -266,7 +266,7 @@ export const nostalgiaList = [
     lyrics_type: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
     author: "周华健",
     time: "04:48",
-    des: "难念的经",
+    des: "唱的是红尘里的执念，越快越像命运追着人奔跑。",
   },
   {
     song_type: TYPE,
@@ -278,7 +278,7 @@ export const nostalgiaList = [
     lyrics_type: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
     author: "许冠杰",
     time: "02:55",
-    des: "沧海一声笑",
+    des: "把恩怨交给江湖，把洒脱留给一声大笑。",
   },
   {
     song_type: TYPE,
@@ -302,6 +302,6 @@ export const nostalgiaList = [
     lyrics_type: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
     author: "韩磊",
     time: "03:12",
-    des: "向天再借五百年 - 韩磊",
+    des: "帝王气魄里也藏着不甘，像人在命运面前最后一次抬头。",
   }
 ];

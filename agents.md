@@ -46,6 +46,9 @@ python3 -m http.server 8000
 - 歌单条目添加到对应的 `catalog/*.js` 文件中，并确认 `catalog/index.js` 已导出该分类。
 - 歌词文件通常使用 `.lrc`。
 - 封面原图可放在 `media/` 对应分类下，列表缩略图由脚本生成到 `assets/covers/music-thumbs/`。
+- 资源文件名优先使用 ASCII slug（如 `gangnam-style - psy.mp3`），避免直接使用日文、韩文、带音标字符或其他 Unicode 组合字符作为音频、歌词、封面、缩略图文件名。
+- `song_name`、`des` 等展示文本可以保留原文，但应使用 NFC 规范化后的正常字符；不要保留韩文 Jamo 分解字符、日文组合浊点等看起来一样但编码不同的字符。
+- 修改资源文件名时，必须同步更新歌单中的 `song_file`、`img_file`、`lyrics_file`，以及 `assets/covers/music-thumbs/` 下对应缩略图，避免本地 macOS 可读取但线上 Linux/静态服务器 404。
 - 不要手动改动大量二进制媒体文件，除非任务明确要求。
 
 生成或检查缩略图：

@@ -20,7 +20,9 @@ const LAST_CATEGORY_KEY = 'musicIceImporterLastCategory';
 const IMPORT_LOCK_NAME = 'music-ice-importer-write';
 const IMPORT_LOG_KEY = 'musicIceImporterLogs';
 const MAX_IMPORT_LOGS = 120;
-const IMPORTER_VERSION = '20260604-05';
+const IMPORTER_VERSION = '20260608-01';
+const AI_DESCRIPTION_TIMEOUT_MS = 12000;
+const AI_DESCRIPTION_MAX_LENGTH = 64;
 const WEBP_DEFAULT_IMAGE_IDS = new Set([18, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 31, 32, 33]);
 const DEFAULT_IMAGE_COUNT = 53;
 const AUDIO_EXTENSIONS = new Set(['mp3', 'flac', 'm4a', 'wav', 'ogg']);
@@ -413,6 +415,8 @@ async function handleSubmit(event) {
     validateRequiredMetadata();
     validateSourceFiles(songFile, lyricsFile, coverFile);
 
+    await fillDescriptionWithAIIfNeeded(category);
+
     const payload = buildPayload(songFile, lyricsFile, coverFile, category);
     validatePayloadTargets(payload);
     addLog(`开始导入《${payload.song_name}》到 ${category.label}`, 'info');
@@ -465,10 +469,15 @@ function setSubmitting(isSubmitting) {
   });
   if (elements.submitButton) {
     elements.submitButton.disabled = isSubmitting;
-    elements.submitButton.textContent = isSubmitting ? '添加中...' : '添加歌曲';
+    setSubmitButtonText(isSubmitting ? '添加中...' : '添加歌曲');
   }
   elements.pickRoot.disabled = isSubmitting;
   elements.pickSongFolder.disabled = isSubmitting;
+}
+
+function setSubmitButtonText(text) {
+  if (!elements.submitButton) return;
+  elements.submitButton.textContent = text;
 }
 
 function getSelectedSourceFiles() {
@@ -535,6 +544,161 @@ function buildPayload(songFile, lyricsFile, coverFile, category) {
     des: description || elements.songName.value.trim(),
     sourceFiles: { songFile, lyricsFile, coverFile }
   };
+}
+
+// 描述为空时优先尝试浏览器内置 AI；不可用或失败时继续沿用歌曲名兜底。
+async function fillDescriptionWithAIIfNeeded(category) {
+  if (elements.description.value.trim()) return;
+
+  const songName = elements.songName.value.trim();
+  if (!songName) return;
+
+  const languageModel = getBrowserLanguageModel();
+  if (!languageModel) {
+    return;
+  }
+
+  try {
+    const availability = await getLanguageModelAvailability(languageModel);
+    if (!isLanguageModelReady(availability)) {
+      addLog(`浏览器 AI 模型未就绪，描述将回退为歌曲名。`, 'info');
+      return;
+    }
+
+    addLog(`描述为空，正在使用 AI 生成《${songName}》的文案。`, 'info');
+    setFeedback('描述为空，正在使用 AI 生成文案...');
+    setSubmitButtonText('生成文案...');
+
+    const session = await createLanguageModelSession(languageModel);
+
+    try {
+      const prompt = buildDescriptionPrompt(songName, elements.author.value.trim(), category);
+      const rawDescription = await withTimeout(
+        session.prompt(prompt),
+        AI_DESCRIPTION_TIMEOUT_MS,
+        'AI 文案生成超时'
+      );
+      const description = normalizeAIDescription(rawDescription, songName);
+      if (!description) {
+        addLog('AI 未返回有效文案，描述将回退为歌曲名。', 'info');
+        return;
+      }
+
+      elements.description.value = description;
+      addLog(`AI 已补全文案：${description}`, 'success');
+      renderPreview();
+    } finally {
+      session.destroy?.();
+    }
+  } catch (error) {
+    addLog(`AI 文案生成失败，描述将回退为歌曲名：${error.message || '未知错误'}`, 'info');
+  } finally {
+    if (state.isSubmitting) {
+      setSubmitButtonText('添加中...');
+    }
+  }
+}
+
+function getBrowserLanguageModel() {
+  if (window.LanguageModel?.create) return window.LanguageModel;
+  if (window.ai?.languageModel?.create) return window.ai.languageModel;
+  return null;
+}
+
+async function getLanguageModelAvailability(languageModel) {
+  if (typeof languageModel.availability === 'function') {
+    return languageModel.availability();
+  }
+
+  if (typeof languageModel.capabilities === 'function') {
+    const capabilities = await languageModel.capabilities();
+    return capabilities?.available ?? capabilities?.availability ?? '';
+  }
+
+  return 'available';
+}
+
+function isLanguageModelReady(availability) {
+  if (availability === true) return true;
+
+  const value = String(availability || '').toLowerCase();
+  return ['available', 'readily', 'readily-available', 'ready'].includes(value);
+}
+
+function buildDescriptionPrompt(songName, author, category) {
+  return [
+    '你是个人音乐播放器的中文歌单文案助手。只输出一句自然、有画面感的中文短文案，不要解释。',
+    '请为这首歌写一句适合个人音乐播放器展示的中文描述。',
+    '要求：20 到 45 个中文字符左右；有情绪和画面感；不要照抄歌名、歌手名或歌词；不要加引号、编号、解释。',
+    `歌曲名：${songName}`,
+    `作者：${author || '未知'}`,
+    `分类：${category?.label || '未分类'}`
+  ].join('\n');
+}
+
+async function createLanguageModelSession(languageModel) {
+  try {
+    return await languageModel.create({
+      systemPrompt: '你是个人音乐播放器的中文歌单文案助手。只输出一句自然、有画面感的中文短文案，不要解释。'
+    });
+  } catch (_) {
+    return languageModel.create();
+  }
+}
+
+function normalizeAIDescription(value, songName) {
+  let description = String(value || '')
+    .trim()
+    .split(/\n+/)
+    .map(line => line.trim())
+    .filter(Boolean)[0] || '';
+
+  description = description
+    .replace(/^["'“”‘’「」『』《》\s]+|["'“”‘’「」『』《》\s]+$/g, '')
+    .replace(/^(文案|描述|推荐语|短文案)\s*[:：]\s*/, '')
+    .replace(/^\d+[.、]\s*/, '')
+    .trim();
+
+  if (!description || isSameDescriptionAsSongName(description, songName)) {
+    return '';
+  }
+
+  if (description.length > AI_DESCRIPTION_MAX_LENGTH) {
+    description = trimDescription(description, AI_DESCRIPTION_MAX_LENGTH);
+  }
+
+  return description;
+}
+
+function isSameDescriptionAsSongName(description, songName) {
+  return normalizeDuplicateValue(description) === normalizeDuplicateValue(songName);
+}
+
+function trimDescription(description, maxLength) {
+  const clipped = description.slice(0, maxLength);
+  const punctuationIndex = Math.max(
+    clipped.lastIndexOf('，'),
+    clipped.lastIndexOf('。'),
+    clipped.lastIndexOf('；'),
+    clipped.lastIndexOf('、')
+  );
+
+  if (punctuationIndex >= 16) {
+    return clipped.slice(0, punctuationIndex).replace(/[，。；、]+$/, '。');
+  }
+
+  return `${clipped.replace(/[，。；、]+$/, '')}。`;
+}
+
+function withTimeout(promise, timeoutMs, message) {
+  let timer = null;
+  const timeout = new Promise((_, reject) => {
+    timer = window.setTimeout(() => reject(new Error(message)), timeoutMs);
+  });
+
+  return Promise.race([promise, timeout]).finally(() => {
+    window.clearTimeout(timer);
+  });
 }
 
 function validateSourceFiles(songFile, lyricsFile, coverFile) {

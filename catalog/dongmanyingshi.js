@@ -97,6 +97,6 @@ export const animeScreenList = [
     lyrics_type: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
     author: "吸引力合唱组",
     time: "02:11",
-    des: "一个师傅仨徒弟 - 吸引力合唱组",
+    des: "一路降妖的热闹和童年滤镜，全在这几句熟悉的旋律里。",
   }
 ];
