@@ -33,7 +33,7 @@ export const popClassicsList = [
     song_path: FILE_MUSIC_LIUXINGJINGDIAN,
     song_name: "喜欢你 - BEYOND",
     song_file: "喜欢你 - BEYOND.mp3",
-    img_file: "喜欢你 - BEYOND.webp",
+    img_file: "喜欢你 - BEYOND.jpg",
     lyrics_file: "喜欢你 - BEYOND.lrc",
     lyrics_type: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
     author: "BEYOND",
