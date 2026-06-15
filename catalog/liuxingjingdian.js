@@ -175,18 +175,6 @@ export const popClassicsList = [
   {
     song_type: TYPE,
     song_path: FILE_MUSIC_LIUXINGJINGDIAN,
-    song_name: "此生不换",
-    song_file: "此生不换 - 青鸟飞鱼.mp3",
-    img_file: "此生不换 - 青鸟飞鱼.jpg",
-    lyrics_file: "此生不换 - 青鸟飞鱼.lrc",
-    lyrics_type: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
-    author: "青鸟飞鱼",
-    time: "04:25",
-    des: "在初中暗恋三年的同桌，有一天看见她在折星星，\n我问她，这是送给谁的啊，她说，送给她最爱的人，\n过了几天，她送了个熊娃娃给我，我在想，那些星星她是送给谁的?\n过了很多年，我结婚了，生了孩子，把熊给孩子玩，\n一天，孩子不小心把熊撕破了，一大把的星星掉了出来，我顿时泪目。",
-  },
-  {
-    song_type: TYPE,
-    song_path: FILE_MUSIC_LIUXINGJINGDIAN,
     song_name: "断点",
     song_file: "断点.mp3",
     img_file: "断点.jpg",

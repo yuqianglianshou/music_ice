@@ -254,17 +254,6 @@ export const lightMusicList = [
   {
     song_type: TYPE,
     song_path: FILE_MUSIC_QINGYINYUE,
-    song_name: "雪见—仙凡之旅 - 麦振鸿",
-    song_file: "雪见—仙凡之旅 - 麦振鸿.mp3",
-    img_file: "雪见—仙凡之旅 - 麦振鸿.jpg",
-    lyrics_type: CONFIG.LOAD_LYRICS_TYPE.TYPE_chunyinyue,
-    author: "麦振鸿",
-    time: "04:50",
-    des: "记得那个为爱掏心的红毛怪，有着无尽相思的夕瑶，等待千年的龙葵，为老大割肉的茂茂，假装背叛死无全尸的必平，纠缠了三生三世放不下的紫萱和徐长卿，还有那个用自己的命换天下人复活的景天，以思念幻化成型的雪见。都说景天负了夕瑶，只有夕瑶知道，景天不是飞蓬。",
-  },
-  {
-    song_type: TYPE,
-    song_path: FILE_MUSIC_QINGYINYUE,
     song_name: "共伴闯天涯 - 麦振鸿",
     song_file: "共伴闯天涯 - 麦振鸿.mp3",
     img_file: "共伴闯天涯 - 麦振鸿.jpg",
