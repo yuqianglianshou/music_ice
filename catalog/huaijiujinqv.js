@@ -163,18 +163,6 @@ export const nostalgiaList = [
   {
     song_type: TYPE,
     song_path: FILE_MUSIC_HUAIJIUJINQV,
-    song_name: "记事本 - 陈慧琳",
-    song_file: "记事本 - 陈慧琳.mp3",
-    img_file: "记事本 - 陈慧琳.jpg",
-    lyrics_file: "记事本 - 陈慧琳.lrc",
-    lyrics_type: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
-    author: "陈慧琳",
-    time: "04:11",
-    des: "那些写进记事本的名字，后来都成了不敢翻开的旧页。",
-  },
-  {
-    song_type: TYPE,
-    song_path: FILE_MUSIC_HUAIJIUJINQV,
     song_name: "吻别 - 张学友",
     song_file: "吻别 - 张学友.mp3",
     img_file: "吻别 - 张学友.jpg",
@@ -292,16 +280,4 @@ export const nostalgiaList = [
     time: "05:18",
     des: "江湖再大，也抵不过心里那个想一起看尽繁华的人。",
   },
-  {
-    song_type: TYPE,
-    song_path: FILE_MUSIC_HUAIJIUJINQV,
-    song_name: "向天再借五百年 - 韩磊",
-    song_file: "向天再借五百年 - 韩磊.mp3",
-    img_file: "./assets/covers/defaults/44.jpg",
-    lyrics_file: "向天再借五百年 - 韩磊.lrc",
-    lyrics_type: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
-    author: "韩磊",
-    time: "03:12",
-    des: "帝王气魄里也藏着不甘，像人在命运面前最后一次抬头。",
-  }
 ];

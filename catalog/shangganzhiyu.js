@@ -582,18 +582,6 @@ export const healingList = [
   {
     song_type: TYPE,
     song_path: FILE_MUSIC_SHANGGANZHIYU,
-    song_name: "黄昏 - 周传雄",
-    song_file: "黄昏 - 周传雄.mp3",
-    img_file: " ",
-    lyrics_file: "黄昏 - 周传雄.lrc",
-    lyrics_type: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
-    author: "周传雄",
-    time: "05:44",
-    des: "我以为我不会再想你了，但是当我听到这首歌时，我才发现我错了。",
-  },
-  {
-    song_type: TYPE,
-    song_path: FILE_MUSIC_SHANGGANZHIYU,
     song_name: "求佛 - 誓言",
     song_file: "求佛 - 誓言.mp3",
     img_file: " ",
@@ -927,16 +915,4 @@ export const healingList = [
     time: "04:33",
     des: "像把心捧出来问世界，为什么越想靠近越疼。",
   },
-  {
-    song_type: TYPE,
-    song_path: FILE_MUSIC_SHANGGANZHIYU,
-    song_name: "我曾 - 隔壁老樊",
-    song_file: "我曾 - 隔壁老樊.mp3",
-    img_file: "我曾 - 隔壁老樊.jpg",
-    lyrics_file: "我曾 - 隔壁老樊.lrc",
-    lyrics_type: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
-    author: "隔壁老樊",
-    time: "00:00",
-    des: "那些咬牙走过的日子，后来都变成嗓音里的风霜。",
-  }
 ];

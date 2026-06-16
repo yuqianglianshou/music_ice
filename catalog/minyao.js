@@ -175,18 +175,6 @@ export const folkList = [
   {
     song_type: TYPE,
     song_path: FILE_MUSIC_MINYAO,
-    song_name: "七月上 - Jam",
-    song_file: "七月上 - Jam.mp3",
-    img_file: "七月上 - Jam.jpg",
-    lyrics_file: "七月上 - Jam.lrc",
-    lyrics_type: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
-    author: "Jam",
-    time: "03:10",
-    des: "我像个傻子一样记住了你。",
-  },
-  {
-    song_type: TYPE,
-    song_path: FILE_MUSIC_MINYAO,
     song_name: "余香 - 张小九",
     song_file: "余香 - 张小九.mp3",
     img_file: "余香 - 张小九.jpg",
@@ -220,16 +208,4 @@ export const folkList = [
     time: "03:55",
     des: "故事走得太快，回头看时才发现，有些人只在一段风景里停过。",
   },
-  {
-    song_type: TYPE,
-    song_path: FILE_MUSIC_MINYAO,
-    song_name: "小半 - 陈粒",
-    song_file: "小半 - 陈粒.mp3",
-    img_file: "小半 - 陈粒.jpg",
-    lyrics_file: "小半 - 陈粒.lrc",
-    lyrics_type: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
-    author: "陈粒",
-    time: "04:57",
-    des: "喜欢说不完整，遗憾也说不完整，剩下的小半都藏在欲言又止里。",
-  }
 ];
