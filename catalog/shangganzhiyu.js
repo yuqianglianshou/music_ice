@@ -462,18 +462,6 @@ export const healingList = [
   {
     song_type: TYPE,
     song_path: FILE_MUSIC_SHANGGANZHIYU,
-    song_name: "청춘（青春） - 金必",
-    song_file: "청춘 - 金必.mp3",
-    img_file: "청춘 - 金必.jpg",
-    lyrics_file: "청춘 - 金必.lrc",
-    lyrics_type: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
-    author: "Sanullim",
-    time: "03:39",
-    des: "你是否想起了请回答1988呢",
-  },
-  {
-    song_type: TYPE,
-    song_path: FILE_MUSIC_SHANGGANZHIYU,
     song_name: "一生所爱 - 卢冠廷,莫文蔚",
     song_file: "一生所爱 - 卢冠廷,莫文蔚.mp3",
     img_file: "一生所爱 - 卢冠廷,莫文蔚.jpg",
@@ -914,5 +902,5 @@ export const healingList = [
     author: "majiko",
     time: "04:33",
     des: "像把心捧出来问世界，为什么越想靠近越疼。",
-  },
+  }
 ];
