@@ -528,9 +528,10 @@ const progressControl = {
 
   updateRange() {
     const duration = Number.isFinite(audioControl.audioSource.duration)
-      ? Math.ceil(audioControl.audioSource.duration)
+      ? Math.max(0, audioControl.audioSource.duration)
       : 0;
     elements.playProgress.forEach((progress, i) => {
+      // 保留原始时长给进度条，展示文本统一由格式化函数向下取整，避免比歌单多显示 1 秒。
       progress.max = duration;
       elements.playTotalTime[i].textContent = timeFormatSecondsToMinutes(duration);
     });
