@@ -687,5 +687,17 @@ export const popClassicsList = [
     author: "G.E.M. 邓紫棋",
     time: "04:18",
     des: "越美的幻象越容易破，爱到最后只剩透明的疼。",
+  },
+  {
+    song_type: TYPE,
+    song_path: FILE_MUSIC_LIUXINGJINGDIAN,
+    song_name: "Call of Silence",
+    song_file: "Call of Silence（最自由的版本） - 海的对面是什么.mp3",
+    img_file: "Call of Silence（最自由的版本） - 海的对面是什么.jpg",
+    lyrics_file: "Call of Silence（最自由的版本） - 海的对面是什么.lrc",
+    lyrics_type: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
+    author: "海的对面是什么",
+    time: "04:39",
+    des: "成长不是变得坚强，是学会了什么都不说。",
   }
 ];

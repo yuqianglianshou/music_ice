@@ -47,6 +47,7 @@ python3 -m http.server 8000
 - 歌词文件通常使用 `.lrc`。
 - 封面原图可放在 `media/` 对应分类下，列表缩略图由脚本生成到 `assets/covers/music-thumbs/`。
 - 如果歌曲当前没有专属头像，`img_file` 可能指向 `./assets/covers/defaults/*.jpg` 默认随机图。用户提供图片并说明“给到某首歌的头像”时，应将图片复制到该歌曲所在分类的 `media/对应分类/` 下，使用与歌曲匹配的封面文件名，更新对应 `catalog/*.js` 条目的 `img_file`，再运行 `node scripts/generate-thumbnails.mjs` 生成或更新列表缩略图。
+- 用户明确要求封面文件名与歌曲文件名一致时，封面原图应使用 `song_file` 去掉扩展名后的完整文件名，图片扩展名按实际图片格式设置，并同步更新 `img_file` 和对应缩略图文件名。
 - 为歌曲替换头像时，不只修改原图；还要确认 `assets/covers/music-thumbs/对应分类/` 下缩略图同步更新，并检查歌单中的 `img_file` 不再指向旧封面或默认封面。
 - 新导入歌曲可能缺少 `des` 描述信息。用户要求“补上 des 信息”时，应在对应 `catalog/*.js` 条目中补齐 `des` 字段，描述应简洁、中文、贴合歌曲/歌手/影视或专辑背景，风格与已有歌单描述保持一致；不要改动歌曲名、文件名或排序，除非用户同时要求。
 - 资源文件名优先使用 ASCII slug（如 `gangnam-style - psy.mp3`），避免直接使用日文、韩文、带音标字符或其他 Unicode 组合字符作为音频、歌词、封面、缩略图文件名。

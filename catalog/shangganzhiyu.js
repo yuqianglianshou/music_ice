@@ -222,6 +222,17 @@ export const healingList = [
   {
     song_type: TYPE,
     song_path: FILE_MUSIC_SHANGGANZHIYU,
+    song_name: "共伴闯天涯 - 麦振鸿",
+    song_file: "共伴闯天涯 - 麦振鸿.mp3",
+    img_file: "共伴闯天涯 - 麦振鸿.jpg",
+    lyrics_type: CONFIG.LOAD_LYRICS_TYPE.TYPE_chunyinyue,
+    author: "麦振鸿",
+    time: "03:22",
+    des: "你最心疼编剧给哪个角色写死了  \"——茂茂，我们到长安了！\"",
+  },
+  {
+    song_type: TYPE,
+    song_path: FILE_MUSIC_SHANGGANZHIYU,
     song_name: "水星记 - 郭顶",
     song_file: "水星记 - 郭顶.mp3",
     img_file: "水星记 - 郭顶.jpg",
