@@ -7,7 +7,7 @@ export const epicScoreList = [
   {
     song_type: TYPE,
     song_path: FILE_MUSIC_SHISHIPEIYUE,
-    song_name: "亡灵序曲 (The Dawn) - Dreamtale",
+    song_name: "亡灵序曲 (The Dawn)",
     song_file: "The Dawn_亡灵序曲.mp3",
     img_file: "The Dawn_亡灵序曲.jpg",
     lyrics_type: CONFIG.LOAD_LYRICS_TYPE.TYPE_chunyinyue,
@@ -18,7 +18,7 @@ export const epicScoreList = [
   {
     song_type: TYPE,
     song_path: FILE_MUSIC_SHISHIPEIYUE,
-    song_name: "伊卡洛斯 Icarus - Ivan Torrent",
+    song_name: "伊卡洛斯 Icarus",
     song_file: "icarus.mp3",
     img_file: "icarus.jpg",
     lyrics_type: CONFIG.LOAD_LYRICS_TYPE.TYPE_chunyinyue,

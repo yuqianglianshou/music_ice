@@ -7,7 +7,7 @@ export const rhythmList = [
   {
     song_type: TYPE,
     song_path: FILE_MUSIC_JIEZOULVDONG,
-    song_name: "Fade - Alan Walker",
+    song_name: "Fade",
     song_file: "Fade - Alan Walker.mp3",
     img_file: "Fade - Alan Walker.jpg",
     lyrics_type: CONFIG.LOAD_LYRICS_TYPE.TYPE_chunyinyue,
@@ -18,7 +18,7 @@ export const rhythmList = [
   {
     song_type: TYPE,
     song_path: FILE_MUSIC_JIEZOULVDONG,
-    song_name: "Something Just Like This - The Chainsmokers,Coldplay",
+    song_name: "Something Just Like This",
     song_file: "Something Just Like This - The Chainsmokers,Coldplay.mp3",
     img_file: "Something Just Like This - The Chainsmokers,Coldplay.jpg",
     lyrics_file: "Something Just Like This - The Chainsmokers,Coldplay.lrc",
@@ -30,13 +30,13 @@ export const rhythmList = [
   {
     song_type: TYPE,
     song_path: FILE_MUSIC_JIEZOULVDONG,
-    song_name: "Dance Monkey - Tones and I",
+    song_name: "Dance Monkey",
     song_file: "Dance Monkey - Tones and I.mp3",
-    img_file: " ",
+    img_file: "Dance Monkey - Tones and I.jpg",
     lyrics_file: "Dance Monkey - Tones and I.lrc",
     lyrics_type: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
     author: "Tones and I",
-    time: "03:30",
+    time: "03:29",
     des: "I'm a dance monkey, I'm a dance monkey, I'm a dance monkey.",
   },
   {
@@ -54,7 +54,7 @@ export const rhythmList = [
   {
     song_type: TYPE,
     song_path: FILE_MUSIC_JIEZOULVDONG,
-    song_name: "We Are Electric - Flying Steps",
+    song_name: "We Are Electric",
     song_file: "We Are Electric - Flying Steps.mp3",
     img_file: "We Are Electric - Flying Steps.jpg",
     lyrics_file: "We Are Electric - Flying Steps.lrc",
@@ -66,7 +66,7 @@ export const rhythmList = [
   {
     song_type: TYPE,
     song_path: FILE_MUSIC_JIEZOULVDONG,
-    song_name: "The Spectre - Alan Walker",
+    song_name: "The Spectre",
     song_file: "The Spectre - Alan Walker.mp3",
     img_file: "The Spectre - Alan Walker.jpg",
     lyrics_file: "The Spectre - Alan Walker.lrc",
@@ -78,7 +78,7 @@ export const rhythmList = [
   {
     song_type: TYPE,
     song_path: FILE_MUSIC_JIEZOULVDONG,
-    song_name: "Reality - Lost Frequencies",
+    song_name: "Reality",
     song_file: "Reality - Lost Frequencies.mp3",
     img_file: "Reality - Lost Frequencies.jpg",
     lyrics_file: "Reality - Lost Frequencies.lrc",
@@ -90,7 +90,7 @@ export const rhythmList = [
   {
     song_type: TYPE,
     song_path: FILE_MUSIC_JIEZOULVDONG,
-    song_name: "Sing Me to Sleep - Alan Walker",
+    song_name: "Sing Me to Sleep",
     song_file: "Sing Me to Sleep - Alan Walker.mp3",
     img_file: "Sing Me to Sleep - Alan Walker.jpg",
     lyrics_file: "Sing Me to Sleep - Alan Walker.lrc",
@@ -102,7 +102,7 @@ export const rhythmList = [
   {
     song_type: TYPE,
     song_path: FILE_MUSIC_JIEZOULVDONG,
-    song_name: "보여줄게 - Ailee",
+    song_name: "보여줄게 （给你看）",
     song_file: "boyeojulge - ailee.mp3",
     img_file: "boyeojulge - ailee.jpg",
     lyrics_file: "boyeojulge - ailee.lrc",
@@ -114,7 +114,7 @@ export const rhythmList = [
   {
     song_type: TYPE,
     song_path: FILE_MUSIC_JIEZOULVDONG,
-    song_name: "Gentleman - PSY",
+    song_name: "Gentleman",
     song_file: "Gentleman - PSY.mp3",
     img_file: "Gentleman - PSY.jpg",
     lyrics_file: "Gentleman - PSY.lrc",
@@ -126,7 +126,7 @@ export const rhythmList = [
   {
     song_type: TYPE,
     song_path: FILE_MUSIC_JIEZOULVDONG,
-    song_name: "Gangnam Style (강남스타일) - PSY",
+    song_name: "Gangnam Style (강남스타일)",
     song_file: "gangnam-style - psy.mp3",
     img_file: "gangnam-style - psy.jpg",
     lyrics_file: "gangnam-style - psy.lrc",
