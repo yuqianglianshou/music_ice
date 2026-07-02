@@ -7,7 +7,7 @@ export const healingList = [
   {
     song_type: TYPE,
     song_path: FILE_MUSIC_SHANGGANZHIYU,
-    song_name: "那些年 - 胡夏",
+    song_name: "那些年",
     song_file: "那些年 - 胡夏.mp3",
     img_file: "那些年 - 胡夏.jpg",
     lyrics_file: "那些年 - 胡夏.lrc",
@@ -19,7 +19,7 @@ export const healingList = [
   {
     song_type: TYPE,
     song_path: FILE_MUSIC_SHANGGANZHIYU,
-    song_name: "生日礼物 - 江涛",
+    song_name: "生日礼物",
     song_file: "生日礼物 - 江涛.mp3",
     img_file: "生日礼物 - 江涛.jpg",
     lyrics_file: "生日礼物 - 江涛.lrc",
@@ -31,7 +31,7 @@ export const healingList = [
   {
     song_type: TYPE,
     song_path: FILE_MUSIC_SHANGGANZHIYU,
-    song_name: "下雨天-南拳妈妈",
+    song_name: "下雨天",
     song_file: "下雨天-南拳妈妈.MP3",
     img_file: "下雨天-南拳妈妈.jpg",
     lyrics_file: "下雨天-南拳妈妈.lrc",
@@ -43,7 +43,7 @@ export const healingList = [
   {
     song_type: TYPE,
     song_path: FILE_MUSIC_SHANGGANZHIYU,
-    song_name: "有没有人告诉你 - 陈楚生",
+    song_name: "有没有人告诉你",
     song_file: "有没有人告诉你 - 陈楚生.mp3",
     img_file: "有没有人告诉你 - 陈楚生.jpg",
     lyrics_file: "有没有人告诉你 - 陈楚生.lrc",
@@ -55,7 +55,7 @@ export const healingList = [
   {
     song_type: TYPE,
     song_path: FILE_MUSIC_SHANGGANZHIYU,
-    song_name: "寂寞沙洲冷 - 周传雄",
+    song_name: "寂寞沙洲冷",
     song_file: "寂寞沙洲冷 - 周传雄.mp3",
     img_file: "寂寞沙洲冷 - 周传雄.jpg",
     lyrics_file: "寂寞沙洲冷 - 周传雄.lrc",
@@ -67,7 +67,7 @@ export const healingList = [
   {
     song_type: TYPE,
     song_path: FILE_MUSIC_SHANGGANZHIYU,
-    song_name: "我好想你-苏打绿",
+    song_name: "我好想你",
     song_file: "我好想你-苏打绿.mp3",
     img_file: "我好想你-苏打绿.jpg",
     lyrics_file: "我好想你-苏打绿.lrc",
@@ -79,7 +79,7 @@ export const healingList = [
   {
     song_type: TYPE,
     song_path: FILE_MUSIC_SHANGGANZHIYU,
-    song_name: "烟火里的尘埃 - 华晨宇",
+    song_name: "烟火里的尘埃",
     song_file: "烟火里的尘埃 - 华晨宇.mp3",
     img_file: "烟火里的尘埃 - 华晨宇.jpg",
     lyrics_file: "烟火里的尘埃 - 华晨宇.lrc",
@@ -91,7 +91,7 @@ export const healingList = [
   {
     song_type: TYPE,
     song_path: FILE_MUSIC_SHANGGANZHIYU,
-    song_name: "怎么说我不爱你 - 萧敬腾",
+    song_name: "怎么说我不爱你",
     song_file: "怎么说我不爱你 - 萧敬腾.mp3",
     img_file: "怎么说我不爱你 - 萧敬腾.jpg",
     lyrics_file: "怎么说我不爱你 - 萧敬腾.lrc",
@@ -103,7 +103,7 @@ export const healingList = [
   {
     song_type: TYPE,
     song_path: FILE_MUSIC_SHANGGANZHIYU,
-    song_name: "不要再来伤害我 - 张振宇",
+    song_name: "不要再来伤害我",
     song_file: "不要再来伤害我 - 张振宇.mp3",
     img_file: "不要再来伤害我 - 张振宇.jpg",
     lyrics_file: "不要再来伤害我 - 张振宇.lrc",
@@ -115,7 +115,7 @@ export const healingList = [
   {
     song_type: TYPE,
     song_path: FILE_MUSIC_SHANGGANZHIYU,
-    song_name: "杀破狼—《仙剑奇侠传》主题曲",
+    song_name: "杀破狼",
     song_file: "杀破狼—《仙剑奇侠传》主题曲 - 小念姑凉.mp3",
     img_file: "杀破狼—《仙剑奇侠传》主题曲 - 小念姑凉.jpg",
     lyrics_file: "杀破狼—《仙剑奇侠传》主题曲 - 小念姑凉.lrc",
@@ -139,7 +139,7 @@ export const healingList = [
   {
     song_type: TYPE,
     song_path: FILE_MUSIC_SHANGGANZHIYU,
-    song_name: "偏爱-张芸京",
+    song_name: "偏爱",
     song_file: "偏爱-张芸京.MP3",
     img_file: "偏爱-张芸京.jpg",
     lyrics_file: "偏爱-张芸京.lrc",
@@ -163,7 +163,7 @@ export const healingList = [
   {
     song_type: TYPE,
     song_path: FILE_MUSIC_SHANGGANZHIYU,
-    song_name: "一直很安静-阿桑",
+    song_name: "一直很安静",
     song_file: "一直很安静-阿桑.MP3",
     img_file: "一直很安静-阿桑.jpg",
     lyrics_file: "一直很安静-阿桑.lrc",
@@ -175,7 +175,7 @@ export const healingList = [
   {
     song_type: TYPE,
     song_path: FILE_MUSIC_SHANGGANZHIYU,
-    song_name: "忘记时间 - 胡歌",
+    song_name: "忘记时间",
     song_file: "忘记时间 - 胡歌.mp3",
     img_file: "忘记时间 - 胡歌.jpg",
     lyrics_file: "忘记时间 - 胡歌.lrc",
@@ -187,7 +187,7 @@ export const healingList = [
   {
     song_type: TYPE,
     song_path: FILE_MUSIC_SHANGGANZHIYU,
-    song_name: "雪见—仙凡之旅 - 麦振鸿",
+    song_name: "雪见—仙凡之旅",
     song_file: "雪见—仙凡之旅 - 麦振鸿.mp3",
     img_file: "雪见—仙凡之旅 - 麦振鸿.jpg",
     lyrics_type: CONFIG.LOAD_LYRICS_TYPE.TYPE_chunyinyue,
@@ -198,7 +198,7 @@ export const healingList = [
   {
     song_type: TYPE,
     song_path: FILE_MUSIC_SHANGGANZHIYU,
-    song_name: "桃花岛-麦振鸿 - 麦振鸿",
+    song_name: "桃花岛-麦振鸿",
     song_file: "桃花岛-麦振鸿 - 麦振鸿.mp3",
     img_file: "桃花岛-麦振鸿 - 麦振鸿.jpg",
     lyrics_file: "桃花岛-麦振鸿 - 麦振鸿.lrc",
@@ -210,7 +210,7 @@ export const healingList = [
   {
     song_type: TYPE,
     song_path: FILE_MUSIC_SHANGGANZHIYU,
-    song_name: "莫失莫忘（仙剑奇侠传一）",
+    song_name: "莫失莫忘",
     song_file: "莫失莫忘（仙剑奇侠传一） - 葉湘倫.mp3",
     img_file: "莫失莫忘（仙剑奇侠传一） - 葉湘倫.jpg",
     lyrics_file: "莫失莫忘（仙剑奇侠传一） - 葉湘倫.lrc",
@@ -222,7 +222,7 @@ export const healingList = [
   {
     song_type: TYPE,
     song_path: FILE_MUSIC_SHANGGANZHIYU,
-    song_name: "共伴闯天涯 - 麦振鸿",
+    song_name: "共伴闯天涯",
     song_file: "共伴闯天涯 - 麦振鸿.mp3",
     img_file: "共伴闯天涯 - 麦振鸿.jpg",
     lyrics_type: CONFIG.LOAD_LYRICS_TYPE.TYPE_chunyinyue,
@@ -233,7 +233,7 @@ export const healingList = [
   {
     song_type: TYPE,
     song_path: FILE_MUSIC_SHANGGANZHIYU,
-    song_name: "水星记 - 郭顶",
+    song_name: "水星记",
     song_file: "水星记 - 郭顶.mp3",
     img_file: "水星记 - 郭顶.jpg",
     lyrics_file: "水星记 - 郭顶.lrc",
@@ -245,7 +245,7 @@ export const healingList = [
   {
     song_type: TYPE,
     song_path: FILE_MUSIC_SHANGGANZHIYU,
-    song_name: "阿拉斯加海湾 - 蓝心羽",
+    song_name: "阿拉斯加海湾",
     song_file: "阿拉斯加海湾 - 蓝心羽.mp3",
     img_file: "阿拉斯加海湾 - 蓝心羽.jpg",
     lyrics_file: "阿拉斯加海湾 - 蓝心羽.lrc",
@@ -257,7 +257,7 @@ export const healingList = [
   {
     song_type: TYPE,
     song_path: FILE_MUSIC_SHANGGANZHIYU,
-    song_name: "无人之岛 - 任然",
+    song_name: "无人之岛",
     song_file: "无人之岛 - 任然.mp3",
     img_file: "无人之岛 - 任然.jpg",
     lyrics_file: "无人之岛 - 任然.lrc",
@@ -269,7 +269,7 @@ export const healingList = [
   {
     song_type: TYPE,
     song_path: FILE_MUSIC_SHANGGANZHIYU,
-    song_name: "凄美地 - 郭顶",
+    song_name: "凄美地",
     song_file: "凄美地 - 郭顶.mp3",
     img_file: "凄美地 - 郭顶.jpg",
     lyrics_file: "凄美地 - 郭顶.lrc",
@@ -281,7 +281,7 @@ export const healingList = [
   {
     song_type: TYPE,
     song_path: FILE_MUSIC_SHANGGANZHIYU,
-    song_name: "你从未离去 - 白挺",
+    song_name: "你从未离去",
     song_file: "你从未离去 - 白挺.mp3",
     img_file: "你从未离去 - 白挺.webp",
     lyrics_file: "你从未离去 - 白挺.lrc",
@@ -293,7 +293,7 @@ export const healingList = [
   {
     song_type: TYPE,
     song_path: FILE_MUSIC_SHANGGANZHIYU,
-    song_name: "卜卦 - 崔子格",
+    song_name: "卜卦",
     song_file: "卜卦 - 崔子格.mp3",
     img_file: "卜卦 - 崔子格.webp",
     lyrics_file: "卜卦 - 崔子格.lrc",
@@ -305,7 +305,7 @@ export const healingList = [
   {
     song_type: TYPE,
     song_path: FILE_MUSIC_SHANGGANZHIYU,
-    song_name: "离别开出花 - 就是南方凯",
+    song_name: "离别开出花",
     song_file: "离别开出花 - 就是南方凯.mp3",
     img_file: "离别开出花 - 就是南方凯.jpg",
     lyrics_file: "离别开出花 - 就是南方凯.lrc",
@@ -317,7 +317,7 @@ export const healingList = [
   {
     song_type: TYPE,
     song_path: FILE_MUSIC_SHANGGANZHIYU,
-    song_name: "悬溺 - 葛东琪",
+    song_name: "悬溺",
     song_file: "悬溺 - 葛东琪.mp3",
     img_file: "悬溺 - 葛东琪.jpg",
     lyrics_file: "悬溺 - 葛东琪.lrc",
@@ -329,7 +329,7 @@ export const healingList = [
   {
     song_type: TYPE,
     song_path: FILE_MUSIC_SHANGGANZHIYU,
-    song_name: "悬溺 - 旺仔小乔",
+    song_name: "悬溺",
     song_file: "悬溺 - 旺仔小乔.mp3",
     img_file: "悬溺 - 旺仔小乔.webp",
     lyrics_file: "悬溺 - 旺仔小乔.lrc",
@@ -341,7 +341,7 @@ export const healingList = [
   {
     song_type: TYPE,
     song_path: FILE_MUSIC_SHANGGANZHIYU,
-    song_name: "堕 - 旺仔小乔",
+    song_name: "堕",
     song_file: "堕 - 旺仔小乔.mp3",
     img_file: "堕 - 旺仔小乔.webp",
     lyrics_file: "堕 - 旺仔小乔.lrc",
@@ -353,7 +353,7 @@ export const healingList = [
   {
     song_type: TYPE,
     song_path: FILE_MUSIC_SHANGGANZHIYU,
-    song_name: "海底 - 一支榴莲",
+    song_name: "海底",
     song_file: "海底 - 一支榴莲.mp3",
     img_file: "海底 - 一支榴莲.jpg",
     lyrics_file: "海底 - 一支榴莲.lrc",
@@ -365,7 +365,7 @@ export const healingList = [
   {
     song_type: TYPE,
     song_path: FILE_MUSIC_SHANGGANZHIYU,
-    song_name: "书房 - 顾君豪",
+    song_name: "书房",
     song_file: "书房 - 顾君豪.mp3",
     img_file: "书房 - 顾君豪.jpg",
     lyrics_file: "书房 - 顾君豪.lrc",
@@ -377,7 +377,7 @@ export const healingList = [
   {
     song_type: TYPE,
     song_path: FILE_MUSIC_SHANGGANZHIYU,
-    song_name: "十一年（翻自 邱永传） - 阿宇",
+    song_name: "十一年",
     song_file: "十一年（翻自 邱永传） - 阿宇.mp3",
     img_file: "十一年（翻自 邱永传） - 阿宇.webp",
     lyrics_file: "十一年（翻自 邱永传） - 阿宇.lrc",
@@ -389,7 +389,7 @@ export const healingList = [
   {
     song_type: TYPE,
     song_path: FILE_MUSIC_SHANGGANZHIYU,
-    song_name: "山海 - 万豹",
+    song_name: "山海",
     song_file: "山海《完整版》cover(草东没有派对） - 万豹.mp3",
     img_file: "山海《完整版》cover(草东没有派对） - 万豹.jpg",
     lyrics_file: "山海《完整版》cover(草东没有派对） - 万豹.lrc",
@@ -413,7 +413,7 @@ export const healingList = [
   {
     song_type: TYPE,
     song_path: FILE_MUSIC_SHANGGANZHIYU,
-    song_name: "漠河舞厅·2022 - 柳爽",
+    song_name: "漠河舞厅·2022",
     song_file: "漠河舞厅·2022 - 柳爽.mp3",
     img_file: "漠河舞厅·2022 - 柳爽.jpg",
     lyrics_file: "漠河舞厅·2022 - 柳爽.lrc",
@@ -425,7 +425,7 @@ export const healingList = [
   {
     song_type: TYPE,
     song_path: FILE_MUSIC_SHANGGANZHIYU,
-    song_name: "无期-石白其",
+    song_name: "无期",
     song_file: "无期-石白其.mp3",
     img_file: "无期-石白其.webp",
     lyrics_file: "无期-石白其.lrc",
@@ -437,7 +437,7 @@ export const healingList = [
   {
     song_type: TYPE,
     song_path: FILE_MUSIC_SHANGGANZHIYU,
-    song_name: "真爱的力量 - Maj7_Music 巴音孟克",
+    song_name: "真爱的力量",
     song_file: "真爱的力量 - Maj7_Music 巴音孟克.mp3",
     img_file: "真爱的力量 - Maj7_Music 巴音孟克.webp",
     lyrics_file: "真爱的力量 - Maj7_Music 巴音孟克.lrc",
@@ -461,7 +461,7 @@ export const healingList = [
   {
     song_type: TYPE,
     song_path: FILE_MUSIC_SHANGGANZHIYU,
-    song_name: "悬日 - 田馥甄",
+    song_name: "悬日",
     song_file: "悬日 - 田馥甄.mp3",
     img_file: "悬日 - 田馥甄.jpg",
     lyrics_file: "悬日 - 田馥甄.lrc",
@@ -485,7 +485,7 @@ export const healingList = [
   {
     song_type: TYPE,
     song_path: FILE_MUSIC_SHANGGANZHIYU,
-    song_name: "你走 - 李宗锦（松紧先生）",
+    song_name: "你走",
     song_file: "你走 - 李宗锦（松紧先生）.mp3",
     img_file: "你走 - 李宗锦（松紧先生）.jpg",
     lyrics_file: "你走 - 李宗锦（松紧先生）.lrc",
@@ -497,7 +497,7 @@ export const healingList = [
   {
     song_type: TYPE,
     song_path: FILE_MUSIC_SHANGGANZHIYU,
-    song_name: "BINGBIAN病变 (女声版) - 鞠文娴",
+    song_name: "BINGBIAN病变 (女声版)",
     song_file: "BINGBIAN病变 (女声版) - 鞠文娴.mp3",
     img_file: "BINGBIAN病变 (女声版) - 鞠文娴.jpg",
     lyrics_file: "BINGBIAN病变 (女声版) - 鞠文娴.lrc",
@@ -509,7 +509,7 @@ export const healingList = [
   {
     song_type: TYPE,
     song_path: FILE_MUSIC_SHANGGANZHIYU,
-    song_name: "泸沽湖（烟嗓女声版） - 陈惟",
+    song_name: "泸沽湖（烟嗓女声版）",
     song_file: "泸沽湖（烟嗓女声版） - 陈惟.mp3",
     img_file: "泸沽湖（烟嗓女声版） - 陈惟.jpg",
     lyrics_file: "泸沽湖（烟嗓女声版） - 陈惟.lrc",
@@ -521,7 +521,7 @@ export const healingList = [
   {
     song_type: TYPE,
     song_path: FILE_MUSIC_SHANGGANZHIYU,
-    song_name: "斯琴高丽的伤心 - Yichen9247",
+    song_name: "斯琴高丽的伤心",
     song_file: "斯琴高丽的伤心 - Yichen9247.mp3",
     img_file: "斯琴高丽的伤心 - Yichen9247.jpg",
     lyrics_file: "斯琴高丽的伤心 - Yichen9247.lrc",
@@ -533,7 +533,7 @@ export const healingList = [
   {
     song_type: TYPE,
     song_path: FILE_MUSIC_SHANGGANZHIYU,
-    song_name: "醉清风 - 弦子",
+    song_name: "醉清风",
     song_file: "醉清风 - 弦子.mp3",
     img_file: "醉清风 - 弦子.jpg",
     lyrics_file: "醉清风 - 弦子.lrc",
@@ -558,18 +558,18 @@ export const healingList = [
     song_type: TYPE,
     song_path: FILE_MUSIC_SHANGGANZHIYU,
     song_name: "ありがとう（泪的告白）",
-    song_file: "泪的告白.mp3",
-    img_file: "泪的告白.jpg",
-    lyrics_file: "泪的告白.lrc",
+    song_file: "arigatou - kokia.mp3",
+    img_file: "arigatou - kokia.jpg",
+    lyrics_file: "arigatou - kokia.lrc",
     lyrics_type: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
-    author: "墓辰倾心",
-    time: "04:11",
+    author: "kokia",
+    time: "04:08",
     des: "遇见的都是幸运，或许下次见面真的只能靠运气了。然而我几乎不出门啊",
   },
   {
     song_type: TYPE,
     song_path: FILE_MUSIC_SHANGGANZHIYU,
-    song_name: "丁香花 (2007版) - 唐磊",
+    song_name: "丁香花 (2007版) ",
     song_file: "丁香花 (2007版) - 唐磊.mp3",
     img_file: "丁香花 (2007版) - 唐磊.jpg",
     lyrics_file: "丁香花 (2007版) - 唐磊.lrc",
@@ -581,7 +581,7 @@ export const healingList = [
   {
     song_type: TYPE,
     song_path: FILE_MUSIC_SHANGGANZHIYU,
-    song_name: "一生所爱 - 卢冠廷,莫文蔚",
+    song_name: "一生所爱",
     song_file: "一生所爱 - 卢冠廷,莫文蔚.mp3",
     img_file: "一生所爱 - 卢冠廷,莫文蔚.jpg",
     lyrics_file: "一生所爱 - 卢冠廷,莫文蔚.lrc",
@@ -593,7 +593,7 @@ export const healingList = [
   {
     song_type: TYPE,
     song_path: FILE_MUSIC_SHANGGANZHIYU,
-    song_name: "清新的小女孩 (For Ma) - July Tun",
+    song_name: "清新的小女孩 (For Ma)",
     song_file: "清新的小女孩 (For Ma) - July Tun.mp3",
     img_file: "清新的小女孩 (For Ma) - July Tun.jpg",
     lyrics_file: "清新的小女孩 (For Ma) - July Tun.lrc",
@@ -617,7 +617,7 @@ export const healingList = [
   {
     song_type: TYPE,
     song_path: FILE_MUSIC_SHANGGANZHIYU,
-    song_name: "假如爱有天意 (Live) - 李健",
+    song_name: "假如爱有天意 (Live)",
     song_file: "假如爱有天意 (Live) - 李健.mp3",
     img_file: "假如爱有天意 (Live) - 李健.jpg",
     lyrics_file: "假如爱有天意 (Live) - 李健.lrc",
@@ -629,7 +629,7 @@ export const healingList = [
   {
     song_type: TYPE,
     song_path: FILE_MUSIC_SHANGGANZHIYU,
-    song_name: "灰色空间 - 罗志祥",
+    song_name: "灰色空间",
     song_file: "灰色空间 - 罗志祥.mp3",
     img_file: "灰色空间 - 罗志祥.jpg",
     lyrics_file: "灰色空间 - 罗志祥.lrc",
@@ -641,7 +641,7 @@ export const healingList = [
   {
     song_type: TYPE,
     song_path: FILE_MUSIC_SHANGGANZHIYU,
-    song_name: "后来-刘若英",
+    song_name: "后来",
     song_file: "后来-刘若英.MP3",
     img_file: "后来-刘若英.jpg",
     lyrics_file: "后来-刘若英.lrc",
@@ -653,7 +653,7 @@ export const healingList = [
   {
     song_type: TYPE,
     song_path: FILE_MUSIC_SHANGGANZHIYU,
-    song_name: "我用什么把你留住-福禄寿",
+    song_name: "我用什么把你留住",
     song_file: "我用什么把你留住-福禄寿.MP3",
     img_file: "我用什么把你留住-福禄寿.jpg",
     lyrics_file: "我用什么把你留住-福禄寿.lrc",
@@ -665,7 +665,7 @@ export const healingList = [
   {
     song_type: TYPE,
     song_path: FILE_MUSIC_SHANGGANZHIYU,
-    song_name: "求佛 - 誓言",
+    song_name: "求佛",
     song_file: "求佛 - 誓言.mp3",
     img_file: "求佛 - 誓言.jpg",
     lyrics_file: "求佛 - 誓言.lrc",
@@ -677,7 +677,7 @@ export const healingList = [
   {
     song_type: TYPE,
     song_path: FILE_MUSIC_SHANGGANZHIYU,
-    song_name: "犯错 - 顾峰",
+    song_name: "犯错",
     song_file: "犯错 - 顾峰.mp3",
     img_file: "犯错 - 顾峰.jpg",
     lyrics_file: "犯错 - 顾峰.lrc",
@@ -689,7 +689,7 @@ export const healingList = [
   {
     song_type: TYPE,
     song_path: FILE_MUSIC_SHANGGANZHIYU,
-    song_name: "好想爱这个世界啊 - 华晨宇",
+    song_name: "好想爱这个世界啊",
     song_file: "好想爱这个世界啊 - 华晨宇.mp3",
     img_file: "好想爱这个世界啊 - 华晨宇.jpg",
     lyrics_file: "好想爱这个世界啊 - 华晨宇.lrc",
@@ -701,7 +701,7 @@ export const healingList = [
   {
     song_type: TYPE,
     song_path: FILE_MUSIC_SHANGGANZHIYU,
-    song_name: "三生石下 - 大欢",
+    song_name: "三生石下",
     song_file: "三生石下 - 大欢.mp3",
     img_file: "三生石下 - 大欢.webp",
     lyrics_file: "三生石下 - 大欢.lrc",
@@ -713,7 +713,7 @@ export const healingList = [
   {
     song_type: TYPE,
     song_path: FILE_MUSIC_SHANGGANZHIYU,
-    song_name: "拯救 - 孙楠",
+    song_name: "拯救",
     song_file: "拯救 - 孙楠.mp3",
     img_file: "拯救 - 孙楠.webp",
     lyrics_file: "拯救 - 孙楠.lrc",
@@ -725,7 +725,7 @@ export const healingList = [
   {
     song_type: TYPE,
     song_path: FILE_MUSIC_SHANGGANZHIYU,
-    song_name: "凉凉 - 杨宗纬",
+    song_name: "凉凉",
     song_file: "凉凉 - 杨宗纬.mp3",
     img_file: "凉凉 - 杨宗纬.webp",
     lyrics_file: "凉凉 - 杨宗纬.lrc",
@@ -737,7 +737,7 @@ export const healingList = [
   {
     song_type: TYPE,
     song_path: FILE_MUSIC_SHANGGANZHIYU,
-    song_name: "再次见到你 _Once Again",
+    song_name: "再次见到你",
     song_file: "再次见到你 _Once Again（翻自 Mad Clown&金娜英） - 阿YueYue.mp3",
     img_file: "再次见到你 _Once Again（翻自 Mad Clown&金娜英） - 阿YueYue.jpg",
     lyrics_file: "再次见到你 _Once Again（翻自 Mad Clown&金娜英） - 阿YueYue.lrc",
@@ -749,7 +749,7 @@ export const healingList = [
   {
     song_type: TYPE,
     song_path: FILE_MUSIC_SHANGGANZHIYU,
-    song_name: "她 - 不可撤销乐队",
+    song_name: "她",
     song_file: "她 - 不可撤销乐队.mp3",
     img_file: "她 - 不可撤销乐队.jpg",
     lyrics_file: "她 - 不可撤销乐队.lrc",
@@ -761,7 +761,7 @@ export const healingList = [
   {
     song_type: TYPE,
     song_path: FILE_MUSIC_SHANGGANZHIYU,
-    song_name: "盛夏的果实 - 莫文蔚",
+    song_name: "盛夏的果实",
     song_file: "盛夏的果实 - 莫文蔚.mp3",
     img_file: "盛夏的果实 - 莫文蔚.jpg",
     lyrics_file: "盛夏的果实 - 莫文蔚.lrc",
@@ -773,7 +773,7 @@ export const healingList = [
   {
     song_type: TYPE,
     song_path: FILE_MUSIC_SHANGGANZHIYU,
-    song_name: "我的歌声里-曲婉婷",
+    song_name: "我的歌声里",
     song_file: "我的歌声里-曲婉婷.mp3",
     img_file: "我的歌声里-曲婉婷.jpg",
     lyrics_file: "我的歌声里-曲婉婷.lrc",
@@ -785,7 +785,7 @@ export const healingList = [
   {
     song_type: TYPE,
     song_path: FILE_MUSIC_SHANGGANZHIYU,
-    song_name: "越长大越孤单 - 牛奶咖啡",
+    song_name: "越长大越孤单",
     song_file: "越长大越孤单 - 牛奶咖啡.mp3",
     img_file: "越长大越孤单 - 牛奶咖啡.jpg",
     lyrics_file: "越长大越孤单 - 牛奶咖啡.lrc",
@@ -797,7 +797,7 @@ export const healingList = [
   {
     song_type: TYPE,
     song_path: FILE_MUSIC_SHANGGANZHIYU,
-    song_name: "空白格 - 杨宗纬",
+    song_name: "空白格",
     song_file: "空白格 - 杨宗纬.mp3",
     img_file: "空白格 - 杨宗纬.jpg",
     lyrics_file: "空白格 - 杨宗纬.lrc",
@@ -809,7 +809,7 @@ export const healingList = [
   {
     song_type: TYPE,
     song_path: FILE_MUSIC_SHANGGANZHIYU,
-    song_name: "丫头 - 王童语",
+    song_name: "丫头",
     song_file: "丫头 - 王童语.mp3",
     img_file: "丫头 - 王童语.webp",
     lyrics_file: "丫头 - 王童语.lrc",
@@ -833,7 +833,7 @@ export const healingList = [
   {
     song_type: TYPE,
     song_path: FILE_MUSIC_SHANGGANZHIYU,
-    song_name: "我好像在哪见过你 - 薛之谦",
+    song_name: "我好像在哪见过你",
     song_file: "我好像在哪见过你 - 薛之谦.mp3",
     img_file: "我好像在哪见过你 - 薛之谦.jpg",
     lyrics_file: "我好像在哪见过你 - 薛之谦.lrc",
@@ -845,7 +845,7 @@ export const healingList = [
   {
     song_type: TYPE,
     song_path: FILE_MUSIC_SHANGGANZHIYU,
-    song_name: "童话 - 光良",
+    song_name: "童话",
     song_file: "童话 - 光良.mp3",
     img_file: "童话 - 光良.jpg",
     lyrics_file: "童话 - 光良.lrc",
@@ -857,7 +857,7 @@ export const healingList = [
   {
     song_type: TYPE,
     song_path: FILE_MUSIC_SHANGGANZHIYU,
-    song_name: "遇见 - 孙燕姿",
+    song_name: "遇见",
     song_file: "遇见 - 孙燕姿.mp3",
     img_file: "遇见 - 孙燕姿.jpg",
     lyrics_file: "遇见 - 孙燕姿.lrc",
@@ -869,7 +869,7 @@ export const healingList = [
   {
     song_type: TYPE,
     song_path: FILE_MUSIC_SHANGGANZHIYU,
-    song_name: "她说 - 林俊杰",
+    song_name: "她说",
     song_file: "她说 - 林俊杰.mp3",
     img_file: "她说 - 林俊杰.jpg",
     lyrics_file: "她说 - 林俊杰.lrc",
@@ -893,7 +893,7 @@ export const healingList = [
   {
     song_type: TYPE,
     song_path: FILE_MUSIC_SHANGGANZHIYU,
-    song_name: "心做し - majiko",
+    song_name: "心做し",
     song_file: "心做し - majiko.mp3",
     img_file: "心做し - majiko.jpg",
     lyrics_file: "心做し - majiko.lrc",
@@ -905,7 +905,7 @@ export const healingList = [
   {
     song_type: TYPE,
     song_path: FILE_MUSIC_SHANGGANZHIYU,
-    song_name: "放生 - 范逸臣",
+    song_name: "放生",
     song_file: "放生 - 范逸臣.mp3",
     img_file: "放生 - 范逸臣.jpg",
     lyrics_file: "放生 - 范逸臣.lrc",

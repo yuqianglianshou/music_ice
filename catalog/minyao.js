@@ -7,7 +7,7 @@ export const folkList = [
   {
     song_type: TYPE,
     song_path: FILE_MUSIC_MINYAO,
-    song_name: "安和桥 - 宋冬野",
+    song_name: "安和桥",
     song_file: "安和桥 - 宋冬野.mp3",
     img_file: "安和桥 - 宋冬野.jpg",
     lyrics_file: "安和桥 - 宋冬野.lrc",
@@ -19,7 +19,7 @@ export const folkList = [
   {
     song_type: TYPE,
     song_path: FILE_MUSIC_MINYAO,
-    song_name: "董小姐 - 宋冬野",
+    song_name: "董小姐",
     song_file: "董小姐 - 宋冬野.mp3",
     img_file: "董小姐 - 宋冬野.jpg",
     lyrics_file: "董小姐 - 宋冬野.lrc",
@@ -31,19 +31,19 @@ export const folkList = [
   {
     song_type: TYPE,
     song_path: FILE_MUSIC_MINYAO,
-    song_name: "斑马，斑马 - 宋冬野",
+    song_name: "斑马，斑马",
     song_file: "斑马，斑马 - 宋冬野.mp3",
     img_file: "斑马，斑马 - 宋冬野.jpg",
     lyrics_file: "斑马，斑马 - 宋冬野.lrc",
     lyrics_type: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
     author: "宋冬野",
-    time: "04:14",
+    time: "04:13",
     des: "世界如此广阔，人类却走进了悲伤的墙角。",
   },
   {
     song_type: TYPE,
     song_path: FILE_MUSIC_MINYAO,
-    song_name: "南方姑娘 - 赵雷",
+    song_name: "南方姑娘",
     song_file: "南方姑娘 - 赵雷.mp3",
     img_file: "南方姑娘 - 赵雷.jpg",
     lyrics_file: "南方姑娘 - 赵雷.lrc",
@@ -55,7 +55,7 @@ export const folkList = [
   {
     song_type: TYPE,
     song_path: FILE_MUSIC_MINYAO,
-    song_name: "鼓楼 - 赵雷",
+    song_name: "鼓楼",
     song_file: "鼓楼 - 赵雷.mp3",
     img_file: "鼓楼 - 赵雷.jpg",
     lyrics_file: "鼓楼 - 赵雷.lrc",
@@ -67,7 +67,7 @@ export const folkList = [
   {
     song_type: TYPE,
     song_path: FILE_MUSIC_MINYAO,
-    song_name: "理想三旬 - 陈鸿宇",
+    song_name: "理想三旬",
     song_file: "理想三旬 - 陈鸿宇.mp3",
     img_file: "理想三旬 - 陈鸿宇.jpg",
     lyrics_file: "理想三旬 - 陈鸿宇.lrc",
@@ -79,7 +79,7 @@ export const folkList = [
   {
     song_type: TYPE,
     song_path: FILE_MUSIC_MINYAO,
-    song_name: "写给黄淮 - 邵帅",
+    song_name: "写给黄淮",
     song_file: "写给黄淮 - 邵帅.mp3",
     img_file: "写给黄淮 - 邵帅.jpg",
     lyrics_file: "写给黄淮 - 邵帅.lrc",
@@ -91,7 +91,7 @@ export const folkList = [
   {
     song_type: TYPE,
     song_path: FILE_MUSIC_MINYAO,
-    song_name: "云烟成雨 - 房东的猫",
+    song_name: "云烟成雨",
     song_file: "云烟成雨 - 房东的猫.mp3",
     img_file: "云烟成雨 - 房东的猫.jpg",
     lyrics_file: "云烟成雨 - 房东的猫.lrc",
@@ -103,7 +103,7 @@ export const folkList = [
   {
     song_type: TYPE,
     song_path: FILE_MUSIC_MINYAO,
-    song_name: "我们的时光 - 赵雷",
+    song_name: "我们的时光",
     song_file: "我们的时光 - 赵雷.mp3",
     img_file: "我们的时光 - 赵雷.jpg",
     lyrics_file: "我们的时光 - 赵雷.lrc",
@@ -115,7 +115,7 @@ export const folkList = [
   {
     song_type: TYPE,
     song_path: FILE_MUSIC_MINYAO,
-    song_name: "我记得 - 赵雷",
+    song_name: "我记得",
     song_file: "我记得 - 赵雷.mp3",
     img_file: "我记得 - 赵雷.jpg",
     lyrics_file: "我记得 - 赵雷.lrc",
@@ -127,19 +127,19 @@ export const folkList = [
   {
     song_type: TYPE,
     song_path: FILE_MUSIC_MINYAO,
-    song_name: "成都 - 赵雷",
+    song_name: "成都",
     song_file: "成都 - 赵雷.mp3",
     img_file: "成都 - 赵雷.jpg",
     lyrics_file: "成都 - 赵雷.lrc",
     lyrics_type: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
     author: "赵雷",
-    time: "05:29",
+    time: "05:28",
     des: "我在这座城市听《成都》，它就变成了我的故事。",
   },
   {
     song_type: TYPE,
     song_path: FILE_MUSIC_MINYAO,
-    song_name: "春风十里 - 鹿先森乐队",
+    song_name: "春风十里",
     song_file: "春风十里 - 鹿先森乐队.mp3",
     img_file: "春风十里 - 鹿先森乐队.jpg",
     lyrics_file: "春风十里 - 鹿先森乐队.lrc",
@@ -151,7 +151,7 @@ export const folkList = [
   {
     song_type: TYPE,
     song_path: FILE_MUSIC_MINYAO,
-    song_name: "白桦林 - 朴树",
+    song_name: "白桦林",
     song_file: "白桦林 - 朴树.mp3",
     img_file: "白桦林 - 朴树.jpg",
     lyrics_file: "白桦林 - 朴树.lrc",
@@ -163,7 +163,7 @@ export const folkList = [
   {
     song_type: TYPE,
     song_path: FILE_MUSIC_MINYAO,
-    song_name: "南山南 - 马頔",
+    song_name: "南山南",
     song_file: "南山南 - 马頔.mp3",
     img_file: "南山南 - 马頔.jpg",
     lyrics_file: "南山南 - 马頔.lrc",
@@ -175,7 +175,7 @@ export const folkList = [
   {
     song_type: TYPE,
     song_path: FILE_MUSIC_MINYAO,
-    song_name: "余香 - 张小九",
+    song_name: "余香",
     song_file: "余香 - 张小九.mp3",
     img_file: "余香 - 张小九.jpg",
     lyrics_file: "余香 - 张小九.lrc",
@@ -187,7 +187,7 @@ export const folkList = [
   {
     song_type: TYPE,
     song_path: FILE_MUSIC_MINYAO,
-    song_name: "画 - 赵雷",
+    song_name: "画",
     song_file: "画 - 赵雷.mp3",
     img_file: "画 - 赵雷.jpg",
     lyrics_file: "画 - 赵雷.lrc",
@@ -199,7 +199,7 @@ export const folkList = [
   {
     song_type: TYPE,
     song_path: FILE_MUSIC_MINYAO,
-    song_name: "走马 - 陈粒",
+    song_name: "走马",
     song_file: "走马 - 陈粒.mp3",
     img_file: "走马 - 陈粒.jpg",
     lyrics_file: "走马 - 陈粒.lrc",
