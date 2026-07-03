@@ -1,9 +1,10 @@
 import { CONFIG } from '../app/config.js';
+import { nostalgiaList } from './huaijiujinqv.js';
 
 const TYPE = "流行经典";
 const FILE_MUSIC_LIUXINGJINGDIAN = "liuxingjingdian/";
 
-export const popClassicsList = [
+const popClassicSongs = [
   {
     song_type: TYPE,
     song_path: FILE_MUSIC_LIUXINGJINGDIAN,
@@ -700,4 +701,12 @@ export const popClassicsList = [
     time: "04:39",
     des: "成长不是变得坚强，是学会了什么都不说。",
   }
+];
+
+export const popClassicsList = [
+  ...popClassicSongs,
+  ...nostalgiaList.map(song => ({
+    ...song,
+    song_type: TYPE,
+  })),
 ];

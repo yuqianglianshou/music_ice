@@ -1,9 +1,10 @@
 import { CONFIG } from '../app/config.js';
+import { epicScoreList } from './shishipeiyue.js';
 
 const TYPE = "节奏律动";
 const FILE_MUSIC_JIEZOULVDONG = "jiezoulvdong/";
 
-export const rhythmList = [
+const rhythmSongs = [
   {
     song_type: TYPE,
     song_path: FILE_MUSIC_JIEZOULVDONG,
@@ -135,4 +136,12 @@ export const rhythmList = [
     time: "03:39",
     des: "这首歌自带派对开关，前奏一响就很难保持严肃。",
   }
+];
+
+export const rhythmList = [
+  ...rhythmSongs,
+  ...epicScoreList.map(song => ({
+    ...song,
+    song_type: TYPE,
+  })),
 ];

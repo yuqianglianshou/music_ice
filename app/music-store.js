@@ -4,35 +4,29 @@ import { MUSIC_LISTS } from '../catalog/index.js';
 export const FILE_MUSIC_ROOT = './media/';
 
 const {
+  folkList,
   lightMusicList,
   healingList,
   popClassicsList,
-  epicScoreList,
   rhythmList,
-  animeScreenList,
-  nostalgiaList,
-  folkList
+  animeScreenList
 } = MUSIC_LISTS;
 
 const ALL_SOURCE_LISTS = [
+  folkList,
   lightMusicList,
   healingList,
   popClassicsList,
-  epicScoreList,
   rhythmList,
-  animeScreenList,
-  nostalgiaList,
-  folkList
+  animeScreenList
 ];
 
 const CATEGORY_LABELS = {
   LIGHT_MUSIC: '轻音乐',
   HEALING: '伤感治愈',
   POP_CLASSICS: '流行经典',
-  EPIC_SCORE: '史诗配乐',
   RHYTHM: '节奏律动',
   ANIME_SCREEN: '动漫影视',
-  NOSTALGIA: '怀旧金曲',
   FOLK: '民谣'
 };
 
@@ -41,10 +35,8 @@ export const STORAGE_KEYS = {
   LIGHT_MUSIC: 'lightMusicList',
   HEALING: 'healingMusicList',
   POP_CLASSICS: 'popClassicsList',
-  EPIC_SCORE: 'epicScoreList',
   RHYTHM: 'rhythmList',
   ANIME_SCREEN: 'animeScreenList',
-  NOSTALGIA: 'nostalgiaList',
   FOLK: 'folkMusicList'
 };
 
@@ -119,10 +111,8 @@ export class MusicStorage {
     LIGHT_MUSIC: { key: STORAGE_KEYS.LIGHT_MUSIC, label: CATEGORY_LABELS.LIGHT_MUSIC },
     HEALING: { key: STORAGE_KEYS.HEALING, label: CATEGORY_LABELS.HEALING },
     POP_CLASSICS: { key: STORAGE_KEYS.POP_CLASSICS, label: CATEGORY_LABELS.POP_CLASSICS },
-    EPIC_SCORE: { key: STORAGE_KEYS.EPIC_SCORE, label: CATEGORY_LABELS.EPIC_SCORE },
     RHYTHM: { key: STORAGE_KEYS.RHYTHM, label: CATEGORY_LABELS.RHYTHM },
     ANIME_SCREEN: { key: STORAGE_KEYS.ANIME_SCREEN, label: CATEGORY_LABELS.ANIME_SCREEN },
-    NOSTALGIA: { key: STORAGE_KEYS.NOSTALGIA, label: CATEGORY_LABELS.NOSTALGIA },
     FOLK: { key: STORAGE_KEYS.FOLK, label: CATEGORY_LABELS.FOLK }
   };
 
@@ -143,10 +133,8 @@ export class MusicStorage {
       [STORAGE_KEYS.LIGHT_MUSIC]: lightMusicList.filter(this.validateMusic),
       [STORAGE_KEYS.HEALING]: healingList.filter(this.validateMusic),
       [STORAGE_KEYS.POP_CLASSICS]: popClassicsList.filter(this.validateMusic),
-      [STORAGE_KEYS.EPIC_SCORE]: epicScoreList.filter(this.validateMusic),
       [STORAGE_KEYS.RHYTHM]: rhythmList.filter(this.validateMusic),
       [STORAGE_KEYS.ANIME_SCREEN]: animeScreenList.filter(this.validateMusic),
-      [STORAGE_KEYS.NOSTALGIA]: nostalgiaList.filter(this.validateMusic),
       [STORAGE_KEYS.FOLK]: folkList.filter(this.validateMusic)
     };
   }
@@ -236,10 +224,8 @@ export const getMusicList = (tabName) => {
     'tab-B': MusicStorage.getList(STORAGE_KEYS.LIGHT_MUSIC),
     'tab-C': MusicStorage.getList(STORAGE_KEYS.HEALING),
     'tab-D': MusicStorage.getList(STORAGE_KEYS.POP_CLASSICS),
-    'tab-E': MusicStorage.getList(STORAGE_KEYS.EPIC_SCORE),
     'tab-F': MusicStorage.getList(STORAGE_KEYS.RHYTHM),
     'tab-G': MusicStorage.getList(STORAGE_KEYS.ANIME_SCREEN),
-    'tab-H': MusicStorage.getList(STORAGE_KEYS.NOSTALGIA),
     'tab-I': MusicStorage.getList(STORAGE_KEYS.FOLK)
   };
   return tabMusicMap[tabName] || [];
