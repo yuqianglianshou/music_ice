@@ -2,13 +2,11 @@
 
 const CATEGORY_CONFIG = [
   { key: 'dongmanyingshi', label: '动漫影视', catalogFile: 'dongmanyingshi.js', folder: 'dongmanyingshi', folderConst: 'FILE_MUSIC_DONGMANYINGSHI' },
-  { key: 'huaijiujinqv', label: '怀旧金曲', catalogFile: 'huaijiujinqv.js', folder: 'huaijiujinqv', folderConst: 'FILE_MUSIC_HUAIJIUJINQV' },
   { key: 'jiezoulvdong', label: '节奏律动', catalogFile: 'jiezoulvdong.js', folder: 'jiezoulvdong', folderConst: 'FILE_MUSIC_JIEZOULVDONG' },
   { key: 'liuxingjingdian', label: '流行经典', catalogFile: 'liuxingjingdian.js', folder: 'liuxingjingdian', folderConst: 'FILE_MUSIC_LIUXINGJINGDIAN' },
   { key: 'minyao', label: '民谣', catalogFile: 'minyao.js', folder: 'minyao', folderConst: 'FILE_MUSIC_MINYAO' },
   { key: 'qingyinyue', label: '轻音乐', catalogFile: 'qingyinyue.js', folder: 'qingyinyue', folderConst: 'FILE_MUSIC_QINGYINYUE' },
-  { key: 'shangganzhiyu', label: '伤感治愈', catalogFile: 'shangganzhiyu.js', folder: 'shangganzhiyu', folderConst: 'FILE_MUSIC_SHANGGANZHIYU' },
-  { key: 'shishipeiyue', label: '史诗配乐', catalogFile: 'shishipeiyue.js', folder: 'shishipeiyue', folderConst: 'FILE_MUSIC_SHISHIPEIYUE' }
+  { key: 'shangganzhiyu', label: '伤感治愈', catalogFile: 'shangganzhiyu.js', folder: 'shangganzhiyu', folderConst: 'FILE_MUSIC_SHANGGANZHIYU' }
 ];
 
 const THUMB_SIZE = 160;

@@ -232,7 +232,7 @@ export const lightMusicList = [
   {
     song_type: TYPE,
     song_path: FILE_MUSIC_QINGYINYUE,
-    song_name: "Daughter of heave",
+    song_name: "Daughter of heave（天国的女儿）",
     song_file: "Daughter of heaven - 段玫梅.mp3",
     img_file: "Daughter of heaven - 段玫梅.png",
     lyrics_type: CONFIG.LOAD_LYRICS_TYPE.TYPE_chunyinyue,

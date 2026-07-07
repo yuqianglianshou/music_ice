@@ -93,11 +93,18 @@
     border-radius: 12px;
   }
 
+  .wrapper-contentList .item-index {
+    width: 26px;
+    flex-basis: 26px;
+    margin-left: 0;
+    font-size: 12px;
+  }
+
   .wrapper-contentList .item-img {
     width: 44px;
     height: 44px;
     flex-basis: 44px;
-    margin-left: 0;
+    margin-left: 8px;
     padding: 0;
   }
 
@@ -384,6 +391,12 @@
   .wrapper-contentList .contentList-item {
     height: 60px;
     padding: 0 10px;
+  }
+
+  .wrapper-contentList .item-index {
+    width: 24px;
+    flex-basis: 24px;
+    font-size: 11px;
   }
 
   .wrapper-contentList .item-img {

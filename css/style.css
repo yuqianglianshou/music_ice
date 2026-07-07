@@ -1001,13 +1001,27 @@
 	background: linear-gradient(180deg, var(--primary-color), var(--secondary-color));
 }
 
+/* 列表项序号，仅表示当前筛选列表中的位置 */
+.wrapper-contentList .item-index {
+	width: 32px;
+	flex: 0 0 32px;
+	margin-left: 10px;
+	text-align: right;
+	font-variant-numeric: tabular-nums;
+	color: rgba(255, 255, 255, 0.5);
+}
+
+.wrapper-contentList .contentList-item.active .item-index {
+	color: rgba(255, 255, 255, 0.82);
+}
+
 /* 列表项图片 */
 .wrapper-contentList .item-img {
 	width: 44px;
 	height: 44px;
 	flex: 0 0 44px;
 	padding: 0;
-	margin-left: 28px;
+	margin-left: 12px;
 }
 
 .wrapper-contentList .item-img img {

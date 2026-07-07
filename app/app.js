@@ -761,6 +761,7 @@ const playlistControl = {
       itemDiv.className = 'contentList-item flex fs-14 fw-5';
       itemDiv.dataset.id = idx;
       itemDiv.innerHTML = `
+        <div class="item-index" aria-hidden="true">${idx + 1}</div>
         <div class="item-img">
           <img src="${music.list_img_file || music.img_file}" data-full-src="${music.img_file}" loading="lazy" decoding="async" alt="">
         </div>
