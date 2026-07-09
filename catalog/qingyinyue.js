@@ -232,17 +232,6 @@ export const lightMusicList = [
   {
     song_type: TYPE,
     song_path: FILE_MUSIC_QINGYINYUE,
-    song_name: "Daughter of heave（天国的女儿）",
-    song_file: "Daughter of heaven - 段玫梅.mp3",
-    img_file: "Daughter of heaven - 段玫梅.png",
-    lyrics_type: CONFIG.LOAD_LYRICS_TYPE.TYPE_chunyinyue,
-    author: "段玫梅",
-    time: "04:18",
-    des: "她不是被命运选中的人，她是把命运握在手里的那个人。",
-  },
-  {
-    song_type: TYPE,
-    song_path: FILE_MUSIC_QINGYINYUE,
     song_name: "The Rain",
     song_file: "The Rain - 久石譲.mp3",
     img_file: "The Rain - 久石譲.jpg",
