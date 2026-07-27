@@ -110,5 +110,17 @@ export const animeScreenList = [
     author: "橋本潮",
     time: "03:50",
     des: "温柔又俏皮的片尾曲，把热血冒险后的浪漫和不舍都轻轻收进旋律里。",
+  },
+  {
+    song_type: TYPE,
+    song_path: FILE_MUSIC_DONGMANYINGSHI,
+    song_name: "万里长城",
+    song_file: "万里长城 - 太田美知彦.mp3",
+    img_file: "万里长城 - 太田美知彦.jpg",
+    lyrics_file: "万里长城 - 太田美知彦.lrc",
+    lyrics_type: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
+    author: "太田美知彦",
+    time: "01:35",
+    des: "气势舒展的配乐像镜头掠过山河，把辽阔与守望一起铺开。",
   }
 ];
