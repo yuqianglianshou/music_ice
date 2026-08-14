@@ -15,6 +15,18 @@
   --glass-border: rgba(235, 252, 255, 0.34);
   --text-color: #f1fbff;
 
+  /* 语义色：统一文本、表面和交互状态，主题切换时仍保持清晰层级 */
+  --text-primary: #f7fdff;
+  --text-secondary: rgba(241, 251, 255, 0.78);
+  --text-tertiary: rgba(241, 251, 255, 0.58);
+  --surface-muted: rgba(12, 28, 38, 0.16);
+  --surface-hover: rgba(230, 250, 255, 0.09);
+  --surface-active: rgba(230, 250, 255, 0.15);
+  --border-subtle: rgba(235, 252, 255, 0.16);
+  --border-strong: rgba(235, 252, 255, 0.3);
+  --focus-ring: #ffffff;
+  --accent-warm: #ffc078;
+
   /* 背景颜色变量（由themeManager动态设置） */
   --bg-base: #286879;
   --bg-gradient-start: #3c8fa0;

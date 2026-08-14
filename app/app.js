@@ -32,6 +32,7 @@ const state = {
   lastSelectIdentity: '',
   lastSelectAt: 0,
   isSeeking: false,
+  panelReturnFocus: null,
   currentMusicList: initialMusicList,
   displayMusicList: initialMusicList
 };
@@ -43,6 +44,7 @@ const elements = {
   // 播放信息相关元素
   currentPlayImg400: Array.from($$('[currentPlay-img400]')),
   currentPlayName: $$('[currentPlay-name]'),
+  currentPlayAuthor: $$('[currentPlay-author]'),
 
   // 进度条相关元素
   playProgress: $$("[play-Progress]"),
@@ -67,9 +69,11 @@ const elements = {
   layoutRight: $('.layout-right'),
   songPanel: $('[song-panel]'),
   panelCloseBtn: $('[panel-close-btn]'),
+  panelToggleBtn: $('[lyrics-panel-toggle]'),
   contentList: $('[content-list]'),
   playImgBoard: $('[play-img-board]'),
   notice: $('[app-notice]'),
+  playlistCount: $('[playlist-count]'),
 
   // 播放元素组
   playElements: [
@@ -234,10 +238,6 @@ function isCurrentMusic(music) {
   return getMusicIdentity(music) === getMusicIdentity(state.currentMusicList[state.currentMusicIndex]);
 }
 
-function isMobileInteraction() {
-  return window.matchMedia('(max-width: 768px), (pointer: coarse)').matches;
-}
-
 function canUseHover() {
   return window.matchMedia('(hover: hover) and (pointer: fine)').matches;
 }
@@ -358,6 +358,7 @@ const playbackControl = {
     elements.playBtns.forEach(btn => {
       btn.classList.add("playing");
       btn.classList.remove("pause");
+      btn.setAttribute('aria-label', '暂停');
     });
     elements.playImgBoard.classList.add('active');
 
@@ -369,6 +370,7 @@ const playbackControl = {
     elements.playBtns.forEach(btn => {
       btn.classList.add("pause");
       btn.classList.remove("playing");
+      btn.setAttribute('aria-label', '播放');
     });
     elements.playImgBoard.classList.remove('active');
   },
@@ -452,9 +454,49 @@ const panelControl = {
   },
 
   setPanelOpen(isOpen) {
+    const isMobileViewport = window.matchMedia('(max-width: 768px)').matches;
+    if (isOpen) {
+      state.panelReturnFocus = document.activeElement;
+    }
+
     elements.imgBoard?.classList.toggle('active', isOpen);
     elements.songPanel?.classList.toggle('active', isOpen);
     elements.layoutRight?.classList.toggle('panel-open', isOpen);
+    elements.panelToggleBtn?.setAttribute('aria-expanded', String(isOpen));
+
+    if (isMobileViewport && !isOpen && state.panelReturnFocus?.focus) {
+      state.panelReturnFocus.focus();
+      state.panelReturnFocus = null;
+    }
+
+    if (elements.layoutRight) {
+      if (isMobileViewport) {
+        elements.layoutRight.setAttribute('aria-hidden', String(!isOpen));
+        elements.layoutRight.inert = !isOpen;
+      } else {
+        elements.layoutRight.removeAttribute('aria-hidden');
+        elements.layoutRight.inert = false;
+      }
+    }
+
+    if (isMobileViewport && isOpen) {
+      requestAnimationFrame(() => elements.panelCloseBtn?.focus());
+    }
+  },
+
+  syncAccessibility() {
+    const isMobileViewport = window.matchMedia('(max-width: 768px)').matches;
+    const isOpen = this.isOpen();
+    if (!elements.layoutRight) return;
+
+    if (isMobileViewport) {
+      elements.layoutRight.setAttribute('aria-hidden', String(!isOpen));
+      elements.layoutRight.inert = !isOpen;
+    } else {
+      elements.layoutRight.removeAttribute('aria-hidden');
+      elements.layoutRight.inert = false;
+    }
+    elements.panelToggleBtn?.setAttribute('aria-expanded', String(isOpen));
   },
 
   togglePanel(e) {
@@ -542,7 +584,9 @@ const progressControl = {
     if (state.isSeeking) return;
     elements.playProgress.forEach((progress, i) => {
       progress.value = audioControl.audioSource.currentTime;
-      elements.playCurrentTime[i].textContent = timeFormatSecondsToMinutes(audioControl.audioSource.currentTime);
+      const currentTimeText = timeFormatSecondsToMinutes(audioControl.audioSource.currentTime);
+      elements.playCurrentTime[i].textContent = currentTimeText;
+      progress.setAttribute('aria-valuetext', currentTimeText);
     });
     this.updateRangeColor();
     if (lyricsManager && !audioControl.audioSource.paused) {
@@ -747,6 +791,9 @@ const volumeControl = {
 const playlistControl = {
   initMusicList() {
     elements.contentList.innerHTML = '';
+    if (elements.playlistCount) {
+      elements.playlistCount.textContent = `${state.displayMusicList.length} 首`;
+    }
 
     // 预处理所有音乐的图片路径
     state.displayMusicList.forEach(music => {
@@ -757,17 +804,26 @@ const playlistControl = {
     const fragment = document.createDocumentFragment();
 
     state.displayMusicList.forEach((music, idx) => {
-      const itemDiv = document.createElement('div');
+      const itemDiv = document.createElement('button');
+      const songName = music.song_name || music.title || '未知歌曲';
+      const author = music.author || '未知歌手';
+      itemDiv.type = 'button';
       itemDiv.className = 'contentList-item flex fs-14 fw-5';
       itemDiv.dataset.id = idx;
+      itemDiv.setAttribute('role', 'option');
+      itemDiv.setAttribute('aria-selected', 'false');
+      itemDiv.setAttribute('aria-label', `${songName}，${author}，时长 ${music.time || '未知'}`);
+      itemDiv.tabIndex = idx === 0 ? 0 : -1;
       itemDiv.innerHTML = `
         <div class="item-index" aria-hidden="true">${idx + 1}</div>
-        <div class="item-img">
+        <div class="item-img" aria-hidden="true">
           <img src="${music.list_img_file || music.img_file}" data-full-src="${music.img_file}" loading="lazy" decoding="async" alt="">
         </div>
-        <div class="item-title text-ol ">${music.song_name || music.title}</div>
-        <div class="item-author text-ol ">${music.author}</div>
-        <div class="item-album text-ol ">${music.song_type || music.type}</div>
+        <div class="item-copy">
+          <div class="item-title text-ol">${songName}</div>
+          <div class="item-author text-ol">${author}</div>
+        </div>
+        <div class="item-album text-ol">${music.song_type || music.type}</div>
         <div class="item-totalTime text-ol flex">${music.time}</div>
       `;
       fragment.appendChild(itemDiv);
@@ -791,15 +847,27 @@ const playlistControl = {
   },
 
   updateActiveItem() {
-    elements.contentList.querySelectorAll('.contentList-item').forEach(item => {
+    const items = Array.from(elements.contentList.querySelectorAll('.contentList-item'));
+    let hasActiveItem = false;
+    items.forEach(item => {
       const index = parseInt(item.dataset.id, 10);
-      item.classList.toggle('active', isCurrentMusic(state.displayMusicList[index]));
+      const isActive = isCurrentMusic(state.displayMusicList[index]);
+      item.classList.toggle('active', isActive);
+      item.setAttribute('aria-selected', String(isActive));
+      item.tabIndex = isActive ? 0 : -1;
+      hasActiveItem ||= isActive;
     });
+
+    if (!hasActiveItem && items[0]) {
+      items[0].tabIndex = 0;
+    }
   },
 
   updatePlayInfo() {
     if (!normalizeCurrentIndex()) return;
     const currentMusic = state.currentMusicList[state.currentMusicIndex];
+    const songName = currentMusic.song_name || currentMusic.title || '未知歌曲';
+    const author = currentMusic.author || '未知歌手';
     // 图片路径已经在初始化时处理过，这里直接使用
 
     elements.playElements.forEach((elementGroup, index) => {
@@ -807,10 +875,9 @@ const playlistControl = {
         if (index === 0) {
           // 更新图片
           element.src = currentMusic.img_file;
-          element.alt = '...';
+          element.alt = element.classList.contains('footer-current-cover') ? '' : `${songName}封面`;
         } else if (index === 1) {
           // 更新歌曲名称
-          const songName = currentMusic.song_name || currentMusic.title || '';
           element.textContent = songName;
           element.title = songName;
           
@@ -830,6 +897,12 @@ const playlistControl = {
         }
       });
     });
+
+    elements.currentPlayAuthor.forEach(element => {
+      element.textContent = author;
+      element.title = author;
+    });
+    elements.panelToggleBtn?.setAttribute('aria-label', `打开《${songName}》的歌词`);
 
     audioControl.updateAudioSource();
 
@@ -873,13 +946,26 @@ const playlistControl = {
 };
 
 function handleListClick(e) {
-  if (!isMobileInteraction()) return;
   playlistControl.playSelectMusic(e);
 }
 
-function handleListDoubleClick(e) {
-  if (isMobileInteraction()) return;
-  playlistControl.playSelectMusic(e);
+function handleListKeydown(e) {
+  const item = e.target.closest('.contentList-item');
+  if (!item) return;
+
+  const items = Array.from(elements.contentList.querySelectorAll('.contentList-item'));
+  const currentIndex = items.indexOf(item);
+  const keyOffset = {
+    ArrowDown: 1,
+    ArrowUp: -1,
+    Home: -currentIndex,
+    End: items.length - currentIndex - 1
+  }[e.key];
+
+  if (keyOffset === undefined) return;
+  e.preventDefault();
+  const nextIndex = Math.max(0, Math.min(items.length - 1, currentIndex + keyOffset));
+  items[nextIndex]?.focus();
 }
 
 /**
@@ -895,16 +981,22 @@ const playModeControl = {
       audioControl.audioSource.loop = false;
       this.classList.remove("singleLoop");
       this.classList.add("listLoop");
+      this.setAttribute('aria-label', '播放模式：列表循环');
+      this.title = '列表循环';
     } else if (state.playMode === 1) {
       state.isShuffle = true;
       audioControl.audioSource.loop = false;
       this.classList.remove("listLoop");
       this.classList.add("randomLoop");
+      this.setAttribute('aria-label', '播放模式：随机播放');
+      this.title = '随机播放';
     } else {
       state.isShuffle = false;
       audioControl.audioSource.loop = true;
       this.classList.remove("randomLoop");
       this.classList.add("singleLoop");
+      this.setAttribute('aria-label', '播放模式：单曲循环');
+      this.title = '单曲循环';
     }
   },
 
@@ -933,7 +1025,7 @@ function initEventListeners() {
   });
 
   // 面板控制事件
-  $('#app-footer')?.addEventListener('click', panelControl.togglePanel.bind(panelControl));
+  elements.panelToggleBtn?.addEventListener('click', panelControl.togglePanel.bind(panelControl));
   elements.layoutRight?.addEventListener('click', panelControl.closePanel.bind(panelControl));
 
   // 防止面板内部点击关闭
@@ -1003,7 +1095,7 @@ function initEventListeners() {
 
     contentList.addEventListener('scroll', playlistControl.handleScroll, { passive: true });
     contentList.addEventListener('click', handleListClick);
-    contentList.addEventListener('dblclick', handleListDoubleClick);
+    contentList.addEventListener('keydown', handleListKeydown);
   }
 
   // 当鼠标进入歌词面板或底部播放面板时，隐藏浮窗
@@ -1034,6 +1126,7 @@ function initEventListeners() {
 
   // 键盘事件
   document.addEventListener('keydown', handleKeyboardEvents);
+  window.addEventListener('resize', () => panelControl.syncAccessibility());
 }
 
 /**
@@ -1052,9 +1145,21 @@ function isEditableTarget(target) {
   return !!target.closest?.(editableSelector) || target.isContentEditable === true;
 }
 
+function isInteractiveTarget(target) {
+  return !!target?.closest?.('button, a, select, input, textarea, [role="option"], [contenteditable]');
+}
+
 function handleKeyboardEvents(event) {
   const { key, target } = event;
   if (isEditableTarget(target)) return;
+
+  if (key === 'Escape' && panelControl.isOpen()) {
+    event.preventDefault();
+    panelControl.closePanel(event);
+    return;
+  }
+
+  if (isInteractiveTarget(target)) return;
 
   if (keyActionMap[key]) {
     event.preventDefault();
@@ -1284,9 +1389,11 @@ function switchTab(tabElement) {
   tabs.forEach(tab => {
     tab.classList.remove('active');
     tab.setAttribute('aria-selected', 'false');
+    tab.tabIndex = -1;
   });
   tabElement.classList.add('active');
   tabElement.setAttribute('aria-selected', 'true');
+  tabElement.tabIndex = 0;
 
   const tabName = tabElement.dataset.tab;
   if (tabName) {
@@ -1295,10 +1402,29 @@ function switchTab(tabElement) {
   }
 }
 
+function handleTabKeydown(event) {
+  const tabs = Array.from(document.querySelectorAll('.list-tab > button'));
+  const currentIndex = tabs.indexOf(event.currentTarget);
+  const keyOffset = {
+    ArrowRight: 1,
+    ArrowLeft: -1,
+    Home: -currentIndex,
+    End: tabs.length - currentIndex - 1
+  }[event.key];
+
+  if (keyOffset === undefined) return;
+  event.preventDefault();
+  const nextIndex = (currentIndex + keyOffset + tabs.length) % tabs.length;
+  const nextTab = tabs[nextIndex];
+  nextTab?.focus();
+  if (nextTab) switchTab(nextTab);
+}
+
 function initTabs() {
   const tabs = document.querySelectorAll('.list-tab > button');
   tabs.forEach(tab => {
     tab.addEventListener('click', () => switchTab(tab));
+    tab.addEventListener('keydown', handleTabKeydown);
   });
 }
 
@@ -1333,6 +1459,10 @@ function init() {
   initEventListeners();
   bindWakeLockEvents();
   playlistControl.updatePlayInfo();
+  playbackControl.updateUIForPaused();
+  panelControl.syncAccessibility();
+  elements.playModeBtn?.setAttribute('aria-label', '播放模式：列表循环');
+  if (elements.playModeBtn) elements.playModeBtn.title = '列表循环';
 }
 
 // 当DOM加载完成后初始化应用

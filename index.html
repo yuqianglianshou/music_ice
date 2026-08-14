@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh">
+<html lang="zh-CN">
 
 <head>
     <meta charset="utf-8" />
@@ -22,34 +22,38 @@
 
     <div id="app">
         <div class="app_layout">
-            <section class="layout-left">
+            <section class="layout-left" aria-labelledby="library-title">
                 <!-- 头部导航栏 -->
                 <header class="list_header flex" list_header>
+                    <div class="library-summary">
+                        <h1 id="library-title">音乐库</h1>
+                        <span class="library-count" playlist-count aria-live="polite"></span>
+                    </div>
                     <div class="list-tab" role="tablist" aria-label="音乐分类">
-                        <button class="tab-A active" type="button" role="tab" aria-selected="true" data-tab="tab-A">全部</button>
-                        <button class="tab-I" type="button" role="tab" aria-selected="false" data-tab="tab-I">民谣</button>
-                        <button class="tab-B" type="button" role="tab" aria-selected="false" data-tab="tab-B">轻音乐</button>
-                        <button class="tab-C" type="button" role="tab" aria-selected="false" data-tab="tab-C">伤感治愈</button>
-                        <button class="tab-D" type="button" role="tab" aria-selected="false" data-tab="tab-D">流行经典</button>
-                        <button class="tab-F" type="button" role="tab" aria-selected="false" data-tab="tab-F">节奏律动</button>
-                        <button class="tab-G" type="button" role="tab" aria-selected="false" data-tab="tab-G">动漫影视</button>
+                        <button class="tab-A active" type="button" role="tab" aria-selected="true" aria-controls="playlist" tabindex="0" data-tab="tab-A">全部</button>
+                        <button class="tab-I" type="button" role="tab" aria-selected="false" aria-controls="playlist" tabindex="-1" data-tab="tab-I">民谣</button>
+                        <button class="tab-B" type="button" role="tab" aria-selected="false" aria-controls="playlist" tabindex="-1" data-tab="tab-B">轻音乐</button>
+                        <button class="tab-C" type="button" role="tab" aria-selected="false" aria-controls="playlist" tabindex="-1" data-tab="tab-C">伤感治愈</button>
+                        <button class="tab-D" type="button" role="tab" aria-selected="false" aria-controls="playlist" tabindex="-1" data-tab="tab-D">流行经典</button>
+                        <button class="tab-F" type="button" role="tab" aria-selected="false" aria-controls="playlist" tabindex="-1" data-tab="tab-F">节奏律动</button>
+                        <button class="tab-G" type="button" role="tab" aria-selected="false" aria-controls="playlist" tabindex="-1" data-tab="tab-G">动漫影视</button>
                     </div>
                 </header>
 
                 <div class="left-scroll">
                     <!-- 歌单列表容器 -->
-                    <div class="wrapper-contentList" content-list></div>
+                    <div class="wrapper-contentList" id="playlist" content-list role="listbox" aria-label="歌曲列表"></div>
                 </div>
             </section>
 
-            <section class="layout-right">
+            <section class="layout-right" aria-label="当前播放详情">
                 <main class="main-wrap">
                     <!-- 歌曲播放面板 -->
                     <!-- 背景图片 -->
-                    <img class="imgBoard" currentPlay-img400 title="..." alt="">
+                    <img class="imgBoard" currentPlay-img400 src="./assets/covers/defaults/48.jpg" alt="当前歌曲封面">
 
                     <!-- 歌曲播放控制面板 -->
-                    <div class="song_panel" song-panel>
+                    <div class="song_panel" id="current-song-panel" song-panel aria-labelledby="current-song-title">
                         <button class="panel-close" type="button" panel-close-btn aria-label="关闭歌词面板"></button>
                         <button class="song-download-btn flex" type="button" download-current-audio
                             aria-label="下载当前音频" title="下载音频">
@@ -64,12 +68,12 @@
                             <div class="content-left flex">
                                 <div class="left-songInfo flex">
                                     <div class="songInfo-img flex">
-                                        <img class="img" src="" alt="..." play-img-board currentPlay-img400>
+                                        <img class="img" src="./assets/covers/defaults/48.jpg" alt="当前歌曲封面" play-img-board currentPlay-img400>
                                     </div>
                                     <div class="songInfo-item flex">
                                         <div class="song-name">
-                                            <span title="" class="name text-ol fs-20 fw-6"
-                                                currentPlay-name></span>
+                                            <h2 id="current-song-title" title="" class="name text-ol fs-20 fw-6"
+                                                currentPlay-name>正在加载</h2>
                                         </div>
                                     </div>
                                 </div>
@@ -143,9 +147,14 @@
 
                 <!-- 播放设置区域 -->
                 <div class="play-setting flex">
-                    <button class="footer-current-song text-ol" type="button" lyrics-panel-toggle
-                        aria-label="打开当前歌曲和歌词">
-                        <span currentPlay-name>...</span>
+                    <button class="footer-current-song" type="button" lyrics-panel-toggle
+                        aria-label="打开当前歌曲和歌词" aria-controls="current-song-panel" aria-expanded="false">
+                        <img class="footer-current-cover" currentPlay-img400 src="./assets/covers/defaults/48.jpg" alt="">
+                        <span class="footer-current-copy">
+                            <span class="footer-current-label">正在播放</span>
+                            <span class="footer-current-title text-ol" currentPlay-name>正在加载</span>
+                            <span class="footer-current-author text-ol" currentPlay-author>请稍候</span>
+                        </span>
                     </button>
                     <div class="setting-options flex">
                         <!-- 循环模式切换 -->

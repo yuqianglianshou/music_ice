@@ -8,7 +8,9 @@
 /* ================ 文档基础样式 ================ */
 body,
 html {
-  height: 100vh;
+  height: 100%;
+  min-height: 100vh;
+  min-height: 100dvh;
   width: 100%;
   color: var(--text-color);
   /* 使用CSS变量，由themeManager动态设置 */
@@ -18,7 +20,7 @@ html {
   /* 字体渲染优化 */
   -webkit-font-smoothing: antialiased;
   /* 设置字体 */
-  font-family: 'Poppins', 'Noto Sans SC', 'Inter', sans-serif;
+  font-family: 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', system-ui, sans-serif;
   /* 鼠标样式 */
   cursor: default;
   /* 禁止文本选择 */
@@ -102,7 +104,12 @@ a {
   text-decoration: none;
 }
 
-/* 输入框焦点样式重置 */
-input:focus {
-  outline: none;
+/* 键盘焦点在所有主题下都保持可见 */
+:is(button, input, [role='option']):focus-visible {
+  outline: 2px solid var(--focus-ring, #fff);
+  outline-offset: 3px;
+}
+
+input[type='range']:focus-visible {
+  outline-offset: 6px;
 }
