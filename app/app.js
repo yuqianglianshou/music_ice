@@ -479,9 +479,13 @@ const progressControl = {
       elements.playTotalTime[i].textContent = '00:00';
     });
     elements.playColorFill.forEach(fill => {
-      fill.style.width = '0%';
+      fill.style.transform = 'scaleX(0)';
     });
+    this.lastTimeText = '00:00';
   },
+
+  // 上次写入的当前时间文本；timeupdate 每秒触发约 4 次，秒数变了才改 DOM 文本
+  lastTimeText: '',
 
   updateRange() {
     const duration = Number.isFinite(audioControl.audioSource.duration)
@@ -497,13 +501,18 @@ const progressControl = {
 
   updateRunningTime() {
     if (state.isSeeking) return;
+    const currentTime = audioControl.audioSource.currentTime;
+    const currentTimeText = timeFormatSecondsToMinutes(currentTime);
+    const textChanged = currentTimeText !== this.lastTimeText;
+    this.lastTimeText = currentTimeText;
     elements.playProgress.forEach((progress, i) => {
-      progress.value = audioControl.audioSource.currentTime;
-      const currentTimeText = timeFormatSecondsToMinutes(audioControl.audioSource.currentTime);
-      elements.playCurrentTime[i].textContent = currentTimeText;
-      progress.setAttribute('aria-valuetext', currentTimeText);
+      progress.value = currentTime;
+      if (textChanged) {
+        elements.playCurrentTime[i].textContent = currentTimeText;
+        progress.setAttribute('aria-valuetext', currentTimeText);
+      }
     });
-    this.updateRangeColor();
+    this.updateFill(currentTime, Number(elements.playProgress[0]?.max));
     if (lyricsManager && !audioControl.audioSource.paused) {
       lyricsManager.update(audioControl.audioSource.currentTime);
     }
@@ -522,15 +531,17 @@ const progressControl = {
       element = e.target || e;
     }
 
-    const max = Number(element.max);
-    const value = Number(element.value);
-    const rangeValue = max > 0 ? (value / max) * 100 : 0;
-    elements.playColorFill.forEach(fill => {
-      fill.style.width = `${rangeValue}%`;
-    });
-
     elements.playProgress.forEach(progress => {
-      progress.value = element.value;
+      if (progress !== element) progress.value = element.value;
+    });
+    this.updateFill(Number(element.value), Number(element.max));
+  },
+
+  // 填充条固定为满宽，用 scaleX 表示进度：只触发合成，不引起重排，也不重绘发光阴影所在区域
+  updateFill(value, max) {
+    const ratio = max > 0 ? Math.max(0, Math.min(1, value / max)) : 0;
+    elements.playColorFill.forEach(fill => {
+      fill.style.transform = `scaleX(${ratio})`;
     });
   },
 
@@ -592,8 +603,9 @@ const progressControl = {
       progress.max = sourceProgress.max;
       progress.value = currentTime;
     });
+    this.lastTimeText = timeFormatSecondsToMinutes(currentTime);
     elements.playCurrentTime.forEach(el => {
-      el.textContent = timeFormatSecondsToMinutes(currentTime);
+      el.textContent = this.lastTimeText;
     });
     this.updateRangeColor(sourceProgress);
   }
@@ -610,10 +622,11 @@ const volumeControl = {
     e?.stopPropagation?.();
 
     const volume = Math.max(0, Math.min(1, Number(elements.volumeRange.value)));
-    this.applyVolume(volume);
+    // 拖动中的 input 事件只更新音量和界面，松手触发 change 时才落盘，避免拖动时频繁同步写 localStorage
+    this.applyVolume(volume, { persist: e?.type !== 'input' });
   },
 
-  applyVolume(volume) {
+  applyVolume(volume, { persist = true } = {}) {
     const percentage = (volume / Number(elements.volumeRange.max)) * 100;
 
     elements.volumeRange.value = volume;
@@ -625,10 +638,12 @@ const volumeControl = {
     elements.volumeColorFill.style.width = `${percentage}%`;
 
     this.updateVolumeIcon(volume > 0);
-    savePlaybackState();
+    if (persist) {
+      savePlaybackState();
+    }
   },
 
-  changeByClientX(clientX) {
+  changeByClientX(clientX, options) {
     const rect = elements.volumeRange.getBoundingClientRect();
     if (!rect.width) return;
 
@@ -636,7 +651,7 @@ const volumeControl = {
     const min = Number(elements.volumeRange.min) || 0;
     const max = Number(elements.volumeRange.max) || 1;
     const volume = min + (max - min) * ratio;
-    this.applyVolume(Number(volume.toFixed(2)));
+    this.applyVolume(Number(volume.toFixed(2)), options);
   },
 
   handleTouch(e) {
@@ -647,7 +662,8 @@ const volumeControl = {
 
     const touch = e.touches?.[0] || e.changedTouches?.[0];
     if (!touch) return;
-    this.changeByClientX(touch.clientX);
+    // touchstart/touchmove 期间只调音量，手指抬起（touchend）时再保存快照
+    this.changeByClientX(touch.clientX, { persist: e.type === 'touchend' });
   },
 
   updateVolumeIcon(hasSound) {
@@ -734,23 +750,10 @@ const nowPlayingControl = {
           // 更新歌曲名称
           element.textContent = songName;
           element.title = songName;
-          
-          // 检测文本是否溢出，如果溢出则添加跑马灯效果
-          setTimeout(() => {
-            const songNameContainer = element.closest('.song-name');
-            if (songNameContainer) {
-              const containerWidth = songNameContainer.offsetWidth;
-              const textWidth = element.scrollWidth;
-              if (textWidth > containerWidth) {
-                songNameContainer.classList.add('marquee');
-              } else {
-                songNameContainer.classList.remove('marquee');
-              }
-            }
-          }, 100);
         }
       });
     });
+    this.scheduleMarqueeCheck();
 
     elements.currentPlayAuthor.forEach(element => {
       element.textContent = author;
@@ -773,6 +776,26 @@ const nowPlayingControl = {
       lyricsManager.clear();
       lyricsManager.loadLyrics(song);
     }
+  },
+
+  marqueeFrame: 0,
+
+  /**
+   * 歌名溢出时加跑马灯。所有歌名的写入完成后在下一帧统一测量一次，
+   * 避免每个元素各起一个定时器、各自强制同步布局；快速切歌时只保留最后一次测量。
+   */
+  scheduleMarqueeCheck() {
+    cancelAnimationFrame(this.marqueeFrame);
+    this.marqueeFrame = requestAnimationFrame(() => {
+      const measurements = Array.from(elements.currentPlayName, element => {
+        const container = element.closest('.song-name');
+        return container && { container, overflow: element.scrollWidth > container.offsetWidth };
+      }).filter(Boolean);
+      // 先集中读取，再集中写 class，读写不交错
+      measurements.forEach(({ container, overflow }) => {
+        container.classList.toggle('marquee', overflow);
+      });
+    });
   }
 };
 

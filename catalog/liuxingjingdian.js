@@ -370,7 +370,7 @@ export const popClassicsList = [
     song_path: FILE_MUSIC_LIUXINGJINGDIAN,
     song_name: "七里香",
     song_file: "七里香 - 周杰伦.m4a",
-    img_file: "七里香 - 周杰伦.png",
+    img_file: "七里香 - 周杰伦.jpg",
     lyrics_file: "七里香 - 周杰伦.lrc",
     lyrics_type: CONFIG.LOAD_LYRICS_TYPE.TYPE_file,
     author: "周杰伦",

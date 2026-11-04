@@ -285,7 +285,11 @@
 	position: absolute;
 	top: 0;
 	left: 0;
-	width: 0;
+	/* 进度由 JS 设置 transform: scaleX(比例) 表示，宽度固定为满宽，避免每次 timeupdate 重排 */
+	width: 100%;
+	transform: scaleX(0);
+	transform-origin: left center;
+	will-change: transform;
 	height: 4px;
 	background: linear-gradient(90deg, rgba(255, 255, 255, 0.9), rgba(255, 193, 120, 0.9));
 	border-radius: 999px;

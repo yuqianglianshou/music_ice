@@ -322,11 +322,10 @@
     visibility: hidden;
     border: 0;
     border-radius: 0;
-    background: rgba(4, 12, 18, 0.58);
+    background: rgba(4, 12, 18, 0.66);
     opacity: 0;
     pointer-events: none;
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
+    /* 不使用全屏 backdrop-filter 模糊：低端机打开/关闭面板时开销大，深色半透明遮罩已足够区分层次 */
     transition: opacity 0.22s ease, visibility 0.22s ease;
   }
 

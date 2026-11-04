@@ -33,6 +33,7 @@ export class PlaylistView {
     this.categoryId = '';
     this.songs = [];
     this.lastSelect = { id: '', at: 0 };
+    this.activeItem = null;   // 当前高亮的列表项缓存，切歌时只改新旧两项
 
     this.renderTabs(categories);
     this.bindListEvents();
@@ -58,19 +59,27 @@ export class PlaylistView {
    * 根据 isCurrent 刷新高亮项，并保证列表始终有一项可通过 Tab 键聚焦
    */
   updateActiveItem() {
-    const items = Array.from(this.listEl.querySelectorAll('.contentList-item'));
-    let hasActiveItem = false;
-    items.forEach(item => {
-      const isActive = this.isCurrent(this.getSongForItem(item));
-      item.classList.toggle('active', isActive);
-      item.setAttribute('aria-selected', String(isActive));
-      item.tabIndex = isActive ? 0 : -1;
-      hasActiveItem ||= isActive;
-    });
+    // 在数据数组里找当前歌曲（纯 JS，很便宜），列表项顺序与 songs 一致，可直接按下标取节点
+    const index = this.songs.findIndex(song => this.isCurrent(song));
+    const nextItem = index >= 0 ? this.listEl.children[index] ?? null : null;
+    if (nextItem === this.activeItem) return;
 
-    if (!hasActiveItem && items[0]) {
-      items[0].tabIndex = 0;
+    const firstItem = this.listEl.children[0];
+    if (this.activeItem) {
+      this.activeItem.classList.remove('active');
+      this.activeItem.setAttribute('aria-selected', 'false');
+      this.activeItem.tabIndex = -1;
     }
+    if (nextItem) {
+      nextItem.classList.add('active');
+      nextItem.setAttribute('aria-selected', 'true');
+      nextItem.tabIndex = 0;
+    }
+    // 没有高亮项时保证第一项可通过 Tab 键聚焦；有高亮项时第一项只作普通项
+    if (firstItem && firstItem !== nextItem) {
+      firstItem.tabIndex = nextItem ? -1 : 0;
+    }
+    this.activeItem = nextItem;
   }
 
   scrollToActive() {
@@ -166,6 +175,8 @@ export class PlaylistView {
     });
 
     this.listEl.replaceChildren(fragment);
+    // 列表已整体重建，旧缓存节点失效
+    this.activeItem = null;
     this.updateActiveItem();
   }
 
