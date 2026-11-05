@@ -18,6 +18,7 @@
 - `assets/`：图标、截图、默认封面及歌曲封面缩略图。
 - `tools/import-song.html`：本地浏览器导入歌曲工具。
 - `scripts/generate-thumbnails.mjs`：根据歌单数据生成封面缩略图。
+- `tests/`：纯逻辑单元测试（`node:test`），运行 `node --test tests/*.test.mjs`。
 
 ## 开发与运行
 
@@ -39,7 +40,7 @@ python3 -m http.server 8000
 - JS 模块文件名使用 kebab-case，例如 `lyrics-manager.js`、`music-store.js`。
 - 保持 ES module 写法，优先沿用现有模块边界和命名风格。
 - 修改播放器行为时，优先查看 `app/app.js`、`app/audio-player.js`、`app/music-store.js`、`app/playback-queue.js`、`app/lyrics-manager.js` 和 `app/config.js`。
-- 模块分工：`music-store.js` 把 catalog 原始条目转换为只读歌曲模型（`id`、`audioUrl`、`coverUrl`、`thumbUrl`、`lyricsUrl` 等），页面代码只读模型、不要改写 catalog 原始对象；`playback-queue.js` 负责上一首/下一首和随机顺序；`media-session.js` 对接系统媒体控制；`playback-snapshot.js` 保存/恢复播放状态；`playlist-view.js` 负责分类 tab、歌单搜索和歌曲列表的渲染与交互（搜索只在当前分类内按歌名/歌手过滤；点歌通过 `onSelect` 回调交给 `app.js`，传入的始终是完整分类列表而非搜索结果）；`hover-card.js`、`notice.js`、`wake-lock.js`、`download.js`、`service-worker-setup.js` 分别负责悬浮描述、提示、屏幕常亮、下载和 Service Worker 注册（含旧版清理）。`audio-player.js` 封装唯一的 `<audio>` 元素（加载、播放/暂停请求、跳转、预加载下一首、加载失败自动跳歌、启动时恢复进度），不碰界面，通过构造时传入的 `on` 回调通知 `app.js`；`progress-bar.js`、`volume-control.js` 分别负责进度条和音量控件的界面与交互。`app.js` 只做播放编排（把播放器事件接到界面、歌词、媒体控制、屏幕常亮和快照，以及面板、播放模式、键盘）和模块组装。`shared-constants.js` 存放播放器与导入工具共用的常量（默认封面清单、导入更新通知的 key 和频道名），两边不要各自重复定义。
+- 模块分工：`music-store.js` 把 catalog 原始条目转换为只读歌曲模型（`id`、`audioUrl`、`coverUrl`、`thumbUrl`、`lyricsUrl` 等），页面代码只读模型、不要改写 catalog 原始对象；`playback-queue.js` 负责上一首/下一首和随机顺序；`media-session.js` 对接系统媒体控制；`playback-snapshot.js` 保存/恢复播放状态；`playlist-view.js` 负责分类 tab、歌单搜索和歌曲列表的渲染与交互（搜索只在当前分类内按歌名/歌手过滤；点歌通过 `onSelect` 回调交给 `app.js`，传入的始终是完整分类列表而非搜索结果）；`hover-card.js`、`notice.js`、`wake-lock.js`、`download.js`、`service-worker-setup.js` 分别负责悬浮描述、提示、屏幕常亮、下载和 Service Worker 注册（含旧版清理）。`audio-player.js` 封装唯一的 `<audio>` 元素（加载、播放/暂停请求、跳转、预加载下一首、加载失败自动跳歌、启动时恢复进度），不碰界面，通过构造时传入的 `on` 回调通知 `app.js`；`progress-bar.js`、`volume-control.js` 分别负责进度条和音量控件的界面与交互。`lrc-parser.js` 是不依赖 DOM 的 LRC 解析纯函数（时间格式、双语合并），`lyrics-manager.js` 负责歌词加载、渲染、高亮和滚动；调整歌词解析规则时改 `lrc-parser.js` 并补测试。`app.js` 只做播放编排（把播放器事件接到界面、歌词、媒体控制、屏幕常亮和快照，以及面板、播放模式、键盘）和模块组装。`shared-constants.js` 存放播放器与导入工具共用的常量（默认封面清单、导入更新通知的 key 和频道名），两边不要各自重复定义。
 - 歌曲 `id` 由音频文件名去扩展名派生，会写入播放状态快照；修改音频文件名会让该歌曲的已保存进度失效，属预期行为。
 - 修改视觉样式时，先确认 `css/common.css`、`css/style.css`、`css/response.css` 中是否已有可复用规则。
 - 不要为小改动引入构建工具、包管理器或新的运行时依赖。
@@ -119,7 +120,7 @@ node scripts/validate-catalog.mjs
 
 根据改动范围选择验证方式：
 
-- HTML/CSS/JS 改动：启动本地服务并在桌面和移动视口检查播放器。
+- HTML/CSS/JS 改动：启动本地服务并在桌面和移动视口检查播放器。改动 `app/` 下的逻辑模块时先运行 `node --test tests/*.test.mjs`；新增或修改纯逻辑（不依赖 DOM 的部分）时同步补充测试，测试只用 Node 自带模块，不引入依赖。
 - 歌单数据改动：运行 `node scripts/validate-catalog.mjs` 确认没有错误，再确认页面能加载分类、歌曲可播放、封面和歌词路径正确。
 - `sw.js` 改动：音频请求必须保持不经过 Service Worker；修改缓存结构时递增 `CACHE_VERSION`。新增音频格式时同步更新 `sw.js` 中的 `AUDIO_PATTERN`。
 - 封面资源改动：运行 `node scripts/generate-thumbnails.mjs --dry-run` 或实际生成缩略图。

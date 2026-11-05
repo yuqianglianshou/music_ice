@@ -1,4 +1,5 @@
 import { addEventListeners, escapeHtml } from './utils.js';
+import { parseLrc } from './lrc-parser.js';
 
 /**
  * 歌词管理类
@@ -206,94 +207,7 @@ export class LyricsManager {
                 throw new Error(`无法加载歌词文件: ${lyricsUrl}（HTTP ${response.status}）`);
             }
             const lyricsContent = await response.text();
-            const lyricsText = lyricsContent.split('\n');
-
-            // 支持两种时间格式的正则表达式
-            const lyricsRegex = /\[(\d{2}:\d{2}[\.:]?\d{0,3})\](.*)/;
-
-            // 解析所有歌词行
-            const allLyricsData = lyricsText
-                .map(line => {
-                    const match = line.match(lyricsRegex);
-                    if (!match) return null;
-
-                    const timeStr = match[1];
-                    let lyricsLine = match[2].trim();
-                    
-                    // 处理可能在同一行有重复标题的情况（如第45行）
-                    // 如果行中包含 [ti: 等标签，只取时间戳后的第一部分
-                    if (lyricsLine.includes('[ti:')) {
-                        lyricsLine = lyricsLine.split('[ti:')[0].trim();
-                    }
-
-                    // 处理时间戳
-                    let timer = 0;
-                    if (timeStr.includes('.')) {
-                        // 处理 00:29.299 格式
-                        const [minutes, secondsAndMilliseconds] = timeStr.split(':');
-                        const [seconds, milliseconds] = secondsAndMilliseconds.split('.');
-                        timer = parseFloat(minutes) * 60 +
-                            parseFloat(seconds) +
-                            parseFloat(milliseconds) / (milliseconds.length === 2 ? 100 : 1000);
-                    } else {
-                        // 处理 00:15:50 格式
-                        const [minutes, seconds, milliseconds] = timeStr.split(':');
-                        timer = parseFloat(minutes) * 60 +
-                            parseFloat(seconds) +
-                            (milliseconds ? parseFloat(milliseconds) / 100 : 0);
-                    }
-
-                    return { time: timer, text: lyricsLine };
-                })
-                .filter(line => line !== null && line.text !== '');
-
-            // 检测是否有重复的时间戳（说明有翻译）
-            const timeMap = new Map();
-            allLyricsData.forEach(item => {
-                if (!timeMap.has(item.time)) {
-                    timeMap.set(item.time, []);
-                }
-                timeMap.get(item.time).push(item.text);
-            });
-
-            // 检查是否有重复时间戳
-            const hasTranslation = Array.from(timeMap.values()).some(texts => texts.length > 1);
-
-            if (hasTranslation) {
-                // 有翻译的情况：合并相同时间戳的原文和翻译
-                const mergedData = [];
-                const processedTimes = new Set();
-
-                allLyricsData.forEach(item => {
-                    if (processedTimes.has(item.time)) return;
-                    processedTimes.add(item.time);
-
-                    const texts = timeMap.get(item.time);
-                    if (texts.length > 1) {
-                        // 有多个文本，合并为一行（原文 + 翻译）
-                        // 通常第一个是原文，后面的是翻译
-                        const mergedText = texts.join('\n');
-                        mergedData.push({ time: item.time, text: mergedText });
-                    } else {
-                        // 只有一个文本，直接使用
-                        mergedData.push(item);
-                    }
-                });
-
-                // 按时间排序
-                mergedData.sort((a, b) => a.time - b.time);
-
-                return {
-                    text: mergedData.map(line => line.text),
-                    timer: mergedData.map(line => line.time)
-                };
-            } else {
-                // 没有翻译的情况：使用原有逻辑
-                return {
-                    text: allLyricsData.map(line => line.text),
-                    timer: allLyricsData.map(line => line.time)
-                };
-            }
+            return parseLrc(lyricsContent);
         } catch (error) {
             console.error('解析歌词文件失败:', error);
             return null;
