@@ -32,7 +32,7 @@ const error = (message) => errors.push(message);
 const warn = (message) => warnings.push(message);
 
 const { CATEGORIES } = await import(pathToFileURL(path.join(projectRoot, 'catalog/index.js')).href);
-const { CATEGORY_META, getFolderConstName } = await import(pathToFileURL(path.join(projectRoot, 'catalog/categories.js')).href);
+const { CATEGORY_META } = await import(pathToFileURL(path.join(projectRoot, 'catalog/categories.js')).href);
 const { DEFAULT_COVERS } = await import(pathToFileURL(path.join(projectRoot, 'app/shared-constants.js')).href);
 
 // 默认封面清单（编号与 jpg/webp 格式）是手写的，核对每张原图及其缩略图都存在
@@ -47,28 +47,22 @@ for (const coverPath of DEFAULT_COVERS) {
   }
 }
 
-// 分类配置一致性：catalog/categories.js 是唯一来源，歌单文件里的 TYPE / 目录常量仍是手写的，需与之核对
+// 分类配置一致性：catalog/categories.js 是唯一来源，核对每个分类都登记了歌单且歌单文件存在
 for (const meta of CATEGORY_META) {
   if (!CATEGORIES.some(category => category.id === meta.id)) {
     error(`分类 ${meta.id}：未在 catalog/index.js 的 LISTS_BY_ID 中登记歌单`);
   }
-  const catalogPath = path.join(projectRoot, 'catalog', meta.catalogFile);
-  if (!fs.existsSync(catalogPath)) {
+  if (!fs.existsSync(path.join(projectRoot, 'catalog', meta.catalogFile))) {
     error(`分类 ${meta.id}：歌单文件 catalog/${meta.catalogFile} 不存在`);
-    continue;
-  }
-  const source = fs.readFileSync(catalogPath, 'utf8');
-  const typeValue = source.match(/const\s+TYPE\s*=\s*["']([^"']*)["']/)?.[1];
-  if (typeValue !== meta.label) {
-    error(`catalog/${meta.catalogFile}：TYPE 为「${typeValue ?? '未声明'}」，应与分类名称「${meta.label}」一致`);
-  }
-  // 导入工具取文件中第一个 FILE_MUSIC_* 常量作为新条目目录，所以它必须是本分类目录
-  const folderConst = getFolderConstName(meta);
-  const firstConst = source.match(/const\s+(FILE_MUSIC_[A-Z0-9_]+)\s*=\s*["']([^"']*)["']/);
-  if (!firstConst || firstConst[1] !== folderConst || firstConst[2] !== `${meta.folder}/`) {
-    error(`catalog/${meta.catalogFile}：第一个目录常量应为 ${folderConst} = "${meta.folder}/"`);
   }
 }
+
+// 这些字段已改为由所属分类推导或改用 instrumental，页面不再读取；留在条目里会造成误导
+const LEGACY_FIELDS = {
+  song_type: '分类名称由所属分类决定',
+  song_path: '资源目录由所属分类决定，迁移歌曲时把条目移到目标分类文件即可',
+  lyrics_type: '纯音乐请改用 instrumental: true'
+};
 
 // 目录内容缓存：key 为目录绝对路径，value 为文件名数组（保留磁盘上的原始写法）
 const dirCache = new Map();
@@ -128,15 +122,27 @@ for (const category of CATEGORIES) {
     songCount += 1;
     const label = `[${category.label} #${index + 1}] ${music?.song_name || '(无歌名)'}`;
 
-    for (const field of ['song_name', 'song_file', 'song_path', 'author']) {
+    for (const field of ['song_name', 'song_file', 'author']) {
       if (!music?.[field]) error(`${label}：缺少 ${field}`);
     }
-    if (music?.lyrics_type === undefined) error(`${label}：缺少 lyrics_type`);
-    if (!music?.song_file || !music?.song_path) return;
+    for (const [field, hint] of Object.entries(LEGACY_FIELDS)) {
+      if (music && field in music) error(`${label}：已废弃字段 ${field}，请删除（${hint}）`);
+    }
+    // 纯音乐用 instrumental: true 标记；有歌词文件的歌曲不应标为纯音乐
+    if (music && 'instrumental' in music && music.instrumental !== true) {
+      error(`${label}：instrumental 只能写 true，非纯音乐请删除该字段`);
+    }
+    if (music?.instrumental === true && music.lyrics_file) {
+      error(`${label}：标记为纯音乐（instrumental）却有 lyrics_file，二者只能保留一个`);
+    }
+    if (music && music.instrumental !== true && !music.lyrics_file) {
+      warn(`${label}：没有歌词文件；如果是纯音乐请加 instrumental: true`);
+    }
+    if (!music?.song_file) return;
 
-    const mediaDir = path.join(projectRoot, 'media', music.song_path);
+    const mediaDir = path.join(projectRoot, 'media', category.folder);
     if (!listDir(mediaDir)) {
-      error(`${label}：分类目录不存在 media/${music.song_path}`);
+      error(`${label}：分类目录不存在 media/${category.folder}/`);
       return;
     }
 
@@ -178,7 +184,7 @@ for (const category of CATEGORIES) {
 
       // media/ 下的封面应有对应缩略图
       if (kind === '封面' && !isDirectPath) {
-        const thumb = path.join(projectRoot, 'assets/covers/music-thumbs', music.song_path,
+        const thumb = path.join(projectRoot, 'assets/covers/music-thumbs', category.folder,
           fileName.replace(/\.[^.]+$/, '.jpg'));
         if (!fs.existsSync(thumb)) {
           warn(`${label}：缺少列表缩略图，请运行 node scripts/generate-thumbnails.mjs`);

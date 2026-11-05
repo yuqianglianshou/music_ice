@@ -1,4 +1,4 @@
-import { CATEGORY_META, getFolderConstName } from '../catalog/categories.js';
+import { CATEGORY_META } from '../catalog/categories.js';
 import {
   DEFAULT_COVERS,
   isDefaultCoverPath,
@@ -15,8 +15,7 @@ const CATEGORY_CONFIG = CATEGORY_META.map(meta => ({
   key: meta.id,
   label: meta.label,
   catalogFile: meta.catalogFile,
-  folder: meta.folder,
-  folderConst: getFolderConstName(meta)
+  folder: meta.folder
 }));
 
 const THUMB_SIZE = 160;
@@ -27,7 +26,7 @@ const LAST_CATEGORY_KEY = 'musicIceImporterLastCategory';
 const IMPORT_LOCK_NAME = 'music-ice-importer-write';
 const IMPORT_LOG_KEY = 'musicIceImporterLogs';
 const MAX_IMPORT_LOGS = 120;
-const IMPORTER_VERSION = '20261105-02';
+const IMPORTER_VERSION = '20261105-03';
 const AI_DESCRIPTION_TIMEOUT_MS = 12000;
 const AI_DESCRIPTION_MAX_LENGTH = 64;
 const AUDIO_EXTENSIONS = new Set(['mp3', 'flac', 'm4a', 'wav', 'ogg']);
@@ -537,13 +536,14 @@ function buildPayload(songFile, lyricsFile, coverFile, category) {
   const coverTargetName = coverFile ? buildSiblingFileName(coverFile, normalizedBaseName) : getDefaultCoverPath();
 
   return {
-    song_type: category.label,
-    song_path: `${category.folder}/`,
+    // 只在导入工具内部使用（预览时定位分类），不写入歌单条目
+    categoryKey: category.key,
     song_name: elements.songName.value.trim(),
     song_file: songTargetName,
     img_file: coverTargetName,
     lyrics_file: lyricsTargetName,
-    lyrics_type: lyricsFile ? 'CONFIG.LOAD_LYRICS_TYPE.TYPE_file' : 'CONFIG.LOAD_LYRICS_TYPE.TYPE_chunyinyue',
+    // 没有歌词文件时按纯音乐导入
+    instrumental: !lyricsFile,
     author: elements.author.value.trim(),
     time: elements.time.value.trim() || '00:00',
     des: description || elements.songName.value.trim(),
@@ -1310,13 +1310,7 @@ async function prepareCatalogUpdate(payload, category) {
   const catalogDir = await state.projectRootHandle.getDirectoryHandle('catalog');
   const fileHandle = await catalogDir.getFileHandle(category.catalogFile);
   const source = await (await fileHandle.getFile()).text();
-  const folderConstName = source.match(/const\s+(FILE_MUSIC_[A-Z_]+)\s*=/)?.[1];
-
-  if (!folderConstName) {
-    throw new Error(`无法识别 ${category.catalogFile} 中的目录常量。`);
-  }
-
-  const entry = renderEntry(payload, folderConstName);
+  const entry = renderEntry(payload);
   const nextSource = appendEntryToCatalogSource(source, entry);
 
   if (nextSource === source) {
@@ -1441,11 +1435,10 @@ async function verifyImportedFile(directoryHandle, fileName, expectedSize, label
   }
 }
 
-function renderEntry(payload, folderConstName) {
+// 生成写入 catalog/*.js 的条目源码：分类名称和资源目录由所属歌单文件决定，条目里不再重复
+function renderEntry(payload) {
   const lines = [
     '  {',
-    '    song_type: TYPE,',
-    `    song_path: ${folderConstName},`,
     `    song_name: ${JSON.stringify(payload.song_name)},`,
     `    song_file: ${JSON.stringify(payload.song_file)},`,
     `    img_file: ${JSON.stringify(payload.img_file)},`
@@ -1453,9 +1446,10 @@ function renderEntry(payload, folderConstName) {
 
   if (payload.lyrics_file) {
     lines.push(`    lyrics_file: ${JSON.stringify(payload.lyrics_file)},`);
+  } else if (payload.instrumental) {
+    lines.push('    instrumental: true,');
   }
 
-  lines.push(`    lyrics_type: ${payload.lyrics_type},`);
   lines.push(`    author: ${JSON.stringify(payload.author)},`);
   lines.push(`    time: ${JSON.stringify(payload.time)},`);
   lines.push(`    des: ${JSON.stringify(payload.des)},`);
@@ -1543,7 +1537,7 @@ function renderPreview(payload = null, payloadCategory = null) {
     `分类：${category.label}`,
     `目标目录：media/${category.folder}/`,
     '',
-    renderEntry(nextPayload, category.folderConst)
+    renderEntry(nextPayload)
   ].join('\n');
 }
 
@@ -1553,11 +1547,7 @@ function isPayloadObject(value) {
 
 function resolvePreviewCategory(payload = null) {
   if (payload) {
-    const category = CATEGORY_CONFIG.find(item => (
-      item.label === payload.song_type ||
-      `${item.folder}/` === payload.song_path ||
-      item.folder === payload.song_path
-    ));
+    const category = CATEGORY_CONFIG.find(item => item.key === payload.categoryKey);
     if (category) return category;
   }
 

@@ -48,7 +48,8 @@ python3 -m http.server 8000
 ## 歌曲与资源约定
 
 - 新增歌曲时，音频、歌词、封面原图应放入 `media/对应分类/`。
-- 歌单条目添加到对应的 `catalog/*.js` 文件中。新增分类时在 `catalog/categories.js` 的 `CATEGORY_META` 中追加一项，新建歌单文件（`TYPE` 与分类名称一致，第一个目录常量为 `FILE_MUSIC_<目录名大写>`），再在 `catalog/index.js` 的 `LISTS_BY_ID` 中登记歌单数组；导入工具会自动读取，无需另配。改完运行 `node scripts/validate-catalog.mjs` 核对一致性。
+- 歌单条目添加到对应的 `catalog/*.js` 文件中。新增分类时在 `catalog/categories.js` 的 `CATEGORY_META` 中追加一项，新建歌单文件（只导出一个歌单数组），再在 `catalog/index.js` 的 `LISTS_BY_ID` 中登记歌单数组；导入工具会自动读取，无需另配。改完运行 `node scripts/validate-catalog.mjs` 核对一致性。
+- 歌单条目字段：`song_name`、`song_file`、`img_file`、`lyrics_file`、`author`、`time`、`des`；纯音乐不写 `lyrics_file`，改写 `instrumental: true`。条目不写 `song_type`、`song_path`、`lyrics_type`（已废弃，校验脚本会报错）：分类名称和资源目录 `media/<分类目录>/` 都由条目所在的歌单文件决定。
 - 歌词文件通常使用 `.lrc`。
 - 封面原图可放在 `media/` 对应分类下，列表缩略图由脚本生成到 `assets/covers/music-thumbs/`。
 - 如果歌曲当前没有专属头像，`img_file` 可能指向 `./assets/covers/defaults/*.jpg` 默认随机图。用户提供图片并说明“给到某首歌的头像”时，应将图片复制到该歌曲所在分类的 `media/对应分类/` 下，使用与歌曲匹配的封面文件名，更新对应 `catalog/*.js` 条目的 `img_file`，再运行 `node scripts/generate-thumbnails.mjs` 生成或更新列表缩略图。
@@ -74,9 +75,8 @@ python3 -m http.server 8000
 - 用户要求“排序某分类前 N 首”时，只把指定歌曲移动到该分类列表最前面并按给定顺序排列；未指定歌曲保持原有相对顺序。
 - 排序时优先按 `song_name` 精确匹配；用户给的是简称时，可用包含关系匹配，但要避免误匹配，例如“她”不能误选“她说”。
 - 排序或批量移动歌单对象后，必须运行 `node --check catalog/对应文件.js`，并用 ES module import 抽查列表数量、空条目和前 N 首顺序。
-- 分类合并后，某些歌单文件中可能保留多个资源目录常量，例如 `catalog/liuxingjingdian.js` 中既有 `FILE_MUSIC_LIUXINGJINGDIAN`，也可能有原怀旧金曲目录常量。只调整排序时不要改资源目录；真正迁移资源时才同步改 `song_path`。
 - 将歌曲从一个分类迁到另一个分类时，必须同步迁移 `media/源分类/` 下的音频、歌词、封面原图，以及 `assets/covers/music-thumbs/源分类/` 下对应缩略图；优先用 `git mv` 保留重命名/移动历史。
-- 迁移歌曲后，必须从源 `catalog/*.js` 删除该歌曲对象，在目标 `catalog/*.js` 增加对象，并将 `song_path` 改为目标分类目录常量。
+- 迁移歌曲后，必须从源 `catalog/*.js` 删除该歌曲对象，并原样加到目标 `catalog/*.js`；资源目录由所在歌单文件决定，条目本身无需改动。
 - 迁移完成后，应检查源分类 media 和缩略图目录中没有残留同名资源，并确认目标分类中资源文件存在。
 
 生成或检查缩略图：

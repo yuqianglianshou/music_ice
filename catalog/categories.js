@@ -4,12 +4,13 @@
  *
  * 数组顺序即页面 tab 顺序。
  * - id：分类标识，写入播放状态快照和导入工具的“上次分类”，保持稳定不要随意修改
- * - label：tab 上显示的名称，也是该分类歌单条目 song_type 的值
+ * - label：tab 上显示的名称，也是该分类歌曲在列表中显示的分类名
  * - folder：资源目录名，对应 media/<folder>/ 和 assets/covers/music-thumbs/<folder>/
  * - catalogFile：catalog/ 下的歌单文件名
  *
- * 新增分类：在此追加一项，新建 catalog/<catalogFile>（声明 TYPE 和目录常量），
+ * 新增分类：在此追加一项，新建 catalog/<catalogFile>（导出一个歌单数组），
  * 再在 catalog/index.js 的 LISTS_BY_ID 中登记该歌单数组。
+ * 歌单条目不再写 song_type / song_path：分类名称和资源目录都由所属分类决定。
  */
 export const CATEGORY_META = [
   { id: 'minyao', label: '民谣', folder: 'minyao', catalogFile: 'minyao.js' },
@@ -19,11 +20,3 @@ export const CATEGORY_META = [
   { id: 'jiezoulvdong', label: '节奏律动', folder: 'jiezoulvdong', catalogFile: 'jiezoulvdong.js' },
   { id: 'dongmanyingshi', label: '动漫影视', folder: 'dongmanyingshi', catalogFile: 'dongmanyingshi.js' }
 ];
-
-/**
- * 歌单文件中目录常量的命名约定：FILE_MUSIC_ + 目录名大写，
- * 例如 minyao → FILE_MUSIC_MINYAO。导入工具生成条目、校验脚本核对目录时都按此推导。
- */
-export function getFolderConstName(category) {
-  return `FILE_MUSIC_${category.folder.toUpperCase().replace(/[^A-Z0-9]/g, '_')}`;
-}

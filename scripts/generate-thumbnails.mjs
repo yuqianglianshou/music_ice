@@ -38,14 +38,14 @@ async function collectMusicImages() {
   const { CATEGORIES } = await import(pathToFileURL(path.join(dataDir, 'index.js')).href);
   const images = [];
 
-  for (const { list } of CATEGORIES) {
+  for (const { list, folder } of CATEGORIES) {
     for (const music of list) {
       const imgFile = (music.img_file || '').trim();
       if (!imgFile || imgFile.startsWith('http')) continue;
 
       const sourcePath = imgFile.startsWith('./')
         ? path.join(projectRoot, imgFile)
-        : path.join(projectRoot, 'media', music.song_path || '', imgFile);
+        : path.join(projectRoot, 'media', folder, imgFile);
 
       // 默认封面（assets/covers/defaults）由 --defaults 单独处理
       if (!toPosix(sourcePath).includes('/media/')) continue;
