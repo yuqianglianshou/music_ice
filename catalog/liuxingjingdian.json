@@ -1,0 +1,812 @@
+[
+  {
+    "song_name": "星星点灯",
+    "song_file": "星星点灯 - 郑智化.mp3",
+    "img_file": "星星点灯 - 郑智化.jpg",
+    "lyrics_file": "星星点灯 - 郑智化.lrc",
+    "author": "郑智化",
+    "time": "04:59",
+    "des": "黑暗并不可怕，可怕的是忘了抬头看看那盏属于自己的灯。"
+  },
+  {
+    "song_name": "拯救",
+    "song_file": "拯救 - 孙楠.m4a",
+    "img_file": "拯救 - 孙楠.webp",
+    "lyrics_file": "拯救 - 孙楠.lrc",
+    "author": "孙楠",
+    "time": "05:32",
+    "des": "每个快撑不住的夜晚，都希望有人听见那句无声的求救。"
+  },
+  {
+    "song_name": "挪威的森林",
+    "song_file": "挪威的森林 - 伍佰.mp3",
+    "img_file": "挪威的森林 - 伍佰.jpg",
+    "lyrics_file": "挪威的森林 - 伍佰.lrc",
+    "author": "伍佰",
+    "time": "06:33",
+    "des": "心中是否有我未曾到过的地方啊"
+  },
+  {
+    "song_name": "突然的自我",
+    "song_file": "突然的自我 - 伍佰 & China Blue.m4a",
+    "img_file": "突然的自我 - 伍佰 & China Blue.jpg",
+    "lyrics_file": "突然的自我 - 伍佰 & China Blue.lrc",
+    "author": "伍佰 & China Blue",
+    "time": "03:35",
+    "des": "突然的自我，是那个在人群中独自闪耀的自己。"
+  },
+  {
+    "song_name": "西海情歌",
+    "song_file": "西海情歌 - 刀郎.m4a",
+    "img_file": "西海情歌 - 刀郎.jpg",
+    "lyrics_file": "西海情歌 - 刀郎.lrc",
+    "author": "刀郎",
+    "time": "05:43",
+    "des": "风从荒原吹过来，把思念唱得辽阔又孤单。"
+  },
+  {
+    "song_name": "2002年的第一场雪",
+    "song_file": "2002年的第一场雪 - 刀郎.m4a",
+    "img_file": "2002年的第一场雪 - 刀郎.jpg",
+    "lyrics_file": "2002年的第一场雪 - 刀郎.lrc",
+    "author": "刀郎",
+    "time": "04:14",
+    "des": "很多年后才懂，雪落下来的那一刻，回忆也会跟着白了头。"
+  },
+  {
+    "song_name": "求佛",
+    "song_file": "求佛 - 誓言.m4a",
+    "img_file": "求佛 - 誓言.jpg",
+    "lyrics_file": "求佛 - 誓言.lrc",
+    "author": "誓言",
+    "time": "04:46",
+    "des": "求佛，求佛，求佛。"
+  },
+  {
+    "song_name": "冲动的惩罚",
+    "song_file": "冲动的惩罚 - 刀郎.m4a",
+    "img_file": "冲动的惩罚 - 刀郎.jpg",
+    "lyrics_file": "冲动的惩罚 - 刀郎.lrc",
+    "author": "刀郎",
+    "time": "07:54",
+    "des": "年轻时以为冲动是勇敢，后来才知道有些代价会在心里住很久。"
+  },
+  {
+    "song_name": "一生有你",
+    "song_file": "水木年华 - 一生有你.mp3",
+    "img_file": "水木年华 - 一生有你.jpg",
+    "lyrics_file": "水木年华 - 一生有你.lrc",
+    "author": "水木年华",
+    "time": "04:18",
+    "des": "此生未曾拥有。"
+  },
+  {
+    "song_name": "遇见",
+    "song_file": "遇见 - 孙燕姿.m4a",
+    "img_file": "遇见 - 孙燕姿.jpg",
+    "lyrics_file": "遇见 - 孙燕姿.lrc",
+    "author": "孙燕姿",
+    "time": "03:29",
+    "des": "最好的相遇常常没有预告，却能把整段人生悄悄改写。"
+  },
+  {
+    "song_name": "传奇",
+    "song_file": "传奇 - 李健.m4a",
+    "img_file": "传奇 - 李健.jpg",
+    "lyrics_file": "传奇 - 李健.lrc",
+    "author": "李健",
+    "time": "04:54",
+    "des": "只是因为在人群中多看了你一眼，再也没能忘掉你容颜。"
+  },
+  {
+    "song_name": "江南",
+    "song_file": "江南 - 林俊杰.m4a",
+    "img_file": "江南 - 林俊杰.jpg",
+    "lyrics_file": "江南 - 林俊杰.lrc",
+    "author": "林俊杰",
+    "time": "04:27",
+    "des": "一场烟雨，一段放不下的旧梦。"
+  },
+  {
+    "song_name": "青花",
+    "song_file": "青花 - 周传雄.m4a",
+    "img_file": "青花 - 周传雄.jpg",
+    "lyrics_file": "青花 - 周传雄.lrc",
+    "author": "周传雄",
+    "time": "04:57",
+    "des": "像瓷器上的旧花纹，越是安静越藏着破碎的深情。"
+  },
+  {
+    "song_name": "我怀念的",
+    "song_file": "我怀念的 - 孙燕姿.m4a",
+    "img_file": "我怀念的 - 孙燕姿.jpg",
+    "lyrics_file": "我怀念的 - 孙燕姿.lrc",
+    "author": "孙燕姿",
+    "time": "04:49",
+    "des": "我怀念的，是什么？"
+  },
+  {
+    "song_name": "吻别",
+    "song_file": "吻别 - 张学友.m4a",
+    "img_file": "吻别 - 张学友.jpg",
+    "lyrics_file": "吻别 - 张学友.lrc",
+    "author": "张学友",
+    "time": "05:02",
+    "des": "有些告别唱出来很轻，落在心里却很重。"
+  },
+  {
+    "song_name": "暗香",
+    "song_file": "暗香 - 沙宝亮.m4a",
+    "img_file": "暗香 - 沙宝亮.jpg",
+    "lyrics_file": "暗香 - 沙宝亮.lrc",
+    "author": "沙宝亮",
+    "time": "04:37",
+    "des": "暗香 - 沙宝亮"
+  },
+  {
+    "song_name": "大海",
+    "song_file": "大海 - 张雨生.mp3",
+    "img_file": "大海 - 张雨生.jpg",
+    "lyrics_file": "大海 - 张雨生.lrc",
+    "author": "张雨生",
+    "time": "04:40",
+    "des": "你是我这辈子跨不过去的大海，无论我在岸上喊得多用力，你都不会再回应了。"
+  },
+  {
+    "song_name": "演员",
+    "song_file": "演员 - 薛之谦.m4a",
+    "img_file": "演员 - 薛之谦.jpg",
+    "lyrics_file": "演员 - 薛之谦.lrc",
+    "author": "薛之谦",
+    "time": "04:21",
+    "des": "感情里最累的不是争吵，是两个人都在扮演没事。"
+  },
+  {
+    "song_name": "铁窗泪",
+    "song_file": "铁窗泪 - 迟志强.m4a",
+    "img_file": "铁窗泪 - 迟志强.webp",
+    "lyrics_file": "铁窗泪 - 迟志强.lrc",
+    "author": "迟志强",
+    "time": "08:27",
+    "des": "铁窗关住的是年月，关不住一个人回头看人生的叹息。"
+  },
+  {
+    "song_name": "狱中十二月",
+    "song_file": "狱中十二月 - 迟志强.mp3",
+    "img_file": "狱中十二月 - 迟志强.webp",
+    "lyrics_file": "狱中十二月 - 迟志强.lrc",
+    "author": "迟志强",
+    "time": "03:06",
+    "des": "把一年唱成十二个月的想家，听到最后只剩一声叹息。"
+  },
+  {
+    "song_name": "十不该",
+    "song_file": "十不该 - 迟志强.m4a",
+    "img_file": "十不该 - 迟志强.jpg",
+    "lyrics_file": "十不该 - 迟志强.lrc",
+    "author": "迟志强",
+    "time": "04:43",
+    "des": "迟志强的狱中悔过之歌，一句句“不该”，唱尽年少轻狂的代价。"
+  },
+  {
+    "song_name": "愁啊愁",
+    "song_file": "愁啊愁 - 迟志强.m4a",
+    "img_file": "愁啊愁 - 迟志强.jpg",
+    "lyrics_file": "愁啊愁 - 迟志强.lrc",
+    "author": "迟志强",
+    "time": "04:42",
+    "des": "愁到深处反而唱得直白，像老朋友把苦水一口气倒完。"
+  },
+  {
+    "song_name": "北郊",
+    "song_file": "北郊 - 魏三.mp3",
+    "img_file": "北郊 - 魏三.jpg",
+    "lyrics_file": "北郊 - 魏三.lrc",
+    "author": "魏三",
+    "time": "05:05",
+    "des": "如果当时"
+  },
+  {
+    "song_name": "流浪歌",
+    "song_file": "流浪歌 - 迟志强.mp3",
+    "img_file": "流浪歌 - 迟志强.webp",
+    "lyrics_file": "流浪歌 - 迟志强.lrc",
+    "author": "迟志强",
+    "time": "04:57",
+    "des": "流浪不是没有方向，是心里总有个回不去的地方。"
+  },
+  {
+    "song_name": "打工十二月",
+    "song_file": "打工十二月 - 翟惠民.mp3",
+    "img_file": "打工十二月 - 翟惠民.jpg",
+    "lyrics_file": "打工十二月 - 翟惠民.lrc",
+    "author": "翟惠民",
+    "time": "06:07",
+    "des": "为了生活奔波的人，最懂这首歌里那种又累又不肯倒下。"
+  },
+  {
+    "song_name": "钞票",
+    "song_file": "钞票 - 迟志强.m4a",
+    "img_file": "钞票 - 迟志强.jpg",
+    "lyrics_file": "钞票 - 迟志强.lrc",
+    "author": "迟志强",
+    "time": "03:08",
+    "des": "小时候听的是调侃，长大后才知道每一句都扎在生活里。"
+  },
+  {
+    "song_name": "明天，你好",
+    "song_file": "明天，你好 - 牛奶咖啡.m4a",
+    "img_file": "明天，你好 - 牛奶咖啡.jpg",
+    "lyrics_file": "明天，你好 - 牛奶咖啡.lrc",
+    "author": "牛奶咖啡",
+    "time": "04:31",
+    "des": "今天的你也许很累，但请相信——明天的风，会比今天温柔一点。"
+  },
+  {
+    "song_name": "New Boy",
+    "song_file": "New Boy - 朴树.m4a",
+    "img_file": "New Boy - 朴树.jpg",
+    "lyrics_file": "New Boy - 朴树.lrc",
+    "author": "朴树",
+    "time": "03:44",
+    "des": "那是新世纪入口的少年感，明亮、笨拙，又真心相信未来。"
+  },
+  {
+    "song_name": "那些花儿",
+    "song_file": "那些花儿 - 朴树.m4a",
+    "img_file": "那些花儿 - 朴树.jpg",
+    "lyrics_file": "那些花儿 - 朴树.lrc",
+    "author": "朴树",
+    "time": "04:55",
+    "des": "那些走丢的人，那些开过的花，都住在我心里最柔软的地方。"
+  },
+  {
+    "song_name": "忽然之间",
+    "song_file": "忽然之间 - 莫文蔚.m4a",
+    "img_file": "忽然之间 - 莫文蔚.jpg",
+    "lyrics_file": "忽然之间 - 莫文蔚.lrc",
+    "author": "莫文蔚",
+    "time": "03:21",
+    "des": "很多情绪都是突然来的，来不及防备就湿了眼眶。"
+  },
+  {
+    "song_name": "七里香",
+    "song_file": "七里香 - 周杰伦.m4a",
+    "img_file": "七里香 - 周杰伦.jpg",
+    "lyrics_file": "七里香 - 周杰伦.lrc",
+    "author": "周杰伦",
+    "time": "05:02",
+    "des": "窗外的麻雀在电线杆上多嘴，你说这一句很有夏天的感觉。"
+  },
+  {
+    "song_name": "知足",
+    "song_file": "知足 - 五月天.m4a",
+    "img_file": "知足 - 五月天.jpg",
+    "lyrics_file": "知足 - 五月天.lrc",
+    "author": "五月天",
+    "time": "04:16",
+    "des": "知足不是不再想念，是终于学会把遗憾轻轻放下。"
+  },
+  {
+    "song_name": "温柔",
+    "song_file": "温柔 - 五月天.m4a",
+    "img_file": "温柔 - 五月天.jpg",
+    "lyrics_file": "温柔 - 五月天.lrc",
+    "author": "五月天",
+    "time": "04:29",
+    "des": "最温柔的放手，是明明很痛，却仍愿意祝你自由。"
+  },
+  {
+    "song_name": "夜空中最亮的星",
+    "song_file": "夜空中最亮的星 - 逃跑计划.mp3",
+    "img_file": "夜空中最亮的星 - 逃跑计划.jpg",
+    "lyrics_file": "夜空中最亮的星 - 逃跑计划.lrc",
+    "author": "逃跑计划",
+    "time": "04:12",
+    "des": "黑暗多的时候，我就抬头找光。不是为了看得更远，而是为了让自己不倒下。"
+  },
+  {
+    "song_name": "平凡之路",
+    "song_file": "平凡之路 - 朴树.m4a",
+    "img_file": "平凡之路 - 朴树.jpg",
+    "lyrics_file": "平凡之路 - 朴树.lrc",
+    "author": "朴树",
+    "time": "05:02",
+    "des": "走过热闹和迷茫，才懂平凡并不是退场，而是继续往前。"
+  },
+  {
+    "song_name": "旅行",
+    "song_file": "旅行 - 许巍.m4a",
+    "img_file": "旅行 - 许巍.jpg",
+    "lyrics_file": "旅行 - 许巍.lrc",
+    "author": "许巍",
+    "time": "04:26",
+    "des": "许巍的歌总让人想出发，哪怕只是从疲惫里走出去一点。"
+  },
+  {
+    "song_name": "惠化洞",
+    "song_file": "hyehwadong - park-boram.m4a",
+    "img_file": "hyehwadong - park-boram.jpg",
+    "lyrics_file": "hyehwadong - park-boram.lrc",
+    "author": "朴宝蓝",
+    "time": "04:24",
+    "des": "一听见惠化洞，双门洞的巷子、朋友和回不去的青春就一起亮了起来。"
+  },
+  {
+    "song_name": "청춘（青春）",
+    "song_file": "青春 - 金必.m4a",
+    "img_file": "青春 - 金必.jpg",
+    "lyrics_file": "青春 - 金必.lrc",
+    "author": "金必",
+    "time": "03:39",
+    "des": "青春总会走远，但那些一起哭笑过的人，会一直留在记忆最热的地方。"
+  },
+  {
+    "song_name": "每天和你",
+    "song_file": "maeil-geudaewa - wild-chrysanthemum.m4a",
+    "img_file": "maeil-geudaewa - wild-chrysanthemum.jpg",
+    "lyrics_file": "maeil-geudaewa - wild-chrysanthemum.lrc",
+    "author": "野菊花",
+    "time": "03:32",
+    "des": "把每天和你在一起唱得明亮又朴素，像最普通的日子忽然有了光。"
+  },
+  {
+    "song_name": "你不要担心",
+    "song_file": "dont-worry-dear - wild-chrysanthemum.m4a",
+    "img_file": "dont-worry-dear - wild-chrysanthemum.jpg",
+    "lyrics_file": "dont-worry-dear - wild-chrysanthemum.lrc",
+    "author": "野菊花",
+    "time": "04:36",
+    "des": "像一句轻轻拍在肩上的安慰：别担心，走过的路都会成为力量。"
+  },
+  {
+    "song_name": "부채도사 실례송（扇子道士失礼歌）",
+    "song_file": "buchaedosa sillyesong - deokseon.m4a",
+    "img_file": "buchaedosa sillyesong - deokseon.jpg",
+    "lyrics_file": "buchaedosa sillyesong - deokseon.lrc",
+    "author": "德善",
+    "time": "00:26",
+    "des": "短短一段俏皮小调，像从剧情缝隙里跳出来的轻松瞬间。"
+  },
+  {
+    "song_name": "童话镇",
+    "song_file": "陈一发儿 - 童话镇.mp3",
+    "img_file": "陈一发儿 - 童话镇.jpg",
+    "lyrics_file": "陈一发儿 - 童话镇.lrc",
+    "author": "陈一发儿",
+    "time": "04:17",
+    "des": "沉浸在童话的世界里不愿醒来。"
+  },
+  {
+    "song_name": "奇妙能力歌",
+    "song_file": "奇妙能力歌 - 陈粒.mp3",
+    "img_file": "奇妙能力歌 - 陈粒.jpg",
+    "lyrics_file": "奇妙能力歌 - 陈粒.lrc",
+    "author": "陈粒",
+    "time": "04:13",
+    "des": "我听过一万首歌，看过一千部电影，读过一百本书，却从未俘获一个人的心。"
+  },
+  {
+    "song_name": "七月上",
+    "song_file": "七月上 - Jam.m4a",
+    "img_file": "七月上 - Jam.jpg",
+    "lyrics_file": "七月上 - Jam.lrc",
+    "author": "Jam",
+    "time": "03:10",
+    "des": "我像个傻子一样记住了你。"
+  },
+  {
+    "song_name": "唯一",
+    "song_file": "唯一-告五人.mp3",
+    "img_file": "唯一-告五人.jpg",
+    "lyrics_file": "唯一-告五人.lrc",
+    "author": "告五人",
+    "time": "04:31",
+    "des": "我一直很清楚，喜欢你这件事，从来没办法平均分给别人。"
+  },
+  {
+    "song_name": "天顶一粒星",
+    "song_file": "天顶一粒星 - Tizzy T,宋佳.mp3",
+    "img_file": "天顶一粒星 - Tizzy T,宋佳.jpg",
+    "lyrics_file": "天顶一粒星 - Tizzy T,宋佳.lrc",
+    "author": "Tizzy T,宋佳",
+    "time": "03:53",
+    "des": "嘿呀嘿呀咿儿呀"
+  },
+  {
+    "song_name": "突然好想你",
+    "song_file": "突然好想你 - 五月天.m4a",
+    "img_file": "突然好想你 - 五月天.jpg",
+    "lyrics_file": "突然好想你 - 五月天.lrc",
+    "author": "五月天",
+    "time": "04:25",
+    "des": "想念总是不讲道理，越安静的时候越汹涌。"
+  },
+  {
+    "song_name": "断点",
+    "song_file": "断点.mp3",
+    "img_file": "断点.jpg",
+    "lyrics_file": "断点.lrc",
+    "author": "张敬轩",
+    "time": "04:28",
+    "des": "其实我挺羡慕火车的。 \n  为什么? \n 他们连擦肩而过都那么久。"
+  },
+  {
+    "song_name": "记事本",
+    "song_file": "记事本 - 陈慧琳.m4a",
+    "img_file": "记事本 - 陈慧琳.jpg",
+    "lyrics_file": "记事本 - 陈慧琳.lrc",
+    "author": "陈慧琳",
+    "time": "04:11",
+    "des": "那些写进记事本的名字，后来都成了不敢翻开的旧页。"
+  },
+  {
+    "song_name": "不浪漫罪名",
+    "song_file": "不浪漫罪名-王杰.mp3",
+    "img_file": "不浪漫罪名-王杰.jpg",
+    "lyrics_file": "不浪漫罪名-王杰.lrc",
+    "author": "王杰",
+    "time": "04:43",
+    "des": "我犯下了滔天的罪名"
+  },
+  {
+    "song_name": "黄昏",
+    "song_file": "黄昏 - 周传雄.m4a",
+    "img_file": "黄昏 - 周传雄.jpg",
+    "lyrics_file": "黄昏 - 周传雄.lrc",
+    "author": "周传雄",
+    "time": "05:44",
+    "des": "我以为我不会再想你了，但是当我听到这首歌时，我才发现我错了。"
+  },
+  {
+    "song_name": "大地",
+    "song_file": "大地 - BEYOND.m4a",
+    "img_file": "大地 - BEYOND.webp",
+    "lyrics_file": "大地 - BEYOND.lrc",
+    "author": "BEYOND",
+    "time": "04:20",
+    "des": "真正有重量的歌，不是喊得多高，而是多年以后再听，心里还是会微微一震。"
+  },
+  {
+    "song_name": "真的爱你",
+    "song_file": "真的爱你 - BEYOND.m4a",
+    "img_file": "真的爱你 - BEYOND.webp",
+    "lyrics_file": "真的爱你 - BEYOND.lrc",
+    "author": "BEYOND",
+    "time": "04:35",
+    "des": "这首歌不是唱给母亲听的，是唱给每个终于懂事的孩子听的。"
+  },
+  {
+    "song_name": "喜欢你",
+    "song_file": "喜欢你 - BEYOND.m4a",
+    "img_file": "喜欢你 - BEYOND.jpg",
+    "lyrics_file": "喜欢你 - BEYOND.lrc",
+    "author": "BEYOND",
+    "time": "04:33",
+    "des": "一句喜欢你，藏着多少少年时代说不出口的认真。"
+  },
+  {
+    "song_name": "情人",
+    "song_file": "情人_Beyond.m4a",
+    "img_file": "情人_Beyond.jpg",
+    "lyrics_file": "情人_Beyond.lrc",
+    "author": "BEYOND",
+    "time": "05:18",
+    "des": "把离别唱得温柔又克制，越是舍不得，越像站在风里轻轻放手。"
+  },
+  {
+    "song_name": "冷雨夜",
+    "song_file": "冷雨夜 - BEYOND.m4a",
+    "img_file": "冷雨夜 - BEYOND.webp",
+    "lyrics_file": "冷雨夜 - BEYOND.lrc",
+    "author": "BEYOND",
+    "time": "04:19",
+    "des": "雨夜里的失落和倔强一起落下，听到最后，只剩一个人撑着伞往前走。"
+  },
+  {
+    "song_name": "灰色轨迹",
+    "song_file": "灰色轨迹 - Beyond.m4a",
+    "img_file": "灰色轨迹 - Beyond.jpg",
+    "lyrics_file": "灰色轨迹 - Beyond.lrc",
+    "author": "BEYOND",
+    "time": "05:24",
+    "des": "灰色的不是轨迹，是走过青春后再回头看的沉默。"
+  },
+  {
+    "song_name": "谁伴我闯荡",
+    "song_file": "谁伴我闯荡 - Beyond.m4a",
+    "img_file": "谁伴我闯荡 - Beyond.jpg",
+    "lyrics_file": "谁伴我闯荡 - Beyond.lrc",
+    "author": "BEYOND",
+    "time": "04:17",
+    "des": "理想路上最怕的不是远方，而是回头时发现，身边少了那个同行的人。"
+  },
+  {
+    "song_name": "不再犹豫",
+    "song_file": "不再犹豫 - Beyond.m4a",
+    "img_file": "不再犹豫 - Beyond.jpg",
+    "lyrics_file": "不再犹豫 - Beyond.lrc",
+    "author": "BEYOND",
+    "time": "04:15",
+    "des": "少年气最热的一首歌：想清楚了就出发，别让犹豫困住自己的天空。"
+  },
+  {
+    "song_name": "光辉岁月",
+    "song_file": "光辉岁月 - BEYOND.m4a",
+    "img_file": "光辉岁月 - BEYOND.webp",
+    "lyrics_file": "光辉岁月 - BEYOND.lrc",
+    "author": "BEYOND",
+    "time": "05:02",
+    "des": "真正的光辉不是没有黑暗，而是在黑暗里还愿意相信人。"
+  },
+  {
+    "song_name": "海阔天空",
+    "song_file": "海阔天空 - BEYOND.m4a",
+    "img_file": "海阔天空 - BEYOND.webp",
+    "lyrics_file": "海阔天空 - BEYOND.lrc",
+    "author": "BEYOND",
+    "time": "05:24",
+    "des": "每个不肯低头的人，心里大概都有一片自己的海阔天空。"
+  },
+  {
+    "song_name": "仙剑问情(主题曲)",
+    "song_file": "仙剑问情(主题曲) - 萧人凤.mp3",
+    "img_file": "仙剑问情(主题曲) - 萧人凤.jpg",
+    "lyrics_file": "仙剑问情(主题曲) - 萧人凤.lrc",
+    "author": "萧人凤",
+    "time": "04:16",
+    "des": "我李逍遥可以对天发誓从今以后不会再让你一人孤苦伶仃。"
+  },
+  {
+    "song_name": "绿光",
+    "song_file": "绿光 - 孙燕姿.m4a",
+    "img_file": "绿光 - 孙燕姿.jpg",
+    "lyrics_file": "绿光 - 孙燕姿.lrc",
+    "author": "孙燕姿",
+    "time": "03:11",
+    "des": "我想超越这平凡的生活，注定现在暂时漂泊。"
+  },
+  {
+    "song_name": "My Heart Will Go On",
+    "song_file": "My Heart Will Go On (Love Theme from _Titanic_).m4a",
+    "img_file": "My Heart Will Go On (Love Theme from _Titanic_).jpg",
+    "lyrics_file": "My Heart Will Go On (Love Theme from _Titanic_).lrc",
+    "author": "Celine Dion",
+    "time": "05:10",
+    "des": "我心永恒"
+  },
+  {
+    "song_name": "倩女幽魂",
+    "song_file": "倩女幽魂 - 张国荣.m4a",
+    "img_file": "倩女幽魂 - 张国荣.jpg",
+    "lyrics_file": "倩女幽魂 - 张国荣.lrc",
+    "author": "张国荣",
+    "time": "03:37",
+    "des": "倩女幽魂，倩女幽魂。"
+  },
+  {
+    "song_name": "九儿",
+    "song_file": "九儿 - 胡莎莎.m4a",
+    "img_file": "九儿 - 胡莎莎.jpg",
+    "lyrics_file": "九儿 - 胡莎莎.lrc",
+    "author": "胡莎莎",
+    "time": "02:28",
+    "des": "一声九儿，唱出来的是土地、命运和一个人倔强的时光。"
+  },
+  {
+    "song_name": "Lonely",
+    "song_file": "Lonely - Nana.m4a",
+    "img_file": "Lonely - Nana.jpg",
+    "lyrics_file": "Lonely - Nana.lrc",
+    "author": "Nana",
+    "time": "06:21",
+    "des": "孤独不是没人陪，是热闹散场后还要自己和自己说晚安。"
+  },
+  {
+    "song_name": "Dream It Possible",
+    "song_file": "Dream It Possible - Delacey.mp3",
+    "img_file": "Dream It Possible - Delacey.jpg",
+    "lyrics_file": "Dream It Possible - Delacey.lrc",
+    "author": "Delacey",
+    "time": "03:24",
+    "des": "不用等梦想成真，只要每天做一点点。"
+  },
+  {
+    "song_name": "追梦赤子心",
+    "song_file": "追梦赤子心 - GALA.m4a",
+    "img_file": "追梦赤子心 - GALA.jpg",
+    "lyrics_file": "追梦赤子心 - GALA.lrc",
+    "author": "GALA",
+    "time": "05:17",
+    "des": "愿你被现实按倒很多次，仍然能像第一次那样爬起来追梦。"
+  },
+  {
+    "song_name": "情人",
+    "song_file": "情人 - 刀郎.m4a",
+    "img_file": "情人 - 刀郎.jpg",
+    "lyrics_file": "情人 - 刀郎.lrc",
+    "author": "刀郎",
+    "time": "03:16",
+    "des": "粗粝的嗓音唱情歌，反而像风沙里递来的一点温柔。"
+  },
+  {
+    "song_name": "第一次爱的人",
+    "song_file": "第一次爱的人 - 王心凌.m4a",
+    "img_file": "第一次爱的人 - 王心凌.jpg",
+    "lyrics_file": "第一次爱的人 - 王心凌.lrc",
+    "author": "王心凌",
+    "time": "03:49",
+    "des": "初恋最难忘的不是结局，是多年后还会突然心软的瞬间。"
+  },
+  {
+    "song_name": "七月七日晴",
+    "song_file": "七月七日晴 - 许慧欣.m4a",
+    "img_file": "七月七日晴 - 许慧欣.jpg",
+    "lyrics_file": "七月七日晴 - 许慧欣.lrc",
+    "author": "许慧欣",
+    "time": "04:03",
+    "des": "晴天也会让人想哭，因为有些约定只剩天空记得。"
+  },
+  {
+    "song_name": "香水有毒",
+    "song_file": "香水有毒 - 胡杨林.m4a",
+    "img_file": "香水有毒 - 胡杨林.jpg",
+    "lyrics_file": "香水有毒 - 胡杨林.lrc",
+    "author": "胡杨林",
+    "time": "04:50",
+    "des": "爱错的人像气味留在衣角，明知该散却还舍不得。"
+  },
+  {
+    "song_name": "姑娘别哭泣",
+    "song_file": "姑娘别哭泣 - 柯柯柯啊.m4a",
+    "img_file": "姑娘别哭泣 - 柯柯柯啊.jpg",
+    "lyrics_file": "姑娘别哭泣 - 柯柯柯啊.lrc",
+    "author": "柯柯柯啊",
+    "time": "03:55",
+    "des": "把委屈慢慢唱开，像有人在夜里轻轻递来一句安慰。"
+  },
+  {
+    "song_name": "泡沫",
+    "song_file": "泡沫 - G.E.M. 邓紫棋.m4a",
+    "img_file": "泡沫 - G.E.M. 邓紫棋.webp",
+    "lyrics_file": "泡沫 - G.E.M. 邓紫棋.lrc",
+    "author": "G.E.M. 邓紫棋",
+    "time": "04:18",
+    "des": "越美的幻象越容易破，爱到最后只剩透明的疼。"
+  },
+  {
+    "song_name": "Call of Silence",
+    "song_file": "Call of Silence（最自由的版本） - 海的对面是什么.m4a",
+    "img_file": "Call of Silence（最自由的版本） - 海的对面是什么.jpg",
+    "lyrics_file": "Call of Silence（最自由的版本） - 海的对面是什么.lrc",
+    "author": "泽野弘之",
+    "time": "04:39",
+    "des": "成长不是变得坚强，是学会了什么都不说。"
+  },
+  {
+    "song_name": "老鼠爱大米",
+    "song_file": "老鼠爱大米 - 杨臣刚.mp3",
+    "img_file": "老鼠爱大米 - 杨臣刚.jpg",
+    "lyrics_file": "老鼠爱大米 - 杨臣刚.lrc",
+    "author": "杨臣刚",
+    "time": "05:04",
+    "des": "今天语文老师教我们文言文中\"之\"的取独用法，以本歌经典歌词为例，翻译成了古汉语：\"吾之爱汝，如鼠之爱粟。\"简直印象不能再深刻[大哭][大哭][大哭]"
+  },
+  {
+    "song_name": "老鼠爱大米",
+    "song_file": "老鼠爱大米 - 香香.m4a",
+    "img_file": "老鼠爱大米 - 香香.jpg",
+    "lyrics_file": "老鼠爱大米 - 香香.lrc",
+    "author": "香香",
+    "time": "05:01",
+    "des": "今天语文老师教我们文言文中\"之\"的取独用法，以本歌经典歌词为例，翻译成了古汉语：\"吾之爱汝，如鼠之爱粟。\"简直印象不能再深刻[大哭][大哭][大哭]"
+  },
+  {
+    "song_name": "美人吟",
+    "song_file": "美人吟 - 李玲玉.mp3",
+    "img_file": "美人吟 - 李玲玉.jpg",
+    "lyrics_file": "美人吟 - 李玲玉.lrc",
+    "author": "李玲玉",
+    "time": "04:01",
+    "des": "舒畅。"
+  },
+  {
+    "song_name": "雨花石",
+    "song_file": "雨花石（电视连续剧《红红的雨花石》主题歌）.mp3",
+    "img_file": "雨花石（电视连续剧《红红的雨花石》主题歌）.jpg",
+    "lyrics_file": "雨花石（电视连续剧《红红的雨花石》主题歌）.lrc",
+    "author": "陈每文、熊健萍、陈帆等",
+    "time": "03:49",
+    "des": "我是一颗小小的石头"
+  },
+  {
+    "song_name": "满江红",
+    "song_file": "满江红 - 刘可.mp3",
+    "img_file": "满江红 - 刘可.jpg",
+    "lyrics_file": "满江红 - 刘可.lrc",
+    "author": "刘可",
+    "time": "03:11",
+    "des": "听到的是一腔热血，也是普通人心里那点不肯低头的劲。"
+  },
+  {
+    "song_name": "滚滚长江东逝水",
+    "song_file": "滚滚长江东逝水 - 杨洪基.m4a",
+    "img_file": "滚滚长江东逝水 - 杨洪基.jpg",
+    "lyrics_file": "滚滚长江东逝水 - 杨洪基.lrc",
+    "author": "杨洪基",
+    "time": "02:58",
+    "des": "一开口就是历史的江水，英雄成败都被浪花慢慢带远。"
+  },
+  {
+    "song_name": "铁血丹心",
+    "song_file": "铁血丹心 - 罗文.m4a",
+    "img_file": "铁血丹心 - 罗文.jpg",
+    "lyrics_file": "铁血丹心 - 罗文.lrc",
+    "author": "罗文",
+    "time": "02:54",
+    "des": "家国、江湖与儿女情长，都在这股豪气里烧得滚烫。"
+  },
+  {
+    "song_name": "上海滩",
+    "song_file": "上海滩 - 叶丽仪.m4a",
+    "img_file": "上海滩 - 叶丽仪.jpg",
+    "lyrics_file": "上海滩 - 叶丽仪.lrc",
+    "author": "叶丽仪",
+    "time": "03:14",
+    "des": "风浪、霓虹和旧时代的恩怨，一起卷进那声苍茫的开场。"
+  },
+  {
+    "song_name": "世间始终你好",
+    "song_file": "世间始终你好 - 罗文.m4a",
+    "img_file": "世间始终你好 - 罗文.jpg",
+    "lyrics_file": "世间始终你好 - 罗文.lrc",
+    "author": "罗文",
+    "time": "02:47",
+    "des": "江湖路远，最难忘的还是并肩看过风雨的人。"
+  },
+  {
+    "song_name": "难念的经",
+    "song_file": "难念的经 - 周华健.m4a",
+    "img_file": "难念的经 - 周华健.jpg",
+    "lyrics_file": "难念的经 - 周华健.lrc",
+    "author": "周华健",
+    "time": "04:48",
+    "des": "唱的是红尘里的执念，越快越像命运追着人奔跑。"
+  },
+  {
+    "song_name": "沧海一声笑",
+    "song_file": "沧海一声笑 - 许冠杰.m4a",
+    "img_file": "沧海一声笑 - 许冠杰.jpg",
+    "lyrics_file": "沧海一声笑 - 许冠杰.lrc",
+    "author": "许冠杰",
+    "time": "02:55",
+    "des": "把恩怨交给江湖，把洒脱留给一声大笑。"
+  },
+  {
+    "song_name": "爱江山更爱美人",
+    "song_file": "爱江山更爱美人 - 李丽芬.m4a",
+    "img_file": "爱江山更爱美人 - 李丽芬.jpg",
+    "lyrics_file": "爱江山更爱美人 - 李丽芬.lrc",
+    "author": "李丽芬",
+    "time": "05:20",
+    "des": "江湖再大，也抵不过心里那个想一起看尽繁华的人。"
+  },
+  {
+    "song_name": "我的歌声里",
+    "song_file": "我的歌声里-曲婉婷.mp3",
+    "img_file": "我的歌声里-曲婉婷.jpg",
+    "lyrics_file": "我的歌声里-曲婉婷.lrc",
+    "author": "曲婉婷",
+    "time": "03:36",
+    "des": "最心酸的不是忘不掉，而是突然在街角听到这首歌时，一秒就想起你。"
+  },
+  {
+    "song_name": "窗外",
+    "song_file": "窗外 - 李琛.m4a",
+    "img_file": "窗外 - 李琛.jpg",
+    "lyrics_file": "窗外 - 李琛.lrc",
+    "author": "李琛",
+    "time": "04:14",
+    "des": "窗外的风景再美，也比不上你在我心里的模样。"
+  }
+]

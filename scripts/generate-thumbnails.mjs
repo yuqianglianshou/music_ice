@@ -31,8 +31,8 @@ function ensureSips() {
 }
 
 /**
- * 直接 import catalog/index.js 读取歌单，与页面使用同一份数据，不再用正则解析 JS 源码。
- * 需要 Node 22+（可直接以 ES module 加载 catalog/*.js）。
+ * 直接 import catalog/index.js 读取歌单（catalog/*.json），与页面使用同一份数据。
+ * 需要 Node 22+。
  */
 async function collectMusicImages() {
   const { CATEGORIES } = await import(pathToFileURL(path.join(dataDir, 'index.js')).href);

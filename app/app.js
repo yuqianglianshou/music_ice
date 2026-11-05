@@ -729,10 +729,17 @@ function init() {
   }
 }
 
-// 当DOM加载完成后初始化应用
-document.addEventListener('DOMContentLoaded', async () => {
+async function start() {
   const isReloadingForServiceWorkerCleanup = await setupServiceWorker();
   if (isReloadingForServiceWorkerCleanup) return;
   init();
-});
+}
+
+// 歌单由 catalog/index.js 用顶层 await 异步读取，本模块执行时 DOMContentLoaded 往往已经触发过，
+// 所以先判断文档状态：仍在解析就等事件，否则直接启动
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', start);
+} else {
+  start();
+}
 

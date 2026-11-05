@@ -14,8 +14,6 @@ import { DEFAULT_COVERS, DEFAULT_COVER_DIR } from './shared-constants.js';
 export const FILE_MUSIC_ROOT = './media/';
 // “全部”分类的虚拟 id
 export const ALL_CATEGORY_ID = 'all';
-// 旧版歌单条目的纯音乐标记（lyrics_type: 99），现已改用 instrumental: true
-const LEGACY_INSTRUMENTAL_LYRICS_TYPE = 99;
 const ALL_CATEGORY_LABEL = '全部';
 
 // 没有专属封面的歌曲按 id 从 DEFAULT_COVERS 中稳定地分配一张，同一首歌在不同分类下封面保持一致
@@ -92,8 +90,7 @@ function createSong(raw, category, id) {
     coverUrl,
     thumbUrl: resolveThumbnailPath(coverUrl) || coverUrl,
     lyricsUrl: resolveAssetPath(folder, raw.lyrics_file),
-    // lyrics_type === 99 是旧版歌单的纯音乐标记：发布后浏览器可能短时间内仍缓存旧歌单文件，保留兼容
-    isInstrumental: raw.instrumental === true || raw.lyrics_type === LEGACY_INSTRUMENTAL_LYRICS_TYPE
+    isInstrumental: raw.instrumental === true
   });
 }
 

@@ -1,5 +1,12 @@
 import { CATEGORY_META } from '../catalog/categories.js';
 import {
+  parseCatalog,
+  buildCatalogEntry,
+  appendCatalogEntry,
+  removeCatalogEntry,
+  hasCatalogEntry
+} from './catalog-json.js';
+import {
   DEFAULT_COVERS,
   isDefaultCoverPath,
   IMPORT_SIGNAL_KEY,
@@ -26,7 +33,7 @@ const LAST_CATEGORY_KEY = 'musicIceImporterLastCategory';
 const IMPORT_LOCK_NAME = 'music-ice-importer-write';
 const IMPORT_LOG_KEY = 'musicIceImporterLogs';
 const MAX_IMPORT_LOGS = 120;
-const IMPORTER_VERSION = '20261105-03';
+const IMPORTER_VERSION = '20261105-04';
 const AI_DESCRIPTION_TIMEOUT_MS = 12000;
 const AI_DESCRIPTION_MAX_LENGTH = 64;
 const AUDIO_EXTENSIONS = new Set(['mp3', 'flac', 'm4a', 'wav', 'ogg']);
@@ -868,25 +875,22 @@ async function readCatalogSongs() {
 }
 
 function extractCatalogSongs(source, category) {
-  const entryMatches = source.match(/\{[\s\S]*?\n\s*\}/g) || [];
-  return entryMatches.map(entry => ({
-    categoryKey: category.key,
-    categoryLabel: category.label,
-    catalogFile: category.catalogFile,
-    folder: category.folder,
-    entry,
-    song_name: readStringProperty(entry, 'song_name'),
-    song_file: readStringProperty(entry, 'song_file'),
-    img_file: readStringProperty(entry, 'img_file'),
-    lyrics_file: readStringProperty(entry, 'lyrics_file'),
-    author: readStringProperty(entry, 'author'),
-    time: readStringProperty(entry, 'time')
-  })).filter(song => song.song_name || song.song_file);
-}
-
-function readStringProperty(entry, key) {
-  const match = entry.match(new RegExp(`${key}\\s*:\\s*(["'\`])([\\s\\S]*?)\\1`));
-  return match ? match[2] : '';
+  const entries = parseCatalog(source, `catalog/${category.catalogFile}`);
+  return entries
+    .filter(entry => entry && typeof entry === 'object')
+    .map(entry => ({
+      categoryKey: category.key,
+      categoryLabel: category.label,
+      catalogFile: category.catalogFile,
+      folder: category.folder,
+      song_name: entry.song_name || '',
+      song_file: entry.song_file || '',
+      img_file: entry.img_file || '',
+      lyrics_file: entry.lyrics_file || '',
+      author: entry.author || '',
+      time: entry.time || ''
+    }))
+    .filter(song => song.song_name || song.song_file);
 }
 
 function normalizeDuplicateValue(value) {
@@ -1053,9 +1057,10 @@ async function deleteCatalogEntry(song, category) {
   const catalogDir = await state.projectRootHandle.getDirectoryHandle('catalog');
   const fileHandle = await catalogDir.getFileHandle(category.catalogFile);
   const source = await (await fileHandle.getFile()).text();
-  const nextSource = removeEntryFromCatalogSource(source, song);
+  const fileLabel = `catalog/${category.catalogFile}`;
+  const { text: nextSource, removed } = removeCatalogEntry(source, song, fileLabel);
 
-  if (nextSource === source) {
+  if (!removed) {
     throw new Error(`未能在 catalog/${category.catalogFile} 中定位该歌曲条目。`);
   }
 
@@ -1064,36 +1069,11 @@ async function deleteCatalogEntry(song, category) {
   await writable.close();
 
   const verifiedSource = await (await fileHandle.getFile()).text();
-  if (verifiedSource !== nextSource || verifiedSource.includes(`song_file: ${JSON.stringify(song.song_file)}`)) {
+  if (verifiedSource !== nextSource || hasCatalogEntry(verifiedSource, song.song_file, fileLabel)) {
     throw new Error(`歌单删除后校验失败：catalog/${category.catalogFile}`);
   }
 
   addLog(`歌单条目已删除：catalog/${category.catalogFile}`, 'success');
-}
-
-function removeEntryFromCatalogSource(source, song) {
-  const entryMatches = [...source.matchAll(/\{[\s\S]*?\n\s*\}/g)];
-  const match = entryMatches.find(item => {
-    const entry = item[0];
-    return readStringProperty(entry, 'song_file') === song.song_file &&
-      readStringProperty(entry, 'song_name') === song.song_name;
-  });
-
-  if (!match) return source;
-
-  let start = match.index;
-  let end = match.index + match[0].length;
-  if (source.slice(end, end + 1) === ',') {
-    end += 1;
-  } else {
-    const before = source.slice(0, start);
-    const commaIndex = before.lastIndexOf(',');
-    if (commaIndex !== -1 && /^[\s\r\n]*$/.test(before.slice(commaIndex + 1))) {
-      start = commaIndex;
-    }
-  }
-
-  return `${source.slice(0, start)}${source.slice(end)}`;
 }
 
 async function deleteSongMediaFiles(song, category, remainingSongs) {
@@ -1310,21 +1290,21 @@ async function prepareCatalogUpdate(payload, category) {
   const catalogDir = await state.projectRootHandle.getDirectoryHandle('catalog');
   const fileHandle = await catalogDir.getFileHandle(category.catalogFile);
   const source = await (await fileHandle.getFile()).text();
-  const entry = renderEntry(payload);
-  const nextSource = appendEntryToCatalogSource(source, entry);
-
-  if (nextSource === source) {
-    throw new Error(`无法更新 ${category.catalogFile}，数组结尾格式不符合预期。`);
-  }
+  const entry = buildCatalogEntry(payload);
+  // 导入前已排除重复歌曲，这里追加后内容必然变化；解析失败（文件不是合法 JSON）会直接抛错终止导入
+  const nextSource = appendCatalogEntry(source, entry, `catalog/${category.catalogFile}`);
 
   return { fileHandle, source, nextSource, entry };
 }
 
-async function verifyCatalogUpdatePreview(catalogUpdate, payload, category) {
-  const hasSongName = catalogUpdate.nextSource.includes(`song_name: ${JSON.stringify(payload.song_name)}`);
-  const hasSongFile = catalogUpdate.nextSource.includes(`song_file: ${JSON.stringify(payload.song_file)}`);
+// 确认歌单内容中有与本次导入歌名、音频文件都一致的条目
+function catalogContainsSong(source, payload, category) {
+  const entries = parseCatalog(source, `catalog/${category.catalogFile}`);
+  return entries.some(entry => entry?.song_file === payload.song_file && entry?.song_name === payload.song_name);
+}
 
-  if (!hasSongName || !hasSongFile) {
+async function verifyCatalogUpdatePreview(catalogUpdate, payload, category) {
+  if (!catalogContainsSong(catalogUpdate.nextSource, payload, category)) {
     throw new Error(`歌单预览中未找到新条目，请检查：catalog/${category.catalogFile}`);
   }
 }
@@ -1333,7 +1313,8 @@ async function updateCatalogFile(catalogUpdate, payload, category) {
   const latestSource = await (await catalogUpdate.fileHandle.getFile()).text();
   const nextSource = latestSource === catalogUpdate.source
     ? catalogUpdate.nextSource
-    : appendEntryToLatestCatalogSource(latestSource, catalogUpdate.entry, payload, category);
+    // 预检之后歌单文件又被改动（如另一个标签页导入）：基于最新内容重新追加
+    : appendCatalogEntry(latestSource, catalogUpdate.entry, `catalog/${category.catalogFile}`);
 
   const writable = await catalogUpdate.fileHandle.createWritable();
   await writable.write(nextSource);
@@ -1359,39 +1340,10 @@ async function restoreCatalogFile(fileHandle, previousSource, category) {
   }
 }
 
-function appendEntryToLatestCatalogSource(source, entry, payload, category) {
-  if (source.includes(`song_file: ${JSON.stringify(payload.song_file)}`)) {
-    return source;
-  }
-
-  const nextSource = appendEntryToCatalogSource(source, entry);
-  if (nextSource === source) {
-    throw new Error(`无法更新 ${category.catalogFile}，数组结尾格式不符合预期。`);
-  }
-  return nextSource;
-}
-
-function appendEntryToCatalogSource(source, entry) {
-  const closeIndex = findCatalogArrayCloseIndex(source);
-  if (closeIndex < 0) return source;
-
-  const beforeClose = source.slice(0, closeIndex).replace(/\s*$/, '');
-  const afterClose = source.slice(closeIndex);
-  const separator = beforeClose.endsWith('[') ? '\n' : ',\n';
-  return `${beforeClose}${separator}${entry}\n${afterClose}`;
-}
-
-function findCatalogArrayCloseIndex(source) {
-  const match = source.match(/\s*\];\s*$/);
-  return match ? match.index + match[0].indexOf(']') : -1;
-}
-
 async function verifyCatalogEntry(catalogUpdate, payload, category) {
   const verifiedSource = await (await catalogUpdate.fileHandle.getFile()).text();
-  const hasSongName = verifiedSource.includes(`song_name: ${JSON.stringify(payload.song_name)}`);
-  const hasSongFile = verifiedSource.includes(`song_file: ${JSON.stringify(payload.song_file)}`);
 
-  if (!hasSongName || !hasSongFile) {
+  if (!catalogContainsSong(verifiedSource, payload, category)) {
     throw new Error(`歌单更新后未找到新条目，请检查：catalog/${category.catalogFile}`);
   }
 
@@ -1435,27 +1387,12 @@ async function verifyImportedFile(directoryHandle, fileName, expectedSize, label
   }
 }
 
-// 生成写入 catalog/*.js 的条目源码：分类名称和资源目录由所属歌单文件决定，条目里不再重复
+// 预览将写入 catalog/*.json 的条目：缩进与歌单文件中的数组元素一致
 function renderEntry(payload) {
-  const lines = [
-    '  {',
-    `    song_name: ${JSON.stringify(payload.song_name)},`,
-    `    song_file: ${JSON.stringify(payload.song_file)},`,
-    `    img_file: ${JSON.stringify(payload.img_file)},`
-  ];
-
-  if (payload.lyrics_file) {
-    lines.push(`    lyrics_file: ${JSON.stringify(payload.lyrics_file)},`);
-  } else if (payload.instrumental) {
-    lines.push('    instrumental: true,');
-  }
-
-  lines.push(`    author: ${JSON.stringify(payload.author)},`);
-  lines.push(`    time: ${JSON.stringify(payload.time)},`);
-  lines.push(`    des: ${JSON.stringify(payload.des)},`);
-  lines.push('  }');
-
-  return lines.join('\n');
+  return JSON.stringify(buildCatalogEntry(payload), null, 2)
+    .split('\n')
+    .map(line => `  ${line}`)
+    .join('\n');
 }
 
 async function generateCoverThumbnail(payload, category) {

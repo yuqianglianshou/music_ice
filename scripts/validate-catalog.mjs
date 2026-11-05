@@ -12,7 +12,7 @@
  * 警告：缺 des、time 格式不对、缩略图缺失、展示文本未 NFC 规范化、文件名含日文假名/韩文、
  *   扩展名大写、media/ 下有未被歌单引用的文件、（--durations）时长与 time 相差超过 2 秒。
  *
- * 需要 Node 22+（直接以 ES module 加载 catalog/*.js）。
+ * 需要 Node 22+（通过 catalog/index.js 读取 catalog/*.json）。
  */
 
 import { execFileSync } from 'node:child_process';
@@ -31,8 +31,17 @@ const warnings = [];
 const error = (message) => errors.push(message);
 const warn = (message) => warnings.push(message);
 
-const { CATEGORIES } = await import(pathToFileURL(path.join(projectRoot, 'catalog/index.js')).href);
 const { CATEGORY_META } = await import(pathToFileURL(path.join(projectRoot, 'catalog/categories.js')).href);
+const { ENTRY_FIELDS } = await import(pathToFileURL(path.join(projectRoot, 'app/catalog-json.js')).href);
+
+// 歌单文件缺失或 JSON 语法错误时 catalog/index.js 会直接抛错，这里转成可读的提示
+let CATEGORIES;
+try {
+  ({ CATEGORIES } = await import(pathToFileURL(path.join(projectRoot, 'catalog/index.js')).href));
+} catch (loadError) {
+  console.log(`歌单加载失败：${loadError.message}`);
+  process.exit(1);
+}
 const { DEFAULT_COVERS } = await import(pathToFileURL(path.join(projectRoot, 'app/shared-constants.js')).href);
 
 // 默认封面清单（编号与 jpg/webp 格式）是手写的，核对每张原图及其缩略图都存在
@@ -47,13 +56,11 @@ for (const coverPath of DEFAULT_COVERS) {
   }
 }
 
-// 分类配置一致性：catalog/categories.js 是唯一来源，核对每个分类都登记了歌单且歌单文件存在
-for (const meta of CATEGORY_META) {
-  if (!CATEGORIES.some(category => category.id === meta.id)) {
-    error(`分类 ${meta.id}：未在 catalog/index.js 的 LISTS_BY_ID 中登记歌单`);
-  }
-  if (!fs.existsSync(path.join(projectRoot, 'catalog', meta.catalogFile))) {
-    error(`分类 ${meta.id}：歌单文件 catalog/${meta.catalogFile} 不存在`);
+// catalog/ 下没有对应分类的 JSON 文件（常见于删除或改名分类后的残留）
+const catalogFiles = new Set(CATEGORY_META.map(meta => meta.catalogFile));
+for (const fileName of fs.readdirSync(path.join(projectRoot, 'catalog'))) {
+  if (fileName.endsWith('.json') && !catalogFiles.has(fileName)) {
+    warn(`catalog/${fileName} 未在 catalog/categories.js 中登记，页面不会加载它`);
   }
 }
 
@@ -125,8 +132,18 @@ for (const category of CATEGORIES) {
     for (const field of ['song_name', 'song_file', 'author']) {
       if (!music?.[field]) error(`${label}：缺少 ${field}`);
     }
-    for (const [field, hint] of Object.entries(LEGACY_FIELDS)) {
-      if (music && field in music) error(`${label}：已废弃字段 ${field}，请删除（${hint}）`);
+    if (!music || typeof music !== 'object' || Array.isArray(music)) {
+      error(`${label}：条目应为对象`);
+      return;
+    }
+    for (const field of Object.keys(music)) {
+      if (LEGACY_FIELDS[field]) {
+        error(`${label}：已废弃字段 ${field}，请删除（${LEGACY_FIELDS[field]}）`);
+      } else if (!ENTRY_FIELDS.includes(field)) {
+        warn(`${label}：未知字段 ${field}，页面不会读取（可用字段：${ENTRY_FIELDS.join('、')}）`);
+      } else if (field !== 'instrumental' && typeof music[field] !== 'string') {
+        error(`${label}：${field} 应为字符串`);
+      }
     }
     // 纯音乐用 instrumental: true 标记；有歌词文件的歌曲不应标为纯音乐
     if (music && 'instrumental' in music && music.instrumental !== true) {

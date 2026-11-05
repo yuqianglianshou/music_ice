@@ -13,7 +13,7 @@
 - `index.html`：页面结构和资源引用。
 - `app/`：播放器逻辑、配置、歌词、主题和导入相关 JS 模块。
 - `css/`：页面样式。按区域拆分为 `layout.css`（页面骨架）、`player-bar.css`（底部播放栏）、`library-header.css`（歌单头部、分类标签、搜索）、`song-panel.css`（封面、歌曲信息、歌词）、`playlist.css`（歌曲列表、悬浮卡片）、`overrides.css`（后置覆盖规则）；另有 `common.css`（重置与基础样式）、`rules.css`（CSS 变量与工具类）、`response.css`（响应式）、`importer.css`（导入工具）。
-- `catalog/`：按分类拆分的歌单数据。`catalog/categories.js` 的 `CATEGORY_META` 是分类元数据的唯一来源（id、名称、目录、歌单文件、tab 顺序），页面、导入工具和校验脚本都读它；`catalog/index.js` 把元数据和歌单数组组装成 `CATEGORIES`。
+- `catalog/`：按分类拆分的歌单数据。`catalog/categories.js` 的 `CATEGORY_META` 是分类元数据的唯一来源（id、名称、目录、歌单文件、tab 顺序），页面、导入工具和校验脚本都读它；各分类歌单是 `catalog/*.json`（歌曲条目数组），`catalog/index.js` 用顶层 `await` 读取并组装成 `CATEGORIES`，引用方可同步使用；`app/catalog-json.js` 是读写歌单 JSON 的共用函数（解析、规范序列化、追加、删除）。
 - `media/`：歌曲音频、歌词和封面原图。
 - `assets/`：图标、截图、默认封面及歌曲封面缩略图。
 - `tools/import-song.html`：本地浏览器导入歌曲工具。
@@ -49,14 +49,14 @@ python3 -m http.server 8000
 ## 歌曲与资源约定
 
 - 新增歌曲时，音频、歌词、封面原图应放入 `media/对应分类/`。
-- 歌单条目添加到对应的 `catalog/*.js` 文件中。新增分类时在 `catalog/categories.js` 的 `CATEGORY_META` 中追加一项，新建歌单文件（只导出一个歌单数组），再在 `catalog/index.js` 的 `LISTS_BY_ID` 中登记歌单数组；导入工具会自动读取，无需另配。改完运行 `node scripts/validate-catalog.mjs` 核对一致性。
+- 歌单条目添加到对应的 `catalog/*.json` 文件中。歌单文件统一为 `JSON.stringify(条目数组, null, 2)` 加末尾换行的格式（即 `app/catalog-json.js` 的 `serializeCatalog`），手动编辑时保持 2 空格缩进、不加注释和尾逗号；导入工具读写时也按此格式重写整个文件。新增分类时在 `catalog/categories.js` 的 `CATEGORY_META` 中追加一项并新建内容为 `[]` 的歌单文件，页面和导入工具会自动读取。改完运行 `node scripts/validate-catalog.mjs` 核对一致性（JSON 语法错误也会在这里报出）。
 - 歌单条目字段：`song_name`、`song_file`、`img_file`、`lyrics_file`、`author`、`time`、`des`；纯音乐不写 `lyrics_file`，改写 `instrumental: true`。条目不写 `song_type`、`song_path`、`lyrics_type`（已废弃，校验脚本会报错）：分类名称和资源目录 `media/<分类目录>/` 都由条目所在的歌单文件决定。
 - 歌词文件通常使用 `.lrc`。
 - 封面原图可放在 `media/` 对应分类下，列表缩略图由脚本生成到 `assets/covers/music-thumbs/`。
-- 如果歌曲当前没有专属头像，`img_file` 可能指向 `./assets/covers/defaults/*.jpg` 默认随机图。用户提供图片并说明“给到某首歌的头像”时，应将图片复制到该歌曲所在分类的 `media/对应分类/` 下，使用与歌曲匹配的封面文件名，更新对应 `catalog/*.js` 条目的 `img_file`，再运行 `node scripts/generate-thumbnails.mjs` 生成或更新列表缩略图。
+- 如果歌曲当前没有专属头像，`img_file` 可能指向 `./assets/covers/defaults/*.jpg` 默认随机图。用户提供图片并说明“给到某首歌的头像”时，应将图片复制到该歌曲所在分类的 `media/对应分类/` 下，使用与歌曲匹配的封面文件名，更新对应 `catalog/*.json` 条目的 `img_file`，再运行 `node scripts/generate-thumbnails.mjs` 生成或更新列表缩略图。
 - 用户明确要求封面文件名与歌曲文件名一致时，封面原图应使用 `song_file` 去掉扩展名后的完整文件名，图片扩展名按实际图片格式设置，并同步更新 `img_file` 和对应缩略图文件名。
 - 为歌曲替换头像时，不只修改原图；还要确认 `assets/covers/music-thumbs/对应分类/` 下缩略图同步更新，并检查歌单中的 `img_file` 不再指向旧封面或默认封面。
-- 新导入歌曲可能缺少 `des` 描述信息。用户要求“补上 des 信息”时，应在对应 `catalog/*.js` 条目中补齐 `des` 字段，描述应简洁、中文、贴合歌曲/歌手/影视或专辑背景，风格与已有歌单描述保持一致；不要改动歌曲名、文件名或排序，除非用户同时要求。
+- 新导入歌曲可能缺少 `des` 描述信息。用户要求“补上 des 信息”时，应在对应 `catalog/*.json` 条目中补齐 `des` 字段，描述应简洁、中文、贴合歌曲/歌手/影视或专辑背景，风格与已有歌单描述保持一致；不要改动歌曲名、文件名或排序，除非用户同时要求。
 - 资源文件名优先使用 ASCII slug（如 `gangnam-style - psy.mp3`），避免直接使用日文、韩文、带音标字符或其他 Unicode 组合字符作为音频、歌词、封面、缩略图文件名。
 - `song_name`、`des` 等展示文本可以保留原文，但应使用 NFC 规范化后的正常字符；不要保留韩文 Jamo 分解字符、日文组合浊点等看起来一样但编码不同的字符。
 - 修改资源文件名时，必须同步更新歌单中的 `song_file`、`img_file`、`lyrics_file`，以及 `assets/covers/music-thumbs/` 下对应缩略图，避免本地 macOS 可读取但线上 Linux/静态服务器 404。
@@ -75,9 +75,9 @@ python3 -m http.server 8000
 
 - 用户要求“排序某分类前 N 首”时，只把指定歌曲移动到该分类列表最前面并按给定顺序排列；未指定歌曲保持原有相对顺序。
 - 排序时优先按 `song_name` 精确匹配；用户给的是简称时，可用包含关系匹配，但要避免误匹配，例如“她”不能误选“她说”。
-- 排序或批量移动歌单对象后，必须运行 `node --check catalog/对应文件.js`，并用 ES module import 抽查列表数量、空条目和前 N 首顺序。
+- 排序或批量移动歌单条目后，必须运行 `node scripts/validate-catalog.mjs` 和 `node --test tests/*.test.mjs`（会检查 JSON 语法和规范格式），并读取对应 JSON 抽查列表数量、空条目和前 N 首顺序。批量调整建议用脚本读取 JSON、修改数组后用 `serializeCatalog` 写回，避免手工改坏格式。
 - 将歌曲从一个分类迁到另一个分类时，必须同步迁移 `media/源分类/` 下的音频、歌词、封面原图，以及 `assets/covers/music-thumbs/源分类/` 下对应缩略图；优先用 `git mv` 保留重命名/移动历史。
-- 迁移歌曲后，必须从源 `catalog/*.js` 删除该歌曲对象，并原样加到目标 `catalog/*.js`；资源目录由所在歌单文件决定，条目本身无需改动。
+- 迁移歌曲后，必须从源 `catalog/*.json` 删除该歌曲条目，并原样加到目标 `catalog/*.json`；资源目录由所在歌单文件决定，条目本身无需改动。
 - 迁移完成后，应检查源分类 media 和缩略图目录中没有残留同名资源，并确认目标分类中资源文件存在。
 
 生成或检查缩略图：
@@ -98,7 +98,7 @@ node scripts/generate-thumbnails.mjs --defaults
 node scripts/generate-thumbnails.mjs --dry-run
 ```
 
-注意：缩略图脚本依赖 macOS 自带的 `sips` 命令；脚本通过 import `catalog/index.js` 读取歌单，需要 Node 22+。
+注意：缩略图脚本依赖 macOS 自带的 `sips` 命令；脚本通过 import `catalog/index.js` 读取歌单（其中用 Node 读取 `catalog/*.json`），需要 Node 22+。
 
 校验歌单（引用文件是否存在、大小写/Unicode 是否一致、缺 des、缺缩略图、media 残留文件等）：
 

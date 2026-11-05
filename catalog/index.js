@@ -1,42 +1,40 @@
 import { CATEGORY_META } from './categories.js';
-import { folkList } from './minyao.js';
-import { lightMusicList } from './qingyinyue.js';
-import { healingList } from './shangganzhiyu.js';
-import { popClassicsList } from './liuxingjingdian.js';
-import { rhythmList } from './jiezoulvdong.js';
-import { animeScreenList } from './dongmanyingshi.js';
-
-// 分类 id → 歌单数组。分类的名称、目录、顺序统一在 catalog/categories.js 中维护，这里只负责挂上歌单数据。
-const LISTS_BY_ID = {
-  minyao: folkList,
-  qingyinyue: lightMusicList,
-  shangganzhiyu: healingList,
-  liuxingjingdian: popClassicsList,
-  jiezoulvdong: rhythmList,
-  dongmanyingshi: animeScreenList
-};
+import { parseCatalog } from '../app/catalog-json.js';
 
 /**
  * 分类注册表：页面分类 tab 的顺序、名称和对应歌单都以这里为准。
- * 每项为 CATEGORY_META 的分类信息加上 list（该分类的歌单数组）。
- * 元数据和歌单登记不一致时只打印错误并跳过，避免一处笔误导致整个页面无法加载；
- * scripts/validate-catalog.mjs 会把这种不一致当作错误报出。
+ * 每项为 CATEGORY_META 的分类信息加上 list（从 catalog/<catalogFile> 读取的歌单数组）。
+ *
+ * 本模块用顶层 await 读取各分类的 JSON 歌单：引用它的模块（music-store.js、脚本、测试）
+ * 会等歌单加载完再执行，因此仍可像普通常量一样同步使用 CATEGORIES。
  */
-export const CATEGORIES = CATEGORY_META.flatMap(meta => {
-  const list = LISTS_BY_ID[meta.id];
-  if (!Array.isArray(list)) {
-    console.error(`分类 ${meta.id} 未在 catalog/index.js 的 LISTS_BY_ID 中登记歌单，已跳过。`);
-    return [];
-  }
-  return [{ ...meta, list }];
-});
 
-// 保留旧的按变量名导出，兼容可能直接引用它的脚本
-export const MUSIC_LISTS = {
-  folkList,
-  lightMusicList,
-  healingList,
-  popClassicsList,
-  rhythmList,
-  animeScreenList
-};
+// Node 中运行的脚本和测试直接读文件；浏览器中用 fetch
+const IS_NODE = typeof process !== 'undefined' && !!process.versions?.node;
+
+async function readCatalogText(fileName) {
+  const url = new URL(`./${fileName}`, import.meta.url);
+  if (IS_NODE) {
+    const { readFile } = await import('node:fs/promises');
+    return readFile(url, 'utf8');
+  }
+  const response = await fetch(url);
+  if (!response.ok) {
+    throw new Error(`HTTP ${response.status}`);
+  }
+  return response.text();
+}
+
+async function loadCategory(meta) {
+  const fileLabel = `catalog/${meta.catalogFile}`;
+  try {
+    return { ...meta, list: parseCatalog(await readCatalogText(meta.catalogFile), fileLabel) };
+  } catch (error) {
+    // 脚本和测试需要发现问题，直接报错；页面上只让这个分类为空，其他分类照常可听
+    if (IS_NODE) throw error;
+    console.error(`歌单加载失败：${fileLabel}`, error);
+    return { ...meta, list: [] };
+  }
+}
+
+export const CATEGORIES = await Promise.all(CATEGORY_META.map(loadCategory));
