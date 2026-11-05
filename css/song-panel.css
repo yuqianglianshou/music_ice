@@ -1,0 +1,334 @@
+/**
+ * 歌曲面板：封面、歌曲信息、跑马灯、歌词显示
+ * 加载顺序：layout → player-bar → library-header → song-panel → playlist → overrides（见 index.html），顺序不可调换。
+ */
+
+/* ================ 歌词面板相关样式 ================ */
+/* 基础面板样式 */
+:is(.imgBoard, .song_panel) {
+	position: relative;
+	left: auto;
+	right: auto;
+	bottom: auto;
+	top: auto;
+	transform: none;
+	z-index: auto;
+	transition: none;
+}
+
+/* 图片面板样式 */
+.imgBoard {
+	display: none;
+}
+
+/* 歌词面板样式 */
+.song_panel {
+	width: 100%;
+	height: 100%;
+	background: transparent;
+	border-radius: 20px;
+	border: 0;
+	padding: 8px;
+	display: flex;
+	flex-direction: column;
+	gap: 20px;
+	position: relative;
+}
+
+.panel-close {
+	display: none;
+	position: absolute;
+	top: 10px;
+	left: 50%;
+	width: 44px;
+	height: 5px;
+	padding: 0;
+	border: 0;
+	border-radius: 999px;
+	background: rgba(255, 255, 255, 0.34);
+	transform: translateX(-50%);
+	cursor: pointer;
+}
+
+/* 面板内容区域 */
+.song_panel .panel-content {
+	width: 100%;
+	height: 100%;
+	margin: 0;
+	padding: 12px 28px 28px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 16px;
+	overflow: hidden;
+	min-height: 0;
+}
+
+/* 左侧内容区域 */
+.panel-content .content-left {
+	width: 100%;
+	max-width: 600px;
+	flex-direction: column;
+	align-items: center;
+	text-align: center;
+	gap: 14px;
+	flex-shrink: 0;
+}
+
+/* 歌曲信息区域 */
+.panel-content .left-songInfo {
+	width: 100%;
+	flex-direction: column;
+}
+
+/* 歌曲封面图片 */
+.songInfo-img {
+	width: 152px;
+	height: 152px;
+	margin-bottom: 6px;
+}
+
+/* 封面图片动画效果 */
+.songInfo-img .img {
+	transform: scale(0.96);
+	box-shadow: 0 18px 36px rgba(0, 0, 0, 0.32);
+}
+
+.songInfo-img .img.active {
+	transform: scale(1);
+}
+
+/* 封面图片样式 */
+.left-songInfo .img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	border-radius: 50%;
+	border: 1px solid rgba(255, 255, 255, 0.18);
+	box-shadow: 0 12px 24px rgba(0, 0, 0, 0.35);
+}
+
+/* ================ 歌曲信息详细样式 ================ */
+/* 歌曲信息项 */
+.songInfo-item {
+	justify-content: center;
+	flex-direction: column;
+	margin-bottom: 0;
+	width: 100%;
+}
+
+
+/* 更多操作图标 */
+.moreActions-icon .icon {
+	width: 14px;
+	height: 14px;
+}
+
+/* 歌曲信息文字样式 */
+.panel-content .songInfo-item {
+	color: var(--text-color);
+}
+
+.songInfo-item .song-name {
+	height: 34px;
+	width: 100%;
+	max-width: 100%;
+	overflow: hidden;
+	position: relative;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.songInfo-item .name {
+	font-size: 24px;
+	line-height: 32px;
+	font-weight: 700;
+	display: inline-block;
+	white-space: nowrap;
+	/* 移除省略号效果，显示完整文本 */
+	overflow: visible !important;
+	text-overflow: clip !important;
+	/* 默认不应用动画，通过JavaScript动态添加 */
+}
+
+/* 覆盖 text-ol 类的省略号样式 */
+.songInfo-item .song-name .name.text-ol {
+	overflow: visible !important;
+	text-overflow: clip !important;
+}
+
+/* 跑马灯效果 - 当文本溢出时应用 */
+.songInfo-item .song-name.marquee {
+	justify-content: flex-start;
+}
+
+.songInfo-item .song-name.marquee .name {
+	animation: marquee 15s linear infinite;
+	padding-right: 30px;
+	/* 创建无缝循环效果 */
+	display: inline-block;
+}
+
+/* 跑马灯动画 - 从右到左滚动，无缝循环 */
+@keyframes marquee {
+	0% {
+		transform: translateX(0);
+	}
+	100% {
+		transform: translateX(calc(-100% - 30px));
+	}
+}
+
+/* 鼠标悬停时暂停动画 */
+.songInfo-item .song-name.marquee:hover .name {
+	animation-play-state: paused;
+}
+
+.song-download-btn {
+	position: absolute;
+	top: 18px;
+	right: 18px;
+	z-index: 2;
+	width: 40px;
+	height: 40px;
+	padding: 0;
+	border-radius: 12px;
+	border: 1px solid var(--border-subtle);
+	background: var(--surface-muted);
+	color: var(--text-color);
+	box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.035);
+	cursor: pointer;
+	transition: background 0.18s ease, border-color 0.18s ease, transform 0.18s ease, box-shadow 0.18s ease;
+}
+
+.song-download-btn .icon {
+	width: 18px;
+	height: 18px;
+	flex: 0 0 18px;
+}
+
+.song-download-btn:hover {
+	background: var(--surface-hover);
+	border-color: var(--border-strong);
+	transform: translateY(-1px);
+	box-shadow: 0 10px 20px rgba(6, 12, 28, 0.34);
+}
+
+.song-download-btn:active {
+	transform: translateY(0);
+}
+
+/* 更多操作按钮 */
+.panel-content .moreActions-icon {
+	width: 100%;
+	height: 100%;
+	border-radius: 50%;
+}
+
+/* ================ 歌词显示区域 ================ */
+/* 歌词包装容器 */
+.panel-content .right-wrap {
+	width: 100%;
+	max-width: 600px;
+	height: 100%;
+	position: relative;
+	overflow: hidden;
+	/* 遮罩渐变效果 */
+	-webkit-mask: linear-gradient(0deg,
+			transparent,
+			hsla(0, 0%, 100%, .6) 10%,
+			#fff 15%,
+			#fff 85%,
+			hsla(0, 0%, 100%, .6) 90%,
+			transparent);
+	mask: linear-gradient(0deg,
+			transparent,
+			hsla(0, 0%, 100%, .6) 10%,
+			#fff 15%,
+			#fff 85%,
+			hsla(0, 0%, 100%, .6) 90%,
+			transparent);
+}
+
+/* 隐藏滚动条 */
+.panel-content .right-wrap::-webkit-scrollbar-thumb {
+	display: none;
+}
+
+/* 歌词容器 */
+.wrap-lyrics {
+	position: absolute;
+	width: 100%;
+	padding: 0;
+	height: auto;
+	transition: transform 0.52s cubic-bezier(0.22, 1, 0.36, 1);
+	will-change: transform;
+	backface-visibility: hidden;
+	font-size: 14px;
+	line-height: 1.5;
+	padding: 0;
+}
+
+/* 歌词行样式 */
+.wrap-lyrics .lyric {
+	cursor: pointer;
+	padding: 1px 0;
+	height: auto;
+	line-height: 1.4;
+	display: block;
+	text-align: left;
+	color: var(--text-secondary);
+	border-radius: 0;
+	opacity: 0.78;
+	transition: color 0.28s ease, opacity 0.28s ease, transform 0.34s ease;
+	border: none;
+	background: transparent;
+	min-height: 1.4em;
+}
+
+.wrap-lyrics .lyric span {
+	display: block;
+	width: 100%;
+	text-align: left;
+	line-height: 1.4;
+	word-wrap: break-word;
+	overflow-wrap: break-word;
+}
+
+/* 歌词行悬停效果 */
+.wrap-lyrics .lyric:hover {
+	opacity: 0.9;
+}
+
+/* 当前播放歌词样式 */
+.wrap-lyrics .lyric.active {
+	opacity: 1;
+	color: var(--white-color);
+	font-weight: 600;
+	transform: none;
+	background: transparent;
+	border: none;
+	box-shadow: none;
+}
+
+.wrap-lyrics .lyric.active span {
+	animation: lyricActiveIn 0.42s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@keyframes lyricActiveIn {
+	from {
+		opacity: 0.72;
+		transform: translateY(5px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+/* 填充行样式 */
+.wrap-lyrics .lyric.padding {
+	visibility: hidden;
+	pointer-events: none;
+}

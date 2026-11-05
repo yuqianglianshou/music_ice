@@ -1,0 +1,184 @@
+/**
+ * 歌曲列表与悬浮描述卡片
+ * 加载顺序：layout → player-bar → library-header → song-panel → playlist → overrides（见 index.html），顺序不可调换。
+ */
+
+/* ================ 歌曲列表样式 ================ */
+/* 列表容器 */
+.wrapper-contentList {
+	width: 100%;
+	height: 100%;
+	padding: 10px;
+	overflow-y: auto;
+	overflow-x: hidden;
+	background: var(--surface-muted);
+	border-radius: 16px;
+	border: 1px solid var(--border-subtle);
+	contain: layout paint;
+	-webkit-overflow-scrolling: touch;
+	min-height: 0;
+}
+
+/* 自定义滚动条样式 */
+.wrapper-contentList::-webkit-scrollbar {
+	width: 8px;
+	/* 滚动条宽度 */
+}
+
+.wrapper-contentList::-webkit-scrollbar-track {
+	background: transparent;
+	/* 轨道背景透明 */
+	border-radius: 4px;
+}
+
+.wrapper-contentList::-webkit-scrollbar-thumb {
+	background: rgba(180, 231, 238, 0.18);
+	/* 滑块颜色 */
+	border-radius: 4px;
+	transition: background 0.2s ease;
+	/* 添加过渡效果 */
+}
+
+.wrapper-contentList::-webkit-scrollbar-thumb:hover {
+	background: rgba(180, 231, 238, 0.28);
+	/* 悬停时的颜色 */
+}
+
+/* 列表项样式 */
+.wrapper-contentList .contentList-item {
+	display: grid;
+	grid-template-columns: 34px 44px minmax(0, 2fr) minmax(92px, 0.7fr) 54px;
+	align-items: center;
+	gap: 12px;
+	width: 100%;
+	padding: 0 14px;
+	height: 60px;
+	box-sizing: border-box;
+	border-radius: 12px;
+	color: var(--text-color);
+	border: 1px solid transparent;
+	background: transparent;
+	contain: layout paint style;
+	transition: background 0.16s ease, border-color 0.16s ease;
+	position: relative;
+	font: inherit;
+	text-align: left;
+}
+
+/* 列表项悬停效果 */
+@media (hover: hover) and (pointer: fine) {
+	.wrapper-contentList .contentList-item:not(.active):hover {
+		background: var(--surface-hover);
+		border-color: var(--border-subtle);
+	}
+}
+
+/* 当前播放项样式 */
+.wrapper-contentList .contentList-item.active {
+	background: var(--surface-active);
+	color: var(--white-color);
+	border-color: var(--border-strong);
+}
+
+/* 列表项序号，仅表示当前筛选列表中的位置 */
+.wrapper-contentList .item-index {
+	width: 34px;
+	text-align: center;
+	font-variant-numeric: tabular-nums;
+	font-size: 12px;
+	color: var(--text-tertiary);
+}
+
+.wrapper-contentList .contentList-item.active .item-index {
+	color: var(--theme-color);
+	font-weight: 700;
+}
+
+/* 列表项图片 */
+.wrapper-contentList .item-img {
+	width: 44px;
+	height: 44px;
+	padding: 0;
+}
+
+.wrapper-contentList .item-img img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	background-color: transparent;
+	border-radius: 10px;
+}
+
+/* 歌名和歌手共享同一信息组，移动端可自然改为上下排列 */
+.wrapper-contentList .item-copy {
+	display: grid;
+	grid-template-columns: minmax(0, 1.65fr) minmax(88px, 0.8fr);
+	align-items: center;
+	gap: 14px;
+	min-width: 0;
+}
+
+.wrapper-contentList .item-title {
+	min-width: 0;
+	color: var(--text-primary);
+	font-weight: 600;
+}
+
+.wrapper-contentList .item-author {
+	min-width: 0;
+	color: var(--text-secondary);
+}
+
+.wrapper-contentList .item-album {
+	min-width: 0;
+	color: var(--text-tertiary);
+}
+
+.wrapper-contentList .item-totalTime {
+	width: 54px;
+	justify-content: flex-end;
+	font-variant-numeric: tabular-nums;
+	color: var(--text-secondary);
+}
+
+/* ================ 悬浮窗样式优化 ================ */
+.hover-window {
+	position: fixed;
+	display: none;
+	background: rgba(18, 22, 42, 0.96);
+	color: var(--text-color);
+	padding: 18px 26px 20px;
+	border-radius: 16px;
+	border: 1px solid rgba(255, 255, 255, 0.16);
+	z-index: 1000;
+	max-width: 360px;
+	pointer-events: none;
+	opacity: 0;
+	visibility: hidden;
+	transition: opacity 0.16s ease, visibility 0.16s ease, transform 0.16s ease;
+	box-shadow: 0 16px 32px rgba(7, 4, 24, 0.45);
+	transform: translateY(6px) scale(0.98);
+	overflow: hidden;
+}
+
+.hover-window::after {
+	display: none;
+}
+
+/* 悬浮窗显示状态 */
+.hover-window.visible {
+	display: block;
+	opacity: 1;
+	visibility: visible;
+	transform: translateY(0) scale(1);
+}
+
+.hover-content {
+	font-size: 14px;
+	line-height: 1.6;
+	font-weight: normal;
+	word-break: break-word;
+	white-space: pre-wrap;
+	position: relative;
+	z-index: 1;
+}

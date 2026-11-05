@@ -30,7 +30,7 @@
 │       ├── defaults/          # 默认封面原图
 │       ├── defaults/thumbs/   # 默认封面列表缩略图
 │       └── music-thumbs/      # 歌曲封面列表缩略图
-├── css/                       # 页面样式
+├── css/                       # 页面样式（按区域拆分，加载顺序见 index.html）
 ├── app/                       # 页面逻辑
 ├── catalog/                   # 按分类拆分的歌单数据
 ├── scripts/                   # 缩略图生成、歌单校验脚本（需要 Node 22+）

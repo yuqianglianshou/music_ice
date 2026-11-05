@@ -12,7 +12,7 @@
 
 - `index.html`：页面结构和资源引用。
 - `app/`：播放器逻辑、配置、歌词、主题和导入相关 JS 模块。
-- `css/`：页面样式，包含通用样式、响应式样式和导入工具样式。
+- `css/`：页面样式。按区域拆分为 `layout.css`（页面骨架）、`player-bar.css`（底部播放栏）、`library-header.css`（歌单头部、分类标签、搜索）、`song-panel.css`（封面、歌曲信息、歌词）、`playlist.css`（歌曲列表、悬浮卡片）、`overrides.css`（后置覆盖规则）；另有 `common.css`（重置与基础样式）、`rules.css`（CSS 变量与工具类）、`response.css`（响应式）、`importer.css`（导入工具）。
 - `catalog/`：按分类拆分的歌单数据。`catalog/categories.js` 的 `CATEGORY_META` 是分类元数据的唯一来源（id、名称、目录、歌单文件、tab 顺序），页面、导入工具和校验脚本都读它；`catalog/index.js` 把元数据和歌单数组组装成 `CATEGORIES`。
 - `media/`：歌曲音频、歌词和封面原图。
 - `assets/`：图标、截图、默认封面及歌曲封面缩略图。
@@ -42,7 +42,7 @@ python3 -m http.server 8000
 - 修改播放器行为时，优先查看 `app/app.js`、`app/audio-player.js`、`app/music-store.js`、`app/playback-queue.js`、`app/lyrics-manager.js` 和 `app/config.js`。
 - 模块分工：`music-store.js` 把 catalog 原始条目转换为只读歌曲模型（`id`、`audioUrl`、`coverUrl`、`thumbUrl`、`lyricsUrl` 等），页面代码只读模型、不要改写 catalog 原始对象；`playback-queue.js` 负责上一首/下一首和随机顺序；`media-session.js` 对接系统媒体控制；`playback-snapshot.js` 保存/恢复播放状态；`playlist-view.js` 负责分类 tab、歌单搜索和歌曲列表的渲染与交互（搜索只在当前分类内按歌名/歌手过滤；点歌通过 `onSelect` 回调交给 `app.js`，传入的始终是完整分类列表而非搜索结果）；`hover-card.js`、`notice.js`、`wake-lock.js`、`download.js`、`service-worker-setup.js` 分别负责悬浮描述、提示、屏幕常亮、下载和 Service Worker 注册（含旧版清理）。`audio-player.js` 封装唯一的 `<audio>` 元素（加载、播放/暂停请求、跳转、预加载下一首、加载失败自动跳歌、启动时恢复进度），不碰界面，通过构造时传入的 `on` 回调通知 `app.js`；`progress-bar.js`、`volume-control.js` 分别负责进度条和音量控件的界面与交互。`lrc-parser.js` 是不依赖 DOM 的 LRC 解析纯函数（时间格式、双语合并），`lyrics-manager.js` 负责歌词加载、渲染、高亮和滚动；调整歌词解析规则时改 `lrc-parser.js` 并补测试。`app.js` 只做播放编排（把播放器事件接到界面、歌词、媒体控制、屏幕常亮和快照，以及面板、播放模式、键盘）和模块组装。`shared-constants.js` 存放播放器与导入工具共用的常量（默认封面清单、导入更新通知的 key 和频道名），两边不要各自重复定义。
 - 歌曲 `id` 由音频文件名去扩展名派生，会写入播放状态快照；修改音频文件名会让该歌曲的已保存进度失效，属预期行为。
-- 修改视觉样式时，先确认 `css/common.css`、`css/style.css`、`css/response.css` 中是否已有可复用规则。
+- 修改视觉样式时，先确认 `css/` 下对应区域文件、`css/common.css`、`css/rules.css`、`css/response.css` 中是否已有可复用规则。`index.html` 中样式文件的加载顺序决定同优先级规则谁生效，不要调换顺序；新规则放进对应区域文件，只有需要覆盖其他文件的规则才放 `overrides.css`。
 - 不要为小改动引入构建工具、包管理器或新的运行时依赖。
 - 修改程序代码时，给出必要的中文注释，尤其是新增流程、兼容处理或不易一眼看懂的逻辑；不要为显而易见的赋值或简单结构添加冗余注释。
 

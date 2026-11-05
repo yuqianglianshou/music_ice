@@ -1,0 +1,432 @@
+/**
+ * 底部播放控制栏：播放按钮、进度条、播放模式、音量
+ * 加载顺序：layout → player-bar → library-header → song-panel → playlist → overrides（见 index.html），顺序不可调换。
+ */
+
+/* ================ 底部播放控制栏 ================ */
+.app_footer {
+	position: fixed;
+	bottom: 24px;
+	left: 50%;
+	transform: translateX(-50%);
+	width: min(1500px, calc(100% - 56px));
+	height: 88px;
+	background: var(--surface-strong);
+	border: 1px solid var(--glass-border);
+	box-shadow: 0 12px 28px rgba(4, 13, 18, 0.28);
+	border-radius: 20px;
+	padding: 0 28px;
+	z-index: var(--z-index-3);
+}
+
+/* 播放区域容器 */
+.app_footer .songs_play {
+	width: 100%;
+	height: 100%;
+	display: flex;
+	align-items: center;
+	gap: 32px;
+}
+
+
+/* -------- 播放控制区域 -------- */
+.songs_play .play-control {
+	flex: 1;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	gap: 24px;
+	flex-wrap: nowrap;
+	min-width: 0;
+}
+
+/* 控制按钮组 */
+.play-control .control-items {
+	display: flex;
+	align-items: center;
+	gap: 16px;
+	flex-shrink: 0;
+}
+
+.control-items .items-btn {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+}
+
+/* 播放按钮通用样式 */
+.control-items :is(.btn-prev, .btn-play, .btn-next) {
+	width: 48px;
+	height: 48px;
+	cursor: pointer;
+	color: var(--text-color);
+}
+
+/* 播放/暂停状态切换 */
+.btn-play.playing .pause,
+.btn-play.pause .playing {
+	display: none;
+}
+
+/* 按钮悬停效果 */
+.control-items .items-btn :is(.btn-prev, .btn-play, .btn-next):hover {
+	border-radius: 14px;
+	background: var(--surface-hover);
+}
+
+/* 播放按钮特殊尺寸 */
+.control-items .btn-play {
+	width: 60px;
+	height: 60px;
+	margin-right: 10px;
+}
+
+/* 按钮图标尺寸 */
+.control-items :is(.btn-prev, .btn-play, .btn-next) .icon {
+	width: 36px;
+	height: 36px;
+	color: currentColor;
+}
+
+.control-items .btn-play .icon {
+	width: 48px;
+	height: 48px;
+}
+
+/* -------- 进度条样式 -------- */
+.play-control .control-progress {
+	flex: 1;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	gap: 12px;
+	flex-wrap: nowrap;
+	min-width: 0;
+}
+
+.play-control .control-progress .progress-bar {
+	position: relative;
+	flex: 1;
+	min-width: 0;
+	height: 4px;
+}
+
+/* 进度条时间显示 */
+.control-progress :is(.progress-currentTime, .progress-totalTime) {
+	min-width: 42px;
+	max-width: 42px;
+	font-size: 12px;
+	text-align: center;
+	flex-shrink: 0;
+	white-space: nowrap;
+}
+
+/* 进度条滑块样式 */
+.control-progress input[type='range'] {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 4px;
+	margin: 0;
+	padding: 0;
+	background: transparent;
+	-webkit-appearance: none;
+	appearance: none;
+}
+
+.control-progress input[type='range']::-webkit-slider-runnable-track {
+	background: rgba(255, 255, 255, 0.12);
+	border-radius: 999px;
+	height: 4px;
+	cursor: pointer;
+	box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+}
+
+.control-progress input[type='range']::-moz-range-track {
+	background: rgba(255, 255, 255, 0.12);
+	border-radius: 999px;
+	height: 4px;
+	cursor: pointer;
+	box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+}
+
+.control-progress input[type='range']::-webkit-slider-thumb {
+	-webkit-appearance: none;
+	appearance: none;
+	height: 18px;
+	width: 18px;
+	background: radial-gradient(circle, #fff 0%, var(--primary-color) 40%, var(--secondary-color) 100%);
+	border-radius: 50%;
+	border: 2px solid rgba(255, 255, 255, 0.4);
+	cursor: pointer;
+	margin-top: -7px;
+	box-shadow: 0 0 12px var(--aurora-a);
+	position: relative;
+	z-index: 2;
+}
+
+.control-progress input[type='range']::-moz-range-thumb {
+	height: 18px;
+	width: 18px;
+	background: radial-gradient(circle, #fff 0%, var(--primary-color) 40%, var(--secondary-color) 100%);
+	border-radius: 50%;
+	border: 2px solid rgba(255, 255, 255, 0.4);
+	cursor: pointer;
+	box-shadow: 0 0 12px var(--aurora-a);
+	position: relative;
+	z-index: 2;
+}
+
+/* 进度条填充色 */
+.control-progress .progress-colorFill {
+	position: absolute;
+	top: 0;
+	left: 0;
+	/* 进度由 JS 设置 transform: scaleX(比例) 表示，宽度固定为满宽，避免每次 timeupdate 重排 */
+	width: 100%;
+	transform: scaleX(0);
+	transform-origin: left center;
+	will-change: transform;
+	height: 4px;
+	background: linear-gradient(90deg, rgba(255, 255, 255, 0.9), rgba(255, 193, 120, 0.9));
+	border-radius: 999px;
+	pointer-events: none;
+	box-shadow: 0 0 12px rgba(255, 161, 92, 0.7);
+	z-index: 1;
+}
+
+/* ================ 播放设置区域 ================ */
+.songs_play .play-setting {
+	display: flex;
+	align-items: center;
+	gap: 16px;
+}
+
+.footer-current-song {
+	display: none;
+	min-width: 0;
+	max-width: 280px;
+	height: 56px;
+	padding: 4px 8px;
+	border: 1px solid var(--border-subtle);
+	border-radius: 12px;
+	background: var(--surface-muted);
+	color: var(--text-color);
+	cursor: pointer;
+	text-align: left;
+}
+
+.footer-current-cover {
+	display: none;
+	width: 44px;
+	height: 44px;
+	flex: 0 0 44px;
+	object-fit: cover;
+	border-radius: 10px;
+}
+
+.footer-current-copy {
+	display: flex;
+	min-width: 0;
+	flex: 1;
+	flex-direction: column;
+	justify-content: center;
+}
+
+.footer-current-copy > span {
+	display: block;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.footer-current-label {
+	font-size: 11px;
+	color: var(--text-tertiary);
+}
+
+.footer-current-title {
+	font-size: 14px;
+	font-weight: 600;
+}
+
+.footer-current-author {
+	font-size: 12px;
+	color: var(--text-secondary);
+}
+
+
+/* 设置选项容器 */
+.songs_play .play-setting .setting-options {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+	position: relative;
+	height: auto;
+}
+
+/* 通用设置按钮样式 */
+.setting-options :is(.options-circulationMode, .options-sound, .options-soundSlider) {
+	position: relative;
+	width: 50px;
+	cursor: pointer;
+	height: 100%;
+}
+
+/* 循环模式图标 */
+.options-circulationMode .icon {
+	width: 18px;
+	height: 18px;
+	color: var(--blue-color) !important;
+	stroke: var(--blue-color) !important;
+	fill: var(--blue-color) !important;
+}
+
+/* 循环模式图标默认全部隐藏 */
+.options-circulationMode .icon {
+	display: none !important;
+}
+
+/* 循环模式切换状态 - 只显示当前模式的图标 */
+/* 列表循环模式 */
+.options-circulationMode.listLoop .icon.listLoop {
+	display: block !important;
+}
+
+.options-circulationMode.listLoop .icon:not(.listLoop) {
+	display: none !important;
+}
+
+/* 随机播放模式 */
+.options-circulationMode.randomLoop .icon.randomLoop {
+	display: block !important;
+}
+
+.options-circulationMode.randomLoop .icon:not(.randomLoop) {
+	display: none !important;
+}
+
+/* 单曲循环模式 */
+.options-circulationMode.singleLoop .icon.singleLoop {
+	display: block !important;
+}
+
+.options-circulationMode.singleLoop .icon:not(.singleLoop) {
+	display: none !important;
+}
+
+/* 默认显示列表循环图标（当只有listLoop类时） */
+.options-circulationMode.listLoop:not(.randomLoop):not(.singleLoop) .icon.listLoop {
+	display: block !important;
+}
+
+/* 声音控制图标默认全部隐藏 */
+.options-sound .icon {
+	width: 20px;
+	height: 20px;
+	display: none !important;
+	color: var(--text-color);
+	stroke: var(--text-color);
+}
+
+/* 默认显示音量图标（sound状态） */
+.options-sound.sound .icon.sound {
+	display: block !important;
+}
+
+.options-sound.sound .icon:not(.sound) {
+	display: none !important;
+}
+
+/* 静音状态 */
+.options-sound.mute .icon.mute {
+	display: block !important;
+}
+
+.options-sound.mute .icon:not(.mute) {
+	display: none !important;
+}
+
+/* 设置选项通用样式 */
+.setting-options :is(.options-circulationMode[data-play-mode], .options-sound[data-play-volume-icon]) {
+	width: 44px;
+	border-radius: 14px;
+	height: 44px;
+	color: var(--text-color);
+	border: 1px solid var(--glass-border);
+	background: rgba(255, 255, 255, 0.02);
+	box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.04);
+	transition: transform 0.2s ease, box-shadow 0.2s ease;
+	cursor: pointer;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.setting-options :is([data-play-mode], [data-play-volume-icon]):hover {
+	background-color: rgba(255, 255, 255, 0.08);
+	transform: translateY(-2px);
+	box-shadow: 0 10px 25px rgba(6, 12, 28, 0.5);
+}
+
+/* 音量滑块样式 */
+.setting-options .options-soundSlider {
+	width: 70px;
+	position: relative;
+	height: 26px;
+}
+
+.options-soundSlider .progress-colorFill {
+	position: absolute;
+	content: "";
+	top: 50%;
+	transform: translateY(-50%);
+	left: 0px;
+	width: 80%;
+	height: 6px;
+	background: linear-gradient(90deg, var(--secondary-color), var(--primary-color));
+	border-radius: 999px;
+	pointer-events: none;
+	box-shadow: 0 0 8px var(--aurora-c);
+}
+
+/* 音量滑块轨道 */
+.options-soundSlider input[type='range']::-webkit-slider-runnable-track {
+	border-radius: 999px;
+	height: 8px;
+	margin-top: -2px;
+	background-color: rgba(255, 255, 255, 0.08);
+	cursor: pointer;
+}
+
+/* 音量滑块按钮 */
+.options-soundSlider input[type='range']::-webkit-slider-thumb {
+	margin-top: -5px;
+	height: 18px;
+	width: 18px;
+	background: radial-gradient(circle, #fff 0%, var(--primary-color) 40%, var(--secondary-color) 100%);
+	border-radius: 50%;
+	border: 2px solid rgba(255, 255, 255, 0.4);
+	cursor: pointer;
+	box-shadow: 0 0 10px var(--aurora-c);
+}
+
+/* 分隔线 */
+.setting-options .separator {
+	display: inline-block;
+	margin: 15px 0;
+	height: 14px;
+	width: 1px;
+	margin: 0 12px;
+	max-width: 1px;
+	min-width: 1px;
+	vertical-align: middle;
+	background-color: var(--color-14);
+}
+
+.main-wrap {
+	position: relative;
+	width: 100%;
+	height: 100%;
+}

@@ -1,0 +1,111 @@
+/**
+ * 页面骨架：整体布局、左侧歌单区与右侧主区域的容器
+ * 加载顺序：layout → player-bar → library-header → song-panel → playlist → overrides（见 index.html），顺序不可调换。
+ */
+
+/* ================ 基础布局 ================ */
+#app {
+	height: 100vh;
+	height: 100dvh;
+	width: 100%;
+	max-width: 1600px;
+	margin: 0 auto;
+	overflow: hidden;
+	display: flex;
+	flex-direction: column;
+	gap: 0;
+	padding: 24px 28px 132px;
+	box-sizing: border-box;
+}
+
+.app_layout {
+	flex: 1;
+	display: grid;
+	grid-template-columns: minmax(0, 1.72fr) minmax(360px, 1fr);
+	gap: 24px;
+	width: 100%;
+	height: 100%;
+	min-height: 0;
+	overflow: hidden;
+}
+
+.app-notice {
+	position: fixed;
+	left: 50%;
+	bottom: 118px;
+	z-index: 50;
+	max-width: min(520px, calc(100vw - 32px));
+	padding: 11px 16px;
+	border-radius: 14px;
+	border: 1px solid rgba(180, 231, 238, 0.22);
+	background: rgba(14, 22, 32, 0.92);
+	color: var(--text-color);
+	box-shadow: 0 14px 30px rgba(4, 13, 18, 0.28);
+	font-size: 14px;
+	line-height: 1.45;
+	text-align: center;
+	opacity: 0;
+	pointer-events: none;
+	transform: translate(-50%, 12px);
+	transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.app-notice.visible {
+	opacity: 1;
+	transform: translate(-50%, 0);
+}
+
+.layout-left,
+.layout-right {
+	border-radius: 24px;
+	border: 1px solid var(--glass-border);
+	background: var(--surface-color);
+	box-shadow: 0 14px 30px rgba(4, 13, 18, 0.24);
+	display: flex;
+	flex-direction: column;
+	position: relative;
+}
+
+.layout-right {
+	padding: 24px;
+	display: flex;
+	height: 100%;
+	overflow: hidden;
+}
+
+.layout-right .main-wrap {
+	width: 100%;
+	height: 100%;
+	display: flex;
+	overflow: hidden;
+}
+
+.layout-left {
+	padding: 20px;
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+	overflow: hidden;
+}
+
+/* 头部导航栏 - 固定在顶部，不滚动 */
+.layout-left .list_header {
+	flex-shrink: 0;
+	margin-bottom: 16px;
+}
+
+/* 歌单列表滚动区域 */
+.left-scroll {
+	flex: 1;
+	overflow: hidden;
+	display: flex;
+	flex-direction: column;
+	min-height: 0;
+}
+
+.left-scroll .wrapper-contentList {
+	flex: 1;
+	overflow-y: auto;
+	overflow-x: hidden;
+	min-height: 0;
+}

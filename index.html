@@ -13,7 +13,13 @@
     <meta name="theme-color" content="#286879" />
     <title>Music Icee</title>
     <!-- 样式文件引入 -->
-    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <!-- 页面样式按顺序加载，后面的文件依赖覆盖前面的同优先级规则，不要调换顺序 -->
+    <link rel="stylesheet" type="text/css" href="css/layout.css">
+    <link rel="stylesheet" type="text/css" href="css/player-bar.css">
+    <link rel="stylesheet" type="text/css" href="css/library-header.css">
+    <link rel="stylesheet" type="text/css" href="css/song-panel.css">
+    <link rel="stylesheet" type="text/css" href="css/playlist.css">
+    <link rel="stylesheet" type="text/css" href="css/overrides.css">
     <link rel="stylesheet" type="text/css" href="css/common.css">
     <link rel="stylesheet" type="text/css" href="css/rules.css">
     <link rel="stylesheet" type="text/css" href="css/response.css">
