@@ -3,7 +3,7 @@
 // 导入必要的模块和依赖
 import { CONFIG } from './config.js';
 import { LyricsManager } from './lyrics-manager.js';
-import { addEventListeners, timeFormatSecondsToMinutes } from './utils.js';
+import { addEventListeners } from './utils.js';
 import { musicRepository, ALL_CATEGORY_ID } from './music-store.js';
 import { PlaybackQueue } from './playback-queue.js';
 import { mediaSession } from './media-session.js';
@@ -14,6 +14,9 @@ import { downloadSong } from './download.js';
 import { setupServiceWorker } from './service-worker-setup.js';
 import { initHoverCard } from './hover-card.js';
 import { PlaylistView } from './playlist-view.js';
+import { AudioPlayer, MAX_CONSECUTIVE_ERRORS } from './audio-player.js';
+import { ProgressBar } from './progress-bar.js';
+import { VolumeControl } from './volume-control.js';
 import { IMPORT_SIGNAL_KEY, IMPORT_CHANNEL_NAME, CATALOG_UPDATED_MESSAGE } from './shared-constants.js';
 
 // DOM 选择器简写
@@ -28,13 +31,8 @@ const state = {
   playMode: 0, // 0: 列表循环, 1: 随机播放, 2: 单曲循环
   isPlaying: false,
   catalogReloadTimer: null,
-  playRequestId: 0,
-  isSeeking: false,
   panelReturnFocus: null,
   queueCategory: ALL_CATEGORY_ID,   // 当前播放队列来自哪个分类
-  wantsPlay: false,         // 用户意图是否为“正在播放”，用于区分加载失败时是否自动跳歌
-  consecutiveErrors: 0,     // 连续加载失败次数，防止整列表损坏时无限跳歌
-  pendingRestore: null,     // 待恢复的播放进度 { songId, time }，等音频元数据就绪后再应用
   lastSnapshotAt: 0
 };
 
@@ -45,15 +43,10 @@ let playlistView = null;
 // 屏幕常亮只服务于看歌词：正在播放且歌词在屏幕上时才保持亮屏
 const wakeLock = createWakeLock(() => state.isPlaying && panelControl.isLyricsVisible());
 
-// 连续跳过多少首失败歌曲后停止自动跳歌
-const MAX_CONSECUTIVE_ERRORS = 3;
 // 播放过程中保存进度快照的最小间隔
 const SNAPSHOT_INTERVAL = 5000;
 // 当前歌曲已播放超过该秒数时，“上一首”先回到本曲开头（主流播放器的通行做法）
 const PREV_RESTART_THRESHOLD = 3;
-// 当前歌曲剩余不足该秒数时预加载下一首
-const PRELOAD_LEAD_TIME = 30;
-
 /**
  * DOM 元素引用
  */
@@ -98,121 +91,74 @@ const elements = {
   ]
 };
 
+// 音频播放器、进度条、音量控制，在 init 中创建
+let player = null;
+let progressBar = null;
+let volumeControl = null;
+
 /**
- * 音频控制相关
+ * 创建音频播放器，并把音频事件接到界面、屏幕常亮、系统媒体控制和快照上
  */
-const audioControl = {
-  audioSource: null,
-
-  initAudioSource() {
-    const audio = new Audio();
-    audio.preload = 'metadata';
-    audio.volume = CONFIG.VOLUME.DEFAULT;
-    return audio;
-  },
-
-  init() {
-    this.audioSource = this.initAudioSource();
-    this.bindEvents();
-    this.updateAudioSource();
-  },
-
-  bindEvents() {
-    const audio = this.audioSource;
-    audio.addEventListener('loadedmetadata', progressControl.updateRange.bind(progressControl));
-    audio.addEventListener('durationchange', progressControl.updateRange.bind(progressControl));
-    audio.addEventListener('timeupdate', progressControl.updateRunningTime.bind(progressControl));
-    audio.addEventListener('ended', playbackControl.handleEnded.bind(playbackControl));
-    audio.addEventListener('error', playbackControl.handleAudioError.bind(playbackControl));
-    audio.addEventListener('loadedmetadata', applyPendingRestore);
-
-    // 系统也可能直接暂停/恢复音频（来电、拔耳机、蓝牙断开、通知栏按钮），
-    // 以音频元素的真实状态为准同步 UI，避免按钮显示“播放中”但实际已停。
-    audio.addEventListener('playing', () => {
-      state.consecutiveErrors = 0;
-      playbackControl.updateUIForPlaying();
-      wakeLock.request();
-      mediaSession.setPositionState(audio);
-    });
-    audio.addEventListener('pause', () => {
-      playbackControl.updateUIForPaused();
-      wakeLock.release();
-      mediaSession.setPositionState(audio);
-      savePlaybackState();
-    });
-    ['durationchange', 'seeked', 'ratechange'].forEach(eventName => {
-      audio.addEventListener(eventName, () => mediaSession.setPositionState(audio));
-    });
-  },
-
-  updateAudioSource() {
-    const song = queue.current;
-    if (!song?.audioUrl) {
-      this.audioSource.removeAttribute('src');
-      return;
+function createPlayer() {
+  return new AudioPlayer({
+    defaultVolume: CONFIG.VOLUME.DEFAULT,
+    getNextSong: () => queue.peekNext(),
+    // 单曲循环时下一首还是本曲，不需要预加载
+    canPreload: () => state.playMode !== 2,
+    hasAlternative: () => queue.length > 1,
+    on: {
+      playing: () => {
+        playbackControl.updateUIForPlaying();
+        wakeLock.request();
+      },
+      pause: () => {
+        playbackControl.updateUIForPaused();
+        wakeLock.release();
+        savePlaybackState();
+      },
+      ended: () => playbackControl.handleEnded(),
+      timeUpdate: handleTimeUpdate,
+      durationChange: duration => progressBar.setDuration(duration),
+      sourceChange: () => progressBar.reset(),
+      positionChange: () => mediaSession.setPositionState(player.audio),
+      restore: time => seekTo(time),
+      loadError: detail => playbackControl.handleLoadError(detail)
     }
+  });
+}
 
-    this.audioSource.src = song.audioUrl;
-    preloadControl.release();
-    progressControl.reset();
-    mediaSession.setPositionState(this.audioSource);
+function handleTimeUpdate(currentTime) {
+  // 用户正在拖动进度条时不更新进度、歌词和快照
+  if (!progressBar.setTime(currentTime)) return;
+  if (!player.paused) {
+    lyricsManager.update(currentTime);
   }
-};
+
+  // 播放中定期保存进度，后台被系统直接回收时也能恢复到接近的位置
+  if (!player.paused && Date.now() - state.lastSnapshotAt > SNAPSHOT_INTERVAL) {
+    savePlaybackState();
+  }
+}
 
 /**
- * 预加载下一首：当前歌曲快结束时提前请求下一首的音频、封面和歌词，切歌时更快出声。
- * 单曲循环、暂停、省流量模式下不预加载。
+ * 跳转到指定秒数，页面进度条、系统媒体控制（通知栏拖动）和进度恢复共用
  */
-const preloadControl = {
-  audio: null,
-  preloadedId: '',
+function seekTo(time, { fast = false, sourceProgress } = {}) {
+  const currentTime = player.seek(time, { fast });
+  if (currentTime === null) return;
 
-  maybePreload() {
-    const audio = audioControl.audioSource;
-    if (audio.paused || state.playMode === 2 || navigator.connection?.saveData) return;
-
-    const remaining = audio.duration - audio.currentTime;
-    if (!Number.isFinite(remaining) || remaining > PRELOAD_LEAD_TIME) return;
-
-    const next = queue.peekNext();
-    if (!next || next.id === queue.current?.id || next.id === this.preloadedId) return;
-    this.preloadedId = next.id;
-
-    if (next.audioUrl) {
-      // 用独立的静音 Audio 元素拉取音频，数据进入浏览器缓存，主播放器切歌时可直接复用
-      if (!this.audio) {
-        this.audio = new Audio();
-        this.audio.preload = 'auto';
-        this.audio.muted = true;
-      }
-      this.audio.src = next.audioUrl;
-      this.audio.load();
-    }
-    if (next.coverUrl) {
-      new Image().src = next.coverUrl;
-    }
-    if (next.lyricsUrl && !next.isInstrumental) {
-      fetch(next.lyricsUrl).catch(() => {});
-    }
-  },
-
-  // 切歌后释放预加载元素占用的解码资源（已下载的数据仍留在缓存中）
-  release() {
-    this.preloadedId = '';
-    if (this.audio?.getAttribute('src')) {
-      this.audio.removeAttribute('src');
-      this.audio.load();
-    }
-  }
-};
+  progressBar.sync(currentTime, sourceProgress);
+  lyricsManager.isAutoScrolling = true;
+  lyricsManager.update(currentTime);
+}
 
 /**
- * 歌词管理器初始化
+ * 歌词管理器初始化：点击歌词行跳到对应时间
  */
 const lyricsManager = new LyricsManager();
 lyricsManager.setTimeUpdateCallback((time) => {
-  if (audioControl.audioSource) {
-    audioControl.audioSource.currentTime = time;
+  if (player) {
+    player.currentTime = time;
     lyricsManager.update(time);
   }
 });
@@ -238,36 +184,16 @@ function handleCatalogUpdatedSignal() {
  */
 const playbackControl = {
   async startPlayback() {
-    const requestId = ++state.playRequestId;
-    const audio = audioControl.audioSource;
-    state.wantsPlay = true;
-    // 之前加载失败的音源不会自动重试，重新 load 一次；若仍失败会再次触发 error 事件进入自动跳歌流程
-    if (audio.error) {
-      audio.load();
-    }
-    try {
-      await audio.play();
-      if (requestId !== state.playRequestId) return false;
+    const started = await player.play();
+    if (started) {
       this.updateUIForPlaying();
       wakeLock.request();
-      return true;
-    } catch (error) {
-      if (requestId !== state.playRequestId || error?.name === 'AbortError') {
-        return false;
-      }
-      // 音源加载失败时 error 事件已负责提示和自动跳歌，这里不再重复报错覆盖提示
-      if (error?.name === 'NotSupportedError' && audio.error) {
-        return false;
-      }
-      console.error('播放失败:', error);
-      throw error;
     }
+    return started;
   },
 
   stopPlayback() {
-    state.playRequestId += 1;
-    state.wantsPlay = false;
-    audioControl.audioSource.pause();
+    player.pause();
     this.updateUIForPaused();
     wakeLock.release();
   },
@@ -300,7 +226,7 @@ const playbackControl = {
     if (e) e.stopPropagation();
 
     try {
-      if (audioControl.audioSource.paused) {
+      if (player.paused) {
         await this.startPlayback();
       } else {
         this.stopPlayback();
@@ -326,9 +252,8 @@ const playbackControl = {
     if (!queue.length) return;
 
     // 已播放一段时间时先回到本曲开头，再按一次才切到上一首
-    const audio = audioControl.audioSource;
-    if (!audio.error && audio.currentTime > PREV_RESTART_THRESHOLD) {
-      progressControl.seekTo(0);
+    if (!player.hasError && player.currentTime > PREV_RESTART_THRESHOLD) {
+      seekTo(0);
     } else {
       queue.prev();
       nowPlayingControl.updatePlayInfo();
@@ -350,21 +275,14 @@ const playbackControl = {
     });
   },
 
-  handleAudioError() {
-    const song = queue.current;
+  /**
+   * 音频加载失败：是否自动跳歌由 AudioPlayer 判断（用户想播放、还有别的歌、未超过连续失败上限），这里只负责界面
+   */
+  handleLoadError({ song, skipped, reachedLimit }) {
     const songName = song?.name || '当前歌曲';
-    console.error('音频加载失败:', audioControl.audioSource.error, song);
     this.updateUIForPaused();
 
-    // 只有用户正处于“想要播放”的状态才自动跳歌；页面初始化/恢复时加载失败只提示，不擅自开始播放
-    const canSkip = state.wantsPlay &&
-      queue.length > 1 &&
-      state.consecutiveErrors < MAX_CONSECUTIVE_ERRORS;
-
-    if (!canSkip) {
-      const reachedLimit = state.consecutiveErrors >= MAX_CONSECUTIVE_ERRORS;
-      state.consecutiveErrors = 0;
-      state.wantsPlay = false;
+    if (!skipped) {
       wakeLock.release();
       showNotice(reachedLimit
         ? `连续 ${MAX_CONSECUTIVE_ERRORS + 1} 首无法播放，已停止自动跳过，请检查音频文件`
@@ -372,7 +290,6 @@ const playbackControl = {
       return;
     }
 
-    state.consecutiveErrors += 1;
     showNotice(`音频加载失败：${songName}，已自动跳到下一首`);
     this.playSkipNext().catch(error => {
       console.error('自动跳过失败歌曲后播放失败:', error);
@@ -467,270 +384,6 @@ const panelControl = {
 };
 
 /**
- * 进度条控制
- */
-const progressControl = {
-  reset() {
-    state.isSeeking = false;
-    elements.playProgress.forEach((progress, i) => {
-      progress.value = 0;
-      progress.max = 0;
-      elements.playCurrentTime[i].textContent = '00:00';
-      elements.playTotalTime[i].textContent = '00:00';
-    });
-    elements.playColorFill.forEach(fill => {
-      fill.style.transform = 'scaleX(0)';
-    });
-    this.lastTimeText = '00:00';
-  },
-
-  // 上次写入的当前时间文本；timeupdate 每秒触发约 4 次，秒数变了才改 DOM 文本
-  lastTimeText: '',
-
-  updateRange() {
-    const duration = Number.isFinite(audioControl.audioSource.duration)
-      ? Math.max(0, audioControl.audioSource.duration)
-      : 0;
-    elements.playProgress.forEach((progress, i) => {
-      // 保留原始时长给进度条，展示文本统一由格式化函数向下取整，避免比歌单多显示 1 秒。
-      progress.max = duration;
-      elements.playTotalTime[i].textContent = timeFormatSecondsToMinutes(duration);
-    });
-    this.updateRangeColor();
-  },
-
-  updateRunningTime() {
-    if (state.isSeeking) return;
-    const currentTime = audioControl.audioSource.currentTime;
-    const currentTimeText = timeFormatSecondsToMinutes(currentTime);
-    const textChanged = currentTimeText !== this.lastTimeText;
-    this.lastTimeText = currentTimeText;
-    elements.playProgress.forEach((progress, i) => {
-      progress.value = currentTime;
-      if (textChanged) {
-        elements.playCurrentTime[i].textContent = currentTimeText;
-        progress.setAttribute('aria-valuetext', currentTimeText);
-      }
-    });
-    this.updateFill(currentTime, Number(elements.playProgress[0]?.max));
-    if (lyricsManager && !audioControl.audioSource.paused) {
-      lyricsManager.update(audioControl.audioSource.currentTime);
-    }
-
-    // 播放中定期保存进度，后台被系统直接回收时也能恢复到接近的位置
-    const now = Date.now();
-    if (!audioControl.audioSource.paused && now - state.lastSnapshotAt > SNAPSHOT_INTERVAL) {
-      savePlaybackState();
-    }
-    preloadControl.maybePreload();
-  },
-
-  updateRangeColor(e) {
-    let element = elements.playProgress[0];
-    if (e) {
-      element = e.target || e;
-    }
-
-    elements.playProgress.forEach(progress => {
-      if (progress !== element) progress.value = element.value;
-    });
-    this.updateFill(Number(element.value), Number(element.max));
-  },
-
-  // 填充条固定为满宽，用 scaleX 表示进度：只触发合成，不引起重排，也不重绘发光阴影所在区域
-  updateFill(value, max) {
-    const ratio = max > 0 ? Math.max(0, Math.min(1, value / max)) : 0;
-    elements.playColorFill.forEach(fill => {
-      fill.style.transform = `scaleX(${ratio})`;
-    });
-  },
-
-  beginSeek(e) {
-    e.stopPropagation();
-    state.isSeeking = true;
-  },
-
-  previewSeek(e) {
-    e.stopPropagation();
-    const currentTime = this.getSeekTime(e);
-    if (currentTime === null) return;
-    this.syncProgressUI(currentTime, e.target);
-  },
-
-  commitSeek(e) {
-    e.stopPropagation();
-    const currentTime = this.getSeekTime(e);
-    state.isSeeking = false;
-    if (currentTime === null) return;
-    this.seekTo(currentTime, { fast: true, sourceProgress: e.target });
-  },
-
-  /**
-   * 跳转到指定秒数，页面进度条和系统媒体控制（通知栏拖动）共用
-   */
-  seekTo(time, { fast = false, sourceProgress } = {}) {
-    const audio = audioControl.audioSource;
-    const duration = Number.isFinite(audio.duration) ? audio.duration : 0;
-    if (duration <= 0) return;
-    const currentTime = Math.max(0, Math.min(duration, Number(time) || 0));
-
-    try {
-      if (fast && typeof audio.fastSeek === 'function') {
-        audio.fastSeek(currentTime);
-      } else {
-        audio.currentTime = currentTime;
-      }
-    } catch (error) {
-      audio.currentTime = currentTime;
-    }
-
-    this.syncProgressUI(currentTime, sourceProgress);
-    if (lyricsManager) {
-      lyricsManager.isAutoScrolling = true;
-      lyricsManager.update(currentTime);
-    }
-  },
-
-  getSeekTime(e) {
-    const progress = e.target;
-    const max = Number(progress.max) || 0;
-    if (max <= 0) return null;
-    return Math.max(0, Math.min(max, Number(progress.value) || 0));
-  },
-
-  syncProgressUI(currentTime, sourceProgress = elements.playProgress[0]) {
-    elements.playProgress.forEach(progress => {
-      progress.max = sourceProgress.max;
-      progress.value = currentTime;
-    });
-    this.lastTimeText = timeFormatSecondsToMinutes(currentTime);
-    elements.playCurrentTime.forEach(el => {
-      el.textContent = this.lastTimeText;
-    });
-    this.updateRangeColor(sourceProgress);
-  }
-};
-
-/**
- * 音量控制
- */
-const volumeControl = {
-  lastVolume: CONFIG.VOLUME.DEFAULT,
-  systemVolumeOnly: false,
-
-  change(e) {
-    e?.stopPropagation?.();
-
-    const volume = Math.max(0, Math.min(1, Number(elements.volumeRange.value)));
-    // 拖动中的 input 事件只更新音量和界面，松手触发 change 时才落盘，避免拖动时频繁同步写 localStorage
-    this.applyVolume(volume, { persist: e?.type !== 'input' });
-  },
-
-  applyVolume(volume, { persist = true } = {}) {
-    const percentage = (volume / Number(elements.volumeRange.max)) * 100;
-
-    elements.volumeRange.value = volume;
-    audioControl.audioSource.volume = volume;
-    audioControl.audioSource.muted = volume === 0;
-    if (volume > 0) {
-      this.lastVolume = volume;
-    }
-    elements.volumeColorFill.style.width = `${percentage}%`;
-
-    this.updateVolumeIcon(volume > 0);
-    if (persist) {
-      savePlaybackState();
-    }
-  },
-
-  changeByClientX(clientX, options) {
-    const rect = elements.volumeRange.getBoundingClientRect();
-    if (!rect.width) return;
-
-    const ratio = Math.max(0, Math.min(1, (clientX - rect.left) / rect.width));
-    const min = Number(elements.volumeRange.min) || 0;
-    const max = Number(elements.volumeRange.max) || 1;
-    const volume = min + (max - min) * ratio;
-    this.applyVolume(Number(volume.toFixed(2)), options);
-  },
-
-  handleTouch(e) {
-    e.stopPropagation();
-    e.preventDefault();
-
-    if (this.systemVolumeOnly) return;
-
-    const touch = e.touches?.[0] || e.changedTouches?.[0];
-    if (!touch) return;
-    // touchstart/touchmove 期间只调音量，手指抬起（touchend）时再保存快照
-    this.changeByClientX(touch.clientX, { persist: e.type === 'touchend' });
-  },
-
-  updateVolumeIcon(hasSound) {
-    if (audioControl.audioSource.muted || audioControl.audioSource.volume === 0) {
-      elements.volumeIcon.classList.remove('sound');
-      elements.volumeIcon.classList.add('mute');
-    } else {
-      elements.volumeIcon.classList.add('sound');
-      elements.volumeIcon.classList.remove('mute');
-    }
-  },
-
-  toggleMute(e) {
-    e.stopPropagation();
-    e.preventDefault();
-
-    audioControl.audioSource.muted = !audioControl.audioSource.muted;
-
-    if (audioControl.audioSource.muted) {
-      elements.volumeRange.value = 0;
-      elements.volumeColorFill.style.width = '0%';
-    } else {
-      const restoredVolume = this.lastVolume > 0 ? this.lastVolume : CONFIG.VOLUME.DEFAULT;
-      audioControl.audioSource.volume = restoredVolume;
-      elements.volumeRange.value = restoredVolume;
-      const percentage = (audioControl.audioSource.volume / elements.volumeRange.max) * 100;
-      elements.volumeColorFill.style.width = `${percentage}%`;
-    }
-
-    this.updateVolumeIcon(!audioControl.audioSource.muted);
-    savePlaybackState();
-  },
-
-  init(snapshot) {
-    this.systemVolumeOnly = this.isSystemVolumeOnly();
-    document.documentElement.classList.toggle('system-volume-only', this.systemVolumeOnly);
-    elements.volumeRange.disabled = this.systemVolumeOnly;
-
-    // iOS 只能用系统音量，不恢复页面音量
-    const savedVolume = Number(snapshot?.volume);
-    const canRestore = !this.systemVolumeOnly && Number.isFinite(savedVolume) && savedVolume > 0 && savedVolume <= 1;
-    const initialVolume = canRestore ? savedVolume : CONFIG.VOLUME.DEFAULT;
-    audioControl.audioSource.volume = initialVolume;
-    this.lastVolume = initialVolume;
-    elements.volumeRange.value = initialVolume;
-
-    const percentage = (initialVolume / elements.volumeRange.max) * 100;
-    elements.volumeColorFill.style.width = `${percentage}%`;
-
-    if (canRestore && snapshot.muted) {
-      audioControl.audioSource.muted = true;
-      elements.volumeRange.value = 0;
-      elements.volumeColorFill.style.width = '0%';
-    }
-
-    this.updateVolumeIcon(true);
-  },
-
-  isSystemVolumeOnly() {
-    const ua = navigator.userAgent || '';
-    const isiOS = /iPad|iPhone|iPod/.test(ua) ||
-      (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
-    return isiOS;
-  }
-};
-
-/**
  * 当前播放信息（封面、歌名、歌手、系统媒体信息、音源、歌词）
  */
 const nowPlayingControl = {
@@ -768,7 +421,7 @@ const nowPlayingControl = {
       artwork: [song.coverUrl, song.thumbUrl]
     });
 
-    audioControl.updateAudioSource();
+    player.load(song);
     playlistView?.updateActiveItem();
     savePlaybackState();
 
@@ -803,7 +456,7 @@ const nowPlayingControl = {
  * 用户在歌单中点歌：以当前展示的分类作为新的播放队列
  */
 function selectSong(songs, index, categoryId) {
-  state.playRequestId += 1;
+  player.cancelPendingPlay();
   queue.setSongs(songs, index);
   state.queueCategory = categoryId;
 
@@ -834,7 +487,7 @@ const playModeControl = {
   apply(mode) {
     state.playMode = PLAY_MODES[mode] ? mode : 0;
     queue.setShuffle(state.playMode === 1);
-    audioControl.audioSource.loop = state.playMode === 2;
+    player.loop = state.playMode === 2;
 
     const button = elements.playModeBtn;
     if (!button) return;
@@ -876,37 +529,6 @@ function initEventListeners() {
     event.stopPropagation();
     downloadSong(queue.current);
   });
-
-  // 进度条事件
-  addEventListeners(elements.playProgress, {
-    'pointerdown': progressControl.beginSeek.bind(progressControl),
-    'touchstart': progressControl.beginSeek.bind(progressControl),
-    'input': e => {
-      progressControl.previewSeek(e);
-    },
-    'change': e => {
-      progressControl.commitSeek(e);
-    },
-    'pointerup': progressControl.commitSeek.bind(progressControl),
-    'touchend': progressControl.commitSeek.bind(progressControl),
-    'click': e => e.stopPropagation()
-  });
-
-  // 音量控制事件
-  const volumeSlider = elements.volumeRange.closest('.options-soundSlider');
-  volumeSlider?.addEventListener("click", e => e.stopPropagation());
-  volumeSlider?.addEventListener("pointerdown", e => e.stopPropagation());
-  volumeSlider?.addEventListener("touchstart", volumeControl.handleTouch.bind(volumeControl), { passive: false });
-  volumeSlider?.addEventListener("touchmove", volumeControl.handleTouch.bind(volumeControl), { passive: false });
-  volumeSlider?.addEventListener("touchend", volumeControl.handleTouch.bind(volumeControl), { passive: false });
-  elements.volumeRange.addEventListener("input", volumeControl.change.bind(volumeControl));
-  elements.volumeRange.addEventListener("change", volumeControl.change.bind(volumeControl));
-  elements.volumeRange.addEventListener("click", e => e.stopPropagation());
-  elements.volumeRange.addEventListener("pointerdown", e => e.stopPropagation());
-  elements.volumeRange.addEventListener("touchstart", volumeControl.handleTouch.bind(volumeControl), { passive: false });
-  elements.volumeRange.addEventListener("touchmove", volumeControl.handleTouch.bind(volumeControl), { passive: false });
-  elements.volumeRange.addEventListener("touchend", volumeControl.handleTouch.bind(volumeControl), { passive: false });
-  elements.volumeIcon.addEventListener("click", volumeControl.toggleMute.bind(volumeControl));
 
   initHoverCard({
     list: elements.contentList,
@@ -981,20 +603,19 @@ function bindCatalogUpdateEvents() {
  */
 function savePlaybackState() {
   const song = queue.current;
-  if (!audioControl.audioSource || !song) return;
+  if (!player || !song) return;
 
-  const audio = audioControl.audioSource;
   const songId = song.id;
-  const pendingTime = state.pendingRestore?.songId === songId ? state.pendingRestore.time : null;
+  const pendingTime = player.getPendingRestoreTime(songId);
 
   state.lastSnapshotAt = Date.now();
   savePlaybackSnapshot({
     songId,
     category: state.queueCategory,
-    currentTime: pendingTime ?? (audio.currentTime || 0),
+    currentTime: pendingTime ?? player.currentTime,
     playMode: state.playMode,
-    volume: volumeControl.lastVolume,
-    muted: audio.muted
+    volume: volumeControl?.lastVolume ?? CONFIG.VOLUME.DEFAULT,
+    muted: player.muted
   });
 }
 
@@ -1016,30 +637,11 @@ function restorePlaybackSnapshot() {
 
     state.queueCategory = categoryId;
     queue.setSongs(list, index);
-    const savedTime = Number(snapshot.currentTime);
-    state.pendingRestore = savedTime > 0 ? { songId: snapshot.songId, time: savedTime } : null;
+    player.setPendingRestore(snapshot.songId, Number(snapshot.currentTime));
     break;
   }
 
   return snapshot;
-}
-
-/**
- * 音频元数据就绪后应用待恢复的进度。只对快照对应的那首歌生效，用户已切歌则丢弃。
- */
-function applyPendingRestore() {
-  const pending = state.pendingRestore;
-  if (!pending) return;
-  state.pendingRestore = null;
-
-  const audio = audioControl.audioSource;
-  if (queue.current?.id !== pending.songId) return;
-
-  // 上次几乎听完的就从头开始
-  const duration = audio.duration;
-  if (!Number.isFinite(duration) || pending.time >= duration - 1) return;
-
-  progressControl.seekTo(pending.time);
 }
 
 function bindSnapshotEvents() {
@@ -1065,7 +667,7 @@ function bindMediaSessionHandlers() {
     nexttrack: () => playbackControl.playSkipNext(),
     seekto: details => {
       if (details?.seekTime == null) return;
-      progressControl.seekTo(details.seekTime, { fast: !!details.fastSeek });
+      seekTo(details.seekTime, { fast: !!details.fastSeek });
     }
   });
 }
@@ -1074,10 +676,27 @@ function bindMediaSessionHandlers() {
  * 应用初始化
  */
 function init() {
+  player = createPlayer();
+  progressBar = new ProgressBar({
+    progressEls: elements.playProgress,
+    currentTimeEls: elements.playCurrentTime,
+    totalTimeEls: elements.playTotalTime,
+    fillEls: elements.playColorFill,
+    onSeek: seekTo
+  });
+  volumeControl = new VolumeControl({
+    rangeEl: elements.volumeRange,
+    fillEl: elements.volumeColorFill,
+    iconEl: elements.volumeIcon,
+    player,
+    defaultVolume: CONFIG.VOLUME.DEFAULT,
+    onPersist: savePlaybackState
+  });
+
   queue.setSongs(musicRepository.getSongs(ALL_CATEGORY_ID), 0);
+  // 恢复快照会设置播放器的待恢复进度，必须在 player 创建之后
   const snapshot = restorePlaybackSnapshot();
 
-  audioControl.init();
   volumeControl.init(snapshot);
   playModeControl.apply(snapshot?.playMode ?? 0);
 
