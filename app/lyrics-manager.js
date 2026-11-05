@@ -1,5 +1,3 @@
-// 导入所需的配置
-import { CONFIG } from './config.js';
 import { addEventListeners, escapeHtml } from './utils.js';
 
 /**
@@ -38,9 +36,6 @@ export class LyricsManager {
         // DOM 元素
         this.initDOMElements();
 
-        // 配置参数
-        this.initConfig();
-
         // 事件处理
         this.bindEvents();
 
@@ -54,8 +49,8 @@ export class LyricsManager {
      * @private
      */
     initDOMElements() {
-        this.lyricsContainer = document.querySelector('[play-lyrics]');
-        this.wrapLyrics = document.querySelector('[wrap-lyrics]');
+        this.lyricsContainer = document.querySelector('[data-play-lyrics]');
+        this.wrapLyrics = document.querySelector('[data-wrap-lyrics]');
 
         if (this.wrapLyrics) {
             this.wrapLyrics.style.position = 'relative';
@@ -65,21 +60,6 @@ export class LyricsManager {
             this.lyricsContainer.style.position = 'absolute';
             this.lyricsContainer.style.width = '100%';
         }
-    }
-
-    /**
-     * 初始化配置参数
-     * @private
-     */
-    initConfig() {
-        this.config = {
-            scrollSpeed: CONFIG.SCROLL_SPEED,
-            transition: {
-                delay: CONFIG.TRANSITION.DELAY,
-                interval: CONFIG.TRANSITION.INTERVAL,
-                reduce: CONFIG.TRANSITION.REDUCE
-            }
-        };
     }
 
     /**

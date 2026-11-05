@@ -451,12 +451,12 @@
     padding-top: 12px;
   }
 
-  [play-lyrics] .lyric {
+  [data-play-lyrics] .lyric {
     padding: 10px 4px;
     font-size: 14px;
   }
 
-  [play-lyrics] .lyric.active {
+  [data-play-lyrics] .lyric.active {
     font-size: 17px;
   }
 

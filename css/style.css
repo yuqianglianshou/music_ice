@@ -451,7 +451,7 @@
 }
 
 /* 设置选项通用样式 */
-.setting-options :is(.options-circulationMode[play-mode], .options-sound[play-volume-icon]) {
+.setting-options :is(.options-circulationMode[data-play-mode], .options-sound[data-play-volume-icon]) {
 	width: 44px;
 	border-radius: 14px;
 	height: 44px;
@@ -466,7 +466,7 @@
 	justify-content: center;
 }
 
-.setting-options :is([play-mode], [play-volume-icon]):hover {
+.setting-options :is([data-play-mode], [data-play-volume-icon]):hover {
 	background-color: rgba(255, 255, 255, 0.08);
 	transform: translateY(-2px);
 	box-shadow: 0 10px 25px rgba(6, 12, 28, 0.5);
@@ -1271,7 +1271,7 @@
 }
 
 /* 歌词容器 */
-[play-lyrics] {
+[data-play-lyrics] {
 	width: 100%;
 	position: absolute;
 	left: 0;
@@ -1281,7 +1281,7 @@
 }
 
 /* 歌词行样式 */
-[play-lyrics] .lyric {
+[data-play-lyrics] .lyric {
 	padding: 12px 0;
 	text-align: center;
 	transition: color 0.28s ease, opacity 0.28s ease, transform 0.34s ease;
@@ -1292,7 +1292,7 @@
 }
 
 /* 当前播放歌词样式 */
-[play-lyrics] .lyric.active {
+[data-play-lyrics] .lyric.active {
 	color: var(--theme-color);
 	font-size: 18px;
 	font-weight: 700;
@@ -1300,7 +1300,7 @@
 
 @media (prefers-reduced-motion: reduce) {
 	.wrap-lyrics,
-	[play-lyrics] {
+	[data-play-lyrics] {
 		transition-duration: 0.01ms;
 	}
 

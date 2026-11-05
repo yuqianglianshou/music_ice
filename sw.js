@@ -76,7 +76,9 @@ self.addEventListener('fetch', event => {
 async function networkFirst(request) {
   const cache = await caches.open(PAGE_CACHE);
   try {
-    const response = await fetch(request);
+    // cache: 'no-cache' 让浏览器每次向服务器确认（未变化时只返回 304），
+    // 否则 fetch 仍可能命中浏览器 HTTP 缓存，发布后出现新旧 JS 混用（如新 config.js 配旧模块）导致页面报错
+    const response = await fetch(request, { cache: 'no-cache' });
     // 只缓存完整的成功响应（200），206/错误响应不入缓存
     if (response.status === 200) {
       cache.put(request, response.clone());

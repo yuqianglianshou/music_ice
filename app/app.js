@@ -52,42 +52,42 @@ const PREV_RESTART_THRESHOLD = 3;
  */
 const elements = {
   // 播放信息相关元素
-  currentPlayImg400: Array.from($$('[currentPlay-img400]')),
-  currentPlayName: $$('[currentPlay-name]'),
-  currentPlayAuthor: $$('[currentPlay-author]'),
+  currentPlayImg400: Array.from($$('[data-current-play-img400]')),
+  currentPlayName: $$('[data-current-play-name]'),
+  currentPlayAuthor: $$('[data-current-play-author]'),
 
   // 进度条相关元素
-  playProgress: $$("[play-Progress]"),
-  playTotalTime: $$("[play-totalTime]"),
-  playCurrentTime: $$("[play-currentTime]"),
-  playColorFill: $$("[play-colorFill]"),
+  playProgress: $$("[data-play-progress]"),
+  playTotalTime: $$("[data-play-total-time]"),
+  playCurrentTime: $$("[data-play-current-time]"),
+  playColorFill: $$("[data-play-color-fill]"),
 
   // 控制按钮
-  playBtns: $$("[play-btn]"),
-  playNextBtns: $$("[play-next-btn]"),
-  playPrevBtns: $$("[play-prev-btn]"),
-  playModeBtn: $("[play-mode]"),
-  downloadCurrentAudioBtn: $("[download-current-audio]"),
+  playBtns: $$("[data-play-btn]"),
+  playNextBtns: $$("[data-play-next-btn]"),
+  playPrevBtns: $$("[data-play-prev-btn]"),
+  playModeBtn: $("[data-play-mode]"),
+  downloadCurrentAudioBtn: $("[data-download-current-audio]"),
 
   // 音量控制
-  volumeRange: $("[play-volume-range]"),
-  volumeColorFill: $("[play-volume-colorFill]"),
-  volumeIcon: $("[play-volume-icon]"),
+  volumeRange: $("[data-play-volume-range]"),
+  volumeColorFill: $("[data-play-volume-color-fill]"),
+  volumeIcon: $("[data-play-volume-icon]"),
 
   // 其他UI元素
   imgBoard: $('.imgBoard'),
   layoutRight: $('.layout-right'),
-  songPanel: $('[song-panel]'),
-  panelCloseBtn: $('[panel-close-btn]'),
-  panelToggleBtn: $('[lyrics-panel-toggle]'),
-  contentList: $('[content-list]'),
-  playImgBoard: $('[play-img-board]'),
-  playlistCount: $('[playlist-count]'),
+  songPanel: $('[data-song-panel]'),
+  panelCloseBtn: $('[data-panel-close-btn]'),
+  panelToggleBtn: $('[data-lyrics-panel-toggle]'),
+  contentList: $('[data-content-list]'),
+  playImgBoard: $('[data-play-img-board]'),
+  playlistCount: $('[data-playlist-count]'),
 
   // 播放元素组
   playElements: [
-    Array.from($$('[currentPlay-img400]')),
-    $$('[currentPlay-name]')
+    Array.from($$('[data-current-play-img400]')),
+    $$('[data-current-play-name]')
   ]
 };
 
@@ -704,8 +704,8 @@ function init() {
     listEl: elements.contentList,
     countEl: elements.playlistCount,
     tabListEl: document.querySelector('.list-tab'),
-    searchInput: document.querySelector('[playlist-search]'),
-    searchClearBtn: document.querySelector('[playlist-search-clear]'),
+    searchInput: document.querySelector('[data-playlist-search]'),
+    searchClearBtn: document.querySelector('[data-playlist-search-clear]'),
     categories: musicRepository.getCategories(),
     getSongs: categoryId => musicRepository.getSongs(categoryId),
     isCurrent: isCurrentMusic,

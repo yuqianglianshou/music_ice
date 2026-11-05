@@ -6,7 +6,7 @@ const NOTICE_DURATION = 3600;
 let noticeTimer = null;
 
 export function showNotice(message) {
-  const notice = document.querySelector('[app-notice]');
+  const notice = document.querySelector('[data-app-notice]');
   if (!notice) return;
 
   notice.textContent = message;
