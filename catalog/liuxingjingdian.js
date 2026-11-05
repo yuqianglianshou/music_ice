@@ -2,12 +2,11 @@ import { CONFIG } from '../app/config.js';
 
 const TYPE = "流行经典";
 const FILE_MUSIC_LIUXINGJINGDIAN = "liuxingjingdian/";
-const FILE_MUSIC_HUAIJIUJINQV = "huaijiujinqv/";
 
 export const popClassicsList = [
   {
     song_type: TYPE,
-    song_path: FILE_MUSIC_HUAIJIUJINQV,
+    song_path: FILE_MUSIC_LIUXINGJINGDIAN,
     song_name: "星星点灯",
     song_file: "星星点灯 - 郑智化.mp3",
     img_file: "星星点灯 - 郑智化.jpg",
@@ -139,7 +138,7 @@ export const popClassicsList = [
   },
   {
     song_type: TYPE,
-    song_path: FILE_MUSIC_HUAIJIUJINQV,
+    song_path: FILE_MUSIC_LIUXINGJINGDIAN,
     song_name: "江南",
     song_file: "江南 - 林俊杰.m4a",
     img_file: "江南 - 林俊杰.jpg",
@@ -175,7 +174,7 @@ export const popClassicsList = [
   },
   {
     song_type: TYPE,
-    song_path: FILE_MUSIC_HUAIJIUJINQV,
+    song_path: FILE_MUSIC_LIUXINGJINGDIAN,
     song_name: "吻别",
     song_file: "吻别 - 张学友.m4a",
     img_file: "吻别 - 张学友.jpg",
@@ -199,7 +198,7 @@ export const popClassicsList = [
   },
   {
     song_type: TYPE,
-    song_path: FILE_MUSIC_HUAIJIUJINQV,
+    song_path: FILE_MUSIC_LIUXINGJINGDIAN,
     song_name: "大海",
     song_file: "大海 - 张雨生.mp3",
     img_file: "大海 - 张雨生.jpg",
@@ -223,7 +222,7 @@ export const popClassicsList = [
   },
   {
     song_type: TYPE,
-    song_path: FILE_MUSIC_HUAIJIUJINQV,
+    song_path: FILE_MUSIC_LIUXINGJINGDIAN,
     song_name: "铁窗泪",
     song_file: "铁窗泪 - 迟志强.m4a",
     img_file: "铁窗泪 - 迟志强.webp",
@@ -235,7 +234,7 @@ export const popClassicsList = [
   },
   {
     song_type: TYPE,
-    song_path: FILE_MUSIC_HUAIJIUJINQV,
+    song_path: FILE_MUSIC_LIUXINGJINGDIAN,
     song_name: "狱中十二月",
     song_file: "狱中十二月 - 迟志强.mp3",
     img_file: "狱中十二月 - 迟志强.webp",
@@ -259,7 +258,7 @@ export const popClassicsList = [
   },
   {
     song_type: TYPE,
-    song_path: FILE_MUSIC_HUAIJIUJINQV,
+    song_path: FILE_MUSIC_LIUXINGJINGDIAN,
     song_name: "愁啊愁",
     song_file: "愁啊愁 - 迟志强.m4a",
     img_file: "愁啊愁 - 迟志强.jpg",
@@ -271,7 +270,7 @@ export const popClassicsList = [
   },
   {
     song_type: TYPE,
-    song_path: FILE_MUSIC_HUAIJIUJINQV,
+    song_path: FILE_MUSIC_LIUXINGJINGDIAN,
     song_name: "北郊",
     song_file: "北郊 - 魏三.mp3",
     img_file: "北郊 - 魏三.jpg",
@@ -283,7 +282,7 @@ export const popClassicsList = [
   },
   {
     song_type: TYPE,
-    song_path: FILE_MUSIC_HUAIJIUJINQV,
+    song_path: FILE_MUSIC_LIUXINGJINGDIAN,
     song_name: "流浪歌",
     song_file: "流浪歌 - 迟志强.mp3",
     img_file: "流浪歌 - 迟志强.webp",
@@ -295,7 +294,7 @@ export const popClassicsList = [
   },
   {
     song_type: TYPE,
-    song_path: FILE_MUSIC_HUAIJIUJINQV,
+    song_path: FILE_MUSIC_LIUXINGJINGDIAN,
     song_name: "打工十二月",
     song_file: "打工十二月 - 翟惠民.mp3",
     img_file: "打工十二月 - 翟惠民.jpg",
@@ -307,7 +306,7 @@ export const popClassicsList = [
   },
   {
     song_type: TYPE,
-    song_path: FILE_MUSIC_HUAIJIUJINQV,
+    song_path: FILE_MUSIC_LIUXINGJINGDIAN,
     song_name: "钞票",
     song_file: "钞票 - 迟志强.m4a",
     img_file: "钞票 - 迟志强.jpg",
@@ -919,7 +918,7 @@ export const popClassicsList = [
   },
   {
     song_type: TYPE,
-    song_path: FILE_MUSIC_HUAIJIUJINQV,
+    song_path: FILE_MUSIC_LIUXINGJINGDIAN,
     song_name: "老鼠爱大米",
     song_file: "老鼠爱大米 - 杨臣刚.mp3",
     img_file: "老鼠爱大米 - 杨臣刚.jpg",
@@ -931,7 +930,7 @@ export const popClassicsList = [
   },
   {
     song_type: TYPE,
-    song_path: FILE_MUSIC_HUAIJIUJINQV,
+    song_path: FILE_MUSIC_LIUXINGJINGDIAN,
     song_name: "老鼠爱大米",
     song_file: "老鼠爱大米 - 香香.m4a",
     img_file: "老鼠爱大米 - 香香.jpg",
@@ -943,7 +942,7 @@ export const popClassicsList = [
   },
   {
     song_type: TYPE,
-    song_path: FILE_MUSIC_HUAIJIUJINQV,
+    song_path: FILE_MUSIC_LIUXINGJINGDIAN,
     song_name: "美人吟",
     song_file: "美人吟 - 李玲玉.mp3",
     img_file: "美人吟 - 李玲玉.jpg",
@@ -955,7 +954,7 @@ export const popClassicsList = [
   },
   {
     song_type: TYPE,
-    song_path: FILE_MUSIC_HUAIJIUJINQV,
+    song_path: FILE_MUSIC_LIUXINGJINGDIAN,
     song_name: "雨花石",
     song_file: "雨花石（电视连续剧《红红的雨花石》主题歌）.mp3",
     img_file: "雨花石（电视连续剧《红红的雨花石》主题歌）.jpg",
@@ -967,7 +966,7 @@ export const popClassicsList = [
   },
   {
     song_type: TYPE,
-    song_path: FILE_MUSIC_HUAIJIUJINQV,
+    song_path: FILE_MUSIC_LIUXINGJINGDIAN,
     song_name: "满江红",
     song_file: "满江红 - 刘可.mp3",
     img_file: "满江红 - 刘可.jpg",
@@ -979,7 +978,7 @@ export const popClassicsList = [
   },
   {
     song_type: TYPE,
-    song_path: FILE_MUSIC_HUAIJIUJINQV,
+    song_path: FILE_MUSIC_LIUXINGJINGDIAN,
     song_name: "滚滚长江东逝水",
     song_file: "滚滚长江东逝水 - 杨洪基.m4a",
     img_file: "滚滚长江东逝水 - 杨洪基.jpg",
@@ -991,7 +990,7 @@ export const popClassicsList = [
   },
   {
     song_type: TYPE,
-    song_path: FILE_MUSIC_HUAIJIUJINQV,
+    song_path: FILE_MUSIC_LIUXINGJINGDIAN,
     song_name: "铁血丹心",
     song_file: "铁血丹心 - 罗文.m4a",
     img_file: "铁血丹心 - 罗文.jpg",
@@ -1003,7 +1002,7 @@ export const popClassicsList = [
   },
   {
     song_type: TYPE,
-    song_path: FILE_MUSIC_HUAIJIUJINQV,
+    song_path: FILE_MUSIC_LIUXINGJINGDIAN,
     song_name: "上海滩",
     song_file: "上海滩 - 叶丽仪.m4a",
     img_file: "上海滩 - 叶丽仪.jpg",
@@ -1015,7 +1014,7 @@ export const popClassicsList = [
   },
   {
     song_type: TYPE,
-    song_path: FILE_MUSIC_HUAIJIUJINQV,
+    song_path: FILE_MUSIC_LIUXINGJINGDIAN,
     song_name: "世间始终你好",
     song_file: "世间始终你好 - 罗文.m4a",
     img_file: "世间始终你好 - 罗文.jpg",
@@ -1027,7 +1026,7 @@ export const popClassicsList = [
   },
   {
     song_type: TYPE,
-    song_path: FILE_MUSIC_HUAIJIUJINQV,
+    song_path: FILE_MUSIC_LIUXINGJINGDIAN,
     song_name: "难念的经",
     song_file: "难念的经 - 周华健.m4a",
     img_file: "难念的经 - 周华健.jpg",
@@ -1039,7 +1038,7 @@ export const popClassicsList = [
   },
   {
     song_type: TYPE,
-    song_path: FILE_MUSIC_HUAIJIUJINQV,
+    song_path: FILE_MUSIC_LIUXINGJINGDIAN,
     song_name: "沧海一声笑",
     song_file: "沧海一声笑 - 许冠杰.m4a",
     img_file: "沧海一声笑 - 许冠杰.jpg",
@@ -1051,7 +1050,7 @@ export const popClassicsList = [
   },
   {
     song_type: TYPE,
-    song_path: FILE_MUSIC_HUAIJIUJINQV,
+    song_path: FILE_MUSIC_LIUXINGJINGDIAN,
     song_name: "爱江山更爱美人",
     song_file: "爱江山更爱美人 - 李丽芬.m4a",
     img_file: "爱江山更爱美人 - 李丽芬.jpg",

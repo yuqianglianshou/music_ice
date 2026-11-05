@@ -2,7 +2,6 @@ import { CONFIG } from '../app/config.js';
 
 const TYPE = "节奏律动";
 const FILE_MUSIC_JIEZOULVDONG = "jiezoulvdong/";
-const FILE_MUSIC_SHISHIPEIYUE = "shishipeiyue/";
 
 export const rhythmList = [
   {
@@ -138,7 +137,7 @@ export const rhythmList = [
   },
   {
     song_type: TYPE,
-    song_path: FILE_MUSIC_SHISHIPEIYUE,
+    song_path: FILE_MUSIC_JIEZOULVDONG,
     song_name: "亡灵序曲 (The Dawn)",
     song_file: "The Dawn_亡灵序曲.mp3",
     img_file: "The Dawn_亡灵序曲.jpg",
@@ -149,7 +148,7 @@ export const rhythmList = [
   },
   {
     song_type: TYPE,
-    song_path: FILE_MUSIC_SHISHIPEIYUE,
+    song_path: FILE_MUSIC_JIEZOULVDONG,
     song_name: "伊卡洛斯 Icarus",
     song_file: "icarus.mp3",
     img_file: "icarus.jpg",
@@ -160,7 +159,7 @@ export const rhythmList = [
   },
   {
     song_type: TYPE,
-    song_path: FILE_MUSIC_SHISHIPEIYUE,
+    song_path: FILE_MUSIC_JIEZOULVDONG,
     song_name: "Heart of Courage",
     song_file: "Heart of Courage - Two Steps From Hell.m4a",
     img_file: "Heart of Courage - Two Steps From Hell.jpg",
@@ -172,7 +171,7 @@ export const rhythmList = [
   },
     {
     song_type: TYPE,
-    song_path: FILE_MUSIC_SHISHIPEIYUE,
+    song_path: FILE_MUSIC_JIEZOULVDONG,
     song_name: "Victory",
     song_file: "Victory (Orchestral) - Two Steps From Hell.m4a",
     img_file: "Victory (Orchestral) - Two Steps From Hell.jpg",
@@ -184,7 +183,7 @@ export const rhythmList = [
   },
   {
     song_type: TYPE,
-    song_path: FILE_MUSIC_SHISHIPEIYUE,
+    song_path: FILE_MUSIC_JIEZOULVDONG,
     song_name: "Time",
     song_file: "Time - Hans Zimmer.m4a",
     img_file: "Time - Hans Zimmer.jpg",
@@ -196,7 +195,7 @@ export const rhythmList = [
   },
   {
     song_type: TYPE,
-    song_path: FILE_MUSIC_SHISHIPEIYUE,
+    song_path: FILE_MUSIC_JIEZOULVDONG,
     song_name: "Breath and Life",
     song_file: "Breath And Life - Audiomachine.m4a",
     img_file: "Breath And Life - Audiomachine.jpg",
@@ -207,7 +206,7 @@ export const rhythmList = [
   },
   {
     song_type: TYPE,
-    song_path: FILE_MUSIC_SHISHIPEIYUE,
+    song_path: FILE_MUSIC_JIEZOULVDONG,
     song_name: "Electric Romeo",
     song_file: "Electric Romeo - Immediate Music.m4a",
     img_file: "Electric Romeo - Immediate Music.jpg",
@@ -218,7 +217,7 @@ export const rhythmList = [
   },
   {
     song_type: TYPE,
-    song_path: FILE_MUSIC_SHISHIPEIYUE,
+    song_path: FILE_MUSIC_JIEZOULVDONG,
     song_name: "Experience - Ludovico Einaudi",
     song_file: "Experience - Ludovico Einaudi.m4a",
     img_file: "Experience - Ludovico Einaudi.jpg",
