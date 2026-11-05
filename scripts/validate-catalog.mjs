@@ -32,6 +32,30 @@ const error = (message) => errors.push(message);
 const warn = (message) => warnings.push(message);
 
 const { CATEGORIES } = await import(pathToFileURL(path.join(projectRoot, 'catalog/index.js')).href);
+const { CATEGORY_META, getFolderConstName } = await import(pathToFileURL(path.join(projectRoot, 'catalog/categories.js')).href);
+
+// 分类配置一致性：catalog/categories.js 是唯一来源，歌单文件里的 TYPE / 目录常量仍是手写的，需与之核对
+for (const meta of CATEGORY_META) {
+  if (!CATEGORIES.some(category => category.id === meta.id)) {
+    error(`分类 ${meta.id}：未在 catalog/index.js 的 LISTS_BY_ID 中登记歌单`);
+  }
+  const catalogPath = path.join(projectRoot, 'catalog', meta.catalogFile);
+  if (!fs.existsSync(catalogPath)) {
+    error(`分类 ${meta.id}：歌单文件 catalog/${meta.catalogFile} 不存在`);
+    continue;
+  }
+  const source = fs.readFileSync(catalogPath, 'utf8');
+  const typeValue = source.match(/const\s+TYPE\s*=\s*["']([^"']*)["']/)?.[1];
+  if (typeValue !== meta.label) {
+    error(`catalog/${meta.catalogFile}：TYPE 为「${typeValue ?? '未声明'}」，应与分类名称「${meta.label}」一致`);
+  }
+  // 导入工具取文件中第一个 FILE_MUSIC_* 常量作为新条目目录，所以它必须是本分类目录
+  const folderConst = getFolderConstName(meta);
+  const firstConst = source.match(/const\s+(FILE_MUSIC_[A-Z0-9_]+)\s*=\s*["']([^"']*)["']/);
+  if (!firstConst || firstConst[1] !== folderConst || firstConst[2] !== `${meta.folder}/`) {
+    error(`catalog/${meta.catalogFile}：第一个目录常量应为 ${folderConst} = "${meta.folder}/"`);
+  }
+}
 
 // 目录内容缓存：key 为目录绝对路径，value 为文件名数组（保留磁盘上的原始写法）
 const dirCache = new Map();

@@ -13,7 +13,7 @@
 - `index.html`：页面结构和资源引用。
 - `app/`：播放器逻辑、配置、歌词、主题和导入相关 JS 模块。
 - `css/`：页面样式，包含通用样式、响应式样式和导入工具样式。
-- `catalog/`：按分类拆分的歌单数据，`catalog/index.js` 中的 `CATEGORIES` 是分类注册表（页面 tab 由它渲染）。
+- `catalog/`：按分类拆分的歌单数据。`catalog/categories.js` 的 `CATEGORY_META` 是分类元数据的唯一来源（id、名称、目录、歌单文件、tab 顺序），页面、导入工具和校验脚本都读它；`catalog/index.js` 把元数据和歌单数组组装成 `CATEGORIES`。
 - `media/`：歌曲音频、歌词和封面原图。
 - `assets/`：图标、截图、默认封面及歌曲封面缩略图。
 - `tools/import-song.html`：本地浏览器导入歌曲工具。
@@ -48,7 +48,7 @@ python3 -m http.server 8000
 ## 歌曲与资源约定
 
 - 新增歌曲时，音频、歌词、封面原图应放入 `media/对应分类/`。
-- 歌单条目添加到对应的 `catalog/*.js` 文件中。新增分类时还需在 `catalog/index.js` 的 `CATEGORIES` 中注册，并同步导入工具 `app/song-importer.js` 的 `CATEGORY_CONFIG`。
+- 歌单条目添加到对应的 `catalog/*.js` 文件中。新增分类时在 `catalog/categories.js` 的 `CATEGORY_META` 中追加一项，新建歌单文件（`TYPE` 与分类名称一致，第一个目录常量为 `FILE_MUSIC_<目录名大写>`），再在 `catalog/index.js` 的 `LISTS_BY_ID` 中登记歌单数组；导入工具会自动读取，无需另配。改完运行 `node scripts/validate-catalog.mjs` 核对一致性。
 - 歌词文件通常使用 `.lrc`。
 - 封面原图可放在 `media/` 对应分类下，列表缩略图由脚本生成到 `assets/covers/music-thumbs/`。
 - 如果歌曲当前没有专属头像，`img_file` 可能指向 `./assets/covers/defaults/*.jpg` 默认随机图。用户提供图片并说明“给到某首歌的头像”时，应将图片复制到该歌曲所在分类的 `media/对应分类/` 下，使用与歌曲匹配的封面文件名，更新对应 `catalog/*.js` 条目的 `img_file`，再运行 `node scripts/generate-thumbnails.mjs` 生成或更新列表缩略图。

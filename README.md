@@ -40,8 +40,8 @@
 ## 命名约定
 
 - JS 模块统一使用 kebab-case，例如 `lyrics-manager.js`、`music-store.js`。
-- 歌单数据按分类拆分到 `catalog/`，由 `catalog/index.js` 的 `CATEGORIES` 分类注册表汇总；页面分类 tab 的顺序和名称以注册表为准。
-- 新增分类：新建 `catalog/xxx.js` 并在 `CATEGORIES` 中追加一项，同时在导入工具 `app/song-importer.js` 的 `CATEGORY_CONFIG` 中补充对应配置。
+- 歌单数据按分类拆分到 `catalog/`。分类的 id、名称、资源目录、歌单文件和 tab 顺序统一在 `catalog/categories.js` 的 `CATEGORY_META` 中维护，页面、导入工具和校验脚本共用；`catalog/index.js` 把它和各歌单数组组装成 `CATEGORIES`。
+- 新增分类：在 `CATEGORY_META` 中追加一项，新建 `catalog/xxx.js`（`TYPE` 与分类名称一致，第一个目录常量为 `FILE_MUSIC_<目录名大写>`），再在 `catalog/index.js` 的 `LISTS_BY_ID` 中登记歌单数组，最后运行 `node scripts/validate-catalog.mjs` 核对。
 - 页面通用静态资源统一放在 `assets/` 下。
 
 ## 生成封面缩略图

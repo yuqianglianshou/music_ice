@@ -1,13 +1,16 @@
+import { CATEGORY_META, getFolderConstName } from '../catalog/categories.js';
+
 // ==================== 配置与状态 ====================
 
-const CATEGORY_CONFIG = [
-  { key: 'dongmanyingshi', label: '动漫影视', catalogFile: 'dongmanyingshi.js', folder: 'dongmanyingshi', folderConst: 'FILE_MUSIC_DONGMANYINGSHI' },
-  { key: 'jiezoulvdong', label: '节奏律动', catalogFile: 'jiezoulvdong.js', folder: 'jiezoulvdong', folderConst: 'FILE_MUSIC_JIEZOULVDONG' },
-  { key: 'liuxingjingdian', label: '流行经典', catalogFile: 'liuxingjingdian.js', folder: 'liuxingjingdian', folderConst: 'FILE_MUSIC_LIUXINGJINGDIAN' },
-  { key: 'minyao', label: '民谣', catalogFile: 'minyao.js', folder: 'minyao', folderConst: 'FILE_MUSIC_MINYAO' },
-  { key: 'qingyinyue', label: '轻音乐', catalogFile: 'qingyinyue.js', folder: 'qingyinyue', folderConst: 'FILE_MUSIC_QINGYINYUE' },
-  { key: 'shangganzhiyu', label: '伤感治愈', catalogFile: 'shangganzhiyu.js', folder: 'shangganzhiyu', folderConst: 'FILE_MUSIC_SHANGGANZHIYU' }
-];
+// 分类信息统一来自 catalog/categories.js（只含元数据，不加载歌单）。
+// 导入工具内部沿用 key 字段名：key 即分类 id，也是“上次选择分类”存储的值。
+const CATEGORY_CONFIG = CATEGORY_META.map(meta => ({
+  key: meta.id,
+  label: meta.label,
+  catalogFile: meta.catalogFile,
+  folder: meta.folder,
+  folderConst: getFolderConstName(meta)
+}));
 
 const THUMB_SIZE = 160;
 const ROOT_DB_NAME = 'music-ice-importer';
@@ -18,7 +21,7 @@ const LAST_CATEGORY_KEY = 'musicIceImporterLastCategory';
 const IMPORT_LOCK_NAME = 'music-ice-importer-write';
 const IMPORT_LOG_KEY = 'musicIceImporterLogs';
 const MAX_IMPORT_LOGS = 120;
-const IMPORTER_VERSION = '20260608-01';
+const IMPORTER_VERSION = '20261105-01';
 const AI_DESCRIPTION_TIMEOUT_MS = 12000;
 const AI_DESCRIPTION_MAX_LENGTH = 64;
 const WEBP_DEFAULT_IMAGE_IDS = new Set([18, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 31, 32, 33]);
