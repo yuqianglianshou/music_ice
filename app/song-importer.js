@@ -1,4 +1,11 @@
 import { CATEGORY_META, getFolderConstName } from '../catalog/categories.js';
+import {
+  DEFAULT_COVERS,
+  isDefaultCoverPath,
+  IMPORT_SIGNAL_KEY,
+  IMPORT_CHANNEL_NAME,
+  CATALOG_UPDATED_MESSAGE
+} from './shared-constants.js';
 
 // ==================== 配置与状态 ====================
 
@@ -16,23 +23,20 @@ const THUMB_SIZE = 160;
 const ROOT_DB_NAME = 'music-ice-importer';
 const ROOT_STORE_NAME = 'settings';
 const ROOT_HANDLE_KEY = 'project-root-handle';
-const IMPORT_SIGNAL_KEY = 'musicIceCatalogUpdatedAt';
 const LAST_CATEGORY_KEY = 'musicIceImporterLastCategory';
 const IMPORT_LOCK_NAME = 'music-ice-importer-write';
 const IMPORT_LOG_KEY = 'musicIceImporterLogs';
 const MAX_IMPORT_LOGS = 120;
-const IMPORTER_VERSION = '20261105-01';
+const IMPORTER_VERSION = '20261105-02';
 const AI_DESCRIPTION_TIMEOUT_MS = 12000;
 const AI_DESCRIPTION_MAX_LENGTH = 64;
-const WEBP_DEFAULT_IMAGE_IDS = new Set([18, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 31, 32, 33]);
-const DEFAULT_IMAGE_COUNT = 53;
 const AUDIO_EXTENSIONS = new Set(['mp3', 'flac', 'm4a', 'wav', 'ogg']);
 const LYRIC_EXTENSIONS = new Set(['lrc', 'txt']);
 const COVER_EXTENSIONS = new Set(['jpg', 'jpeg', 'png', 'webp', 'gif', 'bmp']);
 
 const state = {
   projectRootHandle: null,
-  importChannel: 'BroadcastChannel' in window ? new BroadcastChannel('music-ice-importer') : null,
+  importChannel: 'BroadcastChannel' in window ? new BroadcastChannel(IMPORT_CHANNEL_NAME) : null,
   duplicateCheckId: 0,
   catalogSongs: [],
   defaultCoverPath: '',
@@ -757,9 +761,7 @@ function validateTargetFileName(fileName, label) {
 }
 
 function pickDefaultCoverPath() {
-  const id = Math.floor(Math.random() * DEFAULT_IMAGE_COUNT) + 1;
-  const extension = WEBP_DEFAULT_IMAGE_IDS.has(id) ? 'webp' : 'jpg';
-  return `./assets/covers/defaults/${id}.${extension}`;
+  return DEFAULT_COVERS[Math.floor(Math.random() * DEFAULT_COVERS.length)];
 }
 
 function getDefaultCoverPath() {
@@ -1145,7 +1147,7 @@ function isFileReferencedByOtherSongs(fileName, field, category, songs) {
 
 function getDeletableCoverFileName(imgFile) {
   const normalized = String(imgFile || '').trim();
-  if (!normalized || normalized.startsWith('./assets/covers/defaults/') || normalized.startsWith('http') || normalized.startsWith('/')) {
+  if (!normalized || isDefaultCoverPath(normalized) || normalized.startsWith('http') || normalized.startsWith('/')) {
     return '';
   }
   return normalized;
@@ -1638,7 +1640,7 @@ function setResultBanner(message, type = '') {
 function notifyMusicCatalogUpdated() {
   const updatedAt = Date.now();
   localStorage.setItem(IMPORT_SIGNAL_KEY, String(updatedAt));
-  state.importChannel?.postMessage({ type: 'catalog-updated', updatedAt });
+  state.importChannel?.postMessage({ type: CATALOG_UPDATED_MESSAGE, updatedAt });
 }
 
 function formatErrorMessage(error) {

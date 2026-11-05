@@ -1,5 +1,6 @@
 import { CATEGORIES } from '../catalog/index.js';
 import { CONFIG } from './config.js';
+import { DEFAULT_COVERS, DEFAULT_COVER_DIR } from './shared-constants.js';
 
 /**
  * 歌曲数据仓库（单一数据源）
@@ -15,13 +16,7 @@ export const FILE_MUSIC_ROOT = './media/';
 export const ALL_CATEGORY_ID = 'all';
 const ALL_CATEGORY_LABEL = '全部';
 
-// 没有专属封面的歌曲按 id 稳定地分配一张默认封面，同一首歌在不同分类下封面保持一致
-const DEFAULT_COVER_COUNT = 53;
-const WEBP_DEFAULT_COVER_IDS = new Set([18, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 31, 32, 33]);
-const DEFAULT_COVERS = Array.from({ length: DEFAULT_COVER_COUNT }, (_, i) => {
-  const id = i + 1;
-  return `./assets/covers/defaults/${id}.${WEBP_DEFAULT_COVER_IDS.has(id) ? 'webp' : 'jpg'}`;
-});
+// 没有专属封面的歌曲按 id 从 DEFAULT_COVERS 中稳定地分配一张，同一首歌在不同分类下封面保持一致
 
 // 旧版会把歌单复制一份进 localStorage 再读出，现已改为直接读内存；启动时清掉这些遗留键
 const LEGACY_STORAGE_KEYS = [
@@ -50,8 +45,8 @@ function resolveThumbnailPath(coverUrl) {
   if (!coverUrl || /^(\/|https?:)/.test(coverUrl)) return coverUrl;
 
   const jpgPath = coverUrl.replace(/\.[^./]+$/, '.jpg');
-  if (jpgPath.startsWith('./assets/covers/defaults/')) {
-    return jpgPath.replace('./assets/covers/defaults/', './assets/covers/defaults/thumbs/');
+  if (jpgPath.startsWith(DEFAULT_COVER_DIR)) {
+    return jpgPath.replace(DEFAULT_COVER_DIR, `${DEFAULT_COVER_DIR}thumbs/`);
   }
   if (jpgPath.startsWith(FILE_MUSIC_ROOT)) {
     return jpgPath.replace(FILE_MUSIC_ROOT, './assets/covers/music-thumbs/');

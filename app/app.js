@@ -14,6 +14,7 @@ import { downloadSong } from './download.js';
 import { setupServiceWorker } from './service-worker-setup.js';
 import { initHoverCard } from './hover-card.js';
 import { PlaylistView } from './playlist-view.js';
+import { IMPORT_SIGNAL_KEY, IMPORT_CHANNEL_NAME, CATALOG_UPDATED_MESSAGE } from './shared-constants.js';
 
 // DOM 选择器简写
 const $ = document.querySelector.bind(document);
@@ -22,8 +23,7 @@ const $$ = document.querySelectorAll.bind(document);
 /**
  * 全局状态管理
  */
-const IMPORT_SIGNAL_KEY = 'musicIceCatalogUpdatedAt';
-const importChannel = 'BroadcastChannel' in window ? new BroadcastChannel('music-ice-importer') : null;
+const importChannel = 'BroadcastChannel' in window ? new BroadcastChannel(IMPORT_CHANNEL_NAME) : null;
 const state = {
   playMode: 0, // 0: 列表循环, 1: 随机播放, 2: 单曲循环
   isPlaying: false,
@@ -970,7 +970,7 @@ function bindCatalogUpdateEvents() {
   });
 
   importChannel?.addEventListener('message', event => {
-    if (event.data?.type === 'catalog-updated') {
+    if (event.data?.type === CATALOG_UPDATED_MESSAGE) {
       handleCatalogUpdatedSignal();
     }
   });

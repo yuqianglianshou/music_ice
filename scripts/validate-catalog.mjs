@@ -33,6 +33,19 @@ const warn = (message) => warnings.push(message);
 
 const { CATEGORIES } = await import(pathToFileURL(path.join(projectRoot, 'catalog/index.js')).href);
 const { CATEGORY_META, getFolderConstName } = await import(pathToFileURL(path.join(projectRoot, 'catalog/categories.js')).href);
+const { DEFAULT_COVERS } = await import(pathToFileURL(path.join(projectRoot, 'app/shared-constants.js')).href);
+
+// 默认封面清单（编号与 jpg/webp 格式）是手写的，核对每张原图及其缩略图都存在
+for (const coverPath of DEFAULT_COVERS) {
+  const absolute = path.join(projectRoot, coverPath);
+  if (!fs.existsSync(absolute)) {
+    error(`默认封面不存在：${coverPath}（检查 app/shared-constants.js 中的默认封面编号和格式）`);
+  }
+  const thumbPath = path.join(path.dirname(absolute), 'thumbs', path.basename(absolute).replace(/\.[^.]+$/, '.jpg'));
+  if (!fs.existsSync(thumbPath)) {
+    warn(`默认封面缺少缩略图：${path.relative(projectRoot, thumbPath)}（运行 node scripts/generate-thumbnails.mjs --defaults）`);
+  }
+}
 
 // 分类配置一致性：catalog/categories.js 是唯一来源，歌单文件里的 TYPE / 目录常量仍是手写的，需与之核对
 for (const meta of CATEGORY_META) {
