@@ -39,7 +39,7 @@ python3 -m http.server 8000
 - JS 模块文件名使用 kebab-case，例如 `lyrics-manager.js`、`music-store.js`。
 - 保持 ES module 写法，优先沿用现有模块边界和命名风格。
 - 修改播放器行为时，优先查看 `app/app.js`、`app/music-store.js`、`app/playback-queue.js`、`app/lyrics-manager.js` 和 `app/config.js`。
-- 模块分工：`music-store.js` 把 catalog 原始条目转换为只读歌曲模型（`id`、`audioUrl`、`coverUrl`、`thumbUrl`、`lyricsUrl` 等），页面代码只读模型、不要改写 catalog 原始对象；`playback-queue.js` 负责上一首/下一首和随机顺序；`media-session.js` 对接系统媒体控制；`playback-snapshot.js` 保存/恢复播放状态；`playlist-view.js` 负责分类 tab 和歌曲列表的渲染与交互（点歌通过 `onSelect` 回调交给 `app.js`）；`hover-card.js`、`notice.js`、`wake-lock.js`、`download.js`、`service-worker-setup.js` 分别负责悬浮描述、提示、屏幕常亮、下载和 Service Worker 注册（含旧版清理）。`app.js` 只做播放编排（音频、进度、音量、面板、快照）和模块组装。
+- 模块分工：`music-store.js` 把 catalog 原始条目转换为只读歌曲模型（`id`、`audioUrl`、`coverUrl`、`thumbUrl`、`lyricsUrl` 等），页面代码只读模型、不要改写 catalog 原始对象；`playback-queue.js` 负责上一首/下一首和随机顺序；`media-session.js` 对接系统媒体控制；`playback-snapshot.js` 保存/恢复播放状态；`playlist-view.js` 负责分类 tab、歌单搜索和歌曲列表的渲染与交互（搜索只在当前分类内按歌名/歌手过滤；点歌通过 `onSelect` 回调交给 `app.js`，传入的始终是完整分类列表而非搜索结果）；`hover-card.js`、`notice.js`、`wake-lock.js`、`download.js`、`service-worker-setup.js` 分别负责悬浮描述、提示、屏幕常亮、下载和 Service Worker 注册（含旧版清理）。`app.js` 只做播放编排（音频、进度、音量、面板、快照）和模块组装。
 - 歌曲 `id` 由音频文件名去扩展名派生，会写入播放状态快照；修改音频文件名会让该歌曲的已保存进度失效，属预期行为。
 - 修改视觉样式时，先确认 `css/common.css`、`css/style.css`、`css/response.css` 中是否已有可复用规则。
 - 不要为小改动引入构建工具、包管理器或新的运行时依赖。

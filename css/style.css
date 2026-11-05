@@ -621,6 +621,112 @@
 	border-color: var(--border-strong);
 }
 
+/* ================ 歌单搜索 ================ */
+.list-search {
+	position: relative;
+	display: flex;
+	align-items: center;
+	flex-shrink: 0;
+	height: 42px;
+	margin-bottom: 12px;
+	border-radius: 999px;
+	border: 1px solid var(--border-subtle);
+	background: var(--surface-muted);
+	transition: border-color 0.16s ease, background 0.16s ease;
+}
+
+.list-search:focus-within {
+	border-color: var(--border-strong);
+	background: var(--surface-active);
+	/* 焦点环画在胶囊外框上（随圆角），代替输入框自身的方形 outline */
+	outline: 2px solid var(--focus-ring, #fff);
+	outline-offset: 2px;
+}
+
+.list-search .list-search-input:focus-visible {
+	outline: none;
+}
+
+.list-search-icon {
+	position: absolute;
+	left: 15px;
+	width: 17px;
+	height: 17px;
+	color: var(--text-tertiary);
+	pointer-events: none;
+}
+
+.list-search-input {
+	width: 100%;
+	height: 100%;
+	padding: 0 42px 0 42px;
+	border: 0;
+	outline: none;
+	background: transparent;
+	color: var(--text-primary);
+	font: inherit;
+	font-size: 14px;
+	/* 输入框需要允许选中文本（body 全局禁用了文本选择） */
+	user-select: text;
+	-webkit-user-select: text;
+	-webkit-appearance: none;
+	appearance: none;
+}
+
+.list-search-input::placeholder {
+	color: var(--text-tertiary);
+}
+
+/* 隐藏浏览器自带的清除按钮，统一使用自定义按钮 */
+.list-search-input::-webkit-search-cancel-button,
+.list-search-input::-webkit-search-decoration {
+	-webkit-appearance: none;
+	appearance: none;
+}
+
+.list-search-clear {
+	position: absolute;
+	right: 6px;
+	width: 30px;
+	height: 30px;
+	align-items: center;
+	justify-content: center;
+	border-radius: 50%;
+	color: var(--text-secondary);
+	cursor: pointer;
+}
+
+.list-search-clear[hidden] {
+	display: none;
+}
+
+.list-search-clear:hover {
+	background: var(--surface-hover);
+	color: var(--white-color);
+}
+
+.list-search-clear .icon {
+	width: 15px;
+	height: 15px;
+}
+
+/* 搜索命中的文字 */
+.wrapper-contentList mark {
+	background: transparent;
+	/* 与进度条填充同色系的暖色，在各主题的冷色底上都足够醒目 */
+	color: rgb(255, 193, 120);
+	font-weight: 600;
+}
+
+/* 搜索无结果 / 空分类提示 */
+.wrapper-contentList .contentList-empty {
+	padding: 48px 16px;
+	text-align: center;
+	font-size: 14px;
+	line-height: 1.6;
+	color: var(--text-tertiary);
+}
+
 /* 平板适配 */
 @media (max-width: 1200px) and (min-width: 769px) {
 	.app_layout {

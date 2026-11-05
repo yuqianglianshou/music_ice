@@ -929,7 +929,9 @@ const keyActionMap = {
   'Enter': () => document.getElementById("btn-play").click(),
   ' ': () => document.getElementById("btn-play").click(),
   'ArrowLeft': () => document.getElementById("btn-prev").click(),
-  'ArrowRight': () => document.getElementById("btn-next").click()
+  'ArrowRight': () => document.getElementById("btn-next").click(),
+  // “/” 快速聚焦歌单搜索框（常见网页搜索快捷键）
+  '/': () => playlistView?.focusSearch()
 };
 
 function isEditableTarget(target) {
@@ -1083,6 +1085,8 @@ function init() {
     listEl: elements.contentList,
     countEl: elements.playlistCount,
     tabListEl: document.querySelector('.list-tab'),
+    searchInput: document.querySelector('[playlist-search]'),
+    searchClearBtn: document.querySelector('[playlist-search-clear]'),
     categories: musicRepository.getCategories(),
     getSongs: categoryId => musicRepository.getSongs(categoryId),
     isCurrent: isCurrentMusic,
